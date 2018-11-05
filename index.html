@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="scripts/helpers.js"></script>
+    <script type="text/javascript" src="scripts/game.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Shrikhand" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css"  type="text/css" >
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <title>Neural Net Viz</title>
+  </head>
+  <body>
+
+    <div class="main-container">
+
+      <div class="title-container">
+        <span id="title">Neural Net Viz</span>
+      </div>
+
+      <div class="speed-container">
+        <span class="speed-label">Game Speed</span>
+        <input id="speed-slider" type="range" name="speed-slider" min="1" max="200" step="1" value="3">
+        <input id="speed-input" type="number" name="speed-input" value="3" min="1" max="200">
+        <span class="speed-label">(updates/sec)</span>
+      </div>
+
+      <div class="status-container">
+        <div class="mode-container">
+          <div>
+            MODE:
+          </div>
+          <div>
+            <span id="mode-current-status">draw</span>
+          </div>
+        </div>
+        <div class="lastkey-container">
+          <div>
+            "Last Key" (key code):
+          </div>
+          <div>
+            <span id="lastkey-name">---</span>
+            -
+            <span id="lastkey-code">---</span>
+          </div>
+        </div>
+        <div class="coords-container">
+          <div id="coords">
+            <div>
+              Mouse Coords
+            </div>
+            <div>
+              X: <span id="coords-x">0</span> Y: <span id="coords-y">0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="keys-container">
+        <div class="keys-main">
+          <div class="keys-group-dir">
+            <div class="keys-item ki-title">
+              WASD
+            </div>
+            <div class="keys-item gap"></div>
+            <div class="keys-item" id="key-W">W</div>
+            <div class="keys-item gap"></div>
+            <div class="keys-item" id="key-A">A</div>
+            <div class="keys-item" id="key-S">S</div>
+            <div class="keys-item" id="key-D">D</div>
+          </div>
+          <div class="keys-group-dir">
+            <div class="keys-item ki-title">
+              Arrows
+            </div>
+            <div class="keys-item gap"></div>
+            <div class="keys-item" id="key-up">Up</div>
+            <div class="keys-item gap"></div>
+            <div class="keys-item" id="key-left">Left</div>
+            <div class="keys-item" id="key-down">Down</div>
+            <div class="keys-item" id="key-right">Right</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="buttons-container">
+        <button id="start-btn" type="button" name="start">START</button>
+        <button id="pause-btn" type="button" name="pause">PAUSE</button>
+        <button id="reset-btn" type="button" name="reset">RESET</button>
+      </div>
+
+      <div class="canvas-container">
+        <canvas id="canvas" tabindex='1' width="800" height="600"></canvas>
+      </div>
+
+    </div>
+
+    <div class="file-in-container">
+      <label for="xml-file">Gimme File!</label>
+      <input type="file" id="file-in" name="xml-file" accept=".xml,.json" />
+      <button id="btn-submit" type="submit" name="submit">Display data</button>
+    </div>
+    <div class="file-output-container">
+      <textarea id="output"></textarea>
+    </div>
+
+  <footer>
+    <div class="social-container">
+      <a href="https://github.com/Umitosan/canvas-game-template">
+        <img id="git-img" border="0" src="giticon.png" alt="github-icon">
+      </a>
+    </div>
+  </footer>
+</html>
