@@ -1,6 +1,9 @@
 /*jshint esversion: 6 */
 
 
+var myJson,
+    myPop;
+
 var CANVAS,
     canH,
     canW,
@@ -424,24 +427,51 @@ $(document).ready(function() {
   });
 
 
-  function getFile(evt) {
+  // function getFileXML(evt) {
+  //   // console.log(evt);
+  //   let myFile = evt.target.files[0];
+  //   let reader = new FileReader();
+  //   reader.onload = function(){
+  //     var text = reader.result;
+  //     var outputDiv = $('#output')[0];
+  //     outputDiv.innerText = text;
+  //     console.log("file preview: ", reader.result.substring(0, 100));
+  //   };
+  //   reader.readAsText(myFile);
+  //   reader.onloadend = function(){
+  //       xmlData = $(reader.result); // obj
+  //       xmlDataString = reader.result; // str
+  //       domParserData = (new DOMParser()).parseFromString(reader.result, "text/xml");
+  //       let inputs = domParserData.getElementsByTagName("inputs");
+  //       let stim = domParserData.getElementsByTagName("stimulus");
+  //       newJSON = xmlToJson(domParserData);
+  //       console.log('inputs nodes = ', inputs);
+  //       console.dir(newJSON);
+  //   };
+  // }
+  // $('#file-in').on("change", getFileXML);
+
+  // function getFileXML(evt) {
+  //   console.log(evt);
+  // }
+
+
+  function getFileJSON(evt) {
     let myFile = evt.target.files[0];
     let reader = new FileReader();
     reader.onload = function(){
       var text = reader.result;
+      myJson = JSON.parse(reader.result);
+      myPop = myJson.Population;
       var outputDiv = $('#output')[0];
-      outputDiv.innerText = text;
       console.log("file preview: ", reader.result.substring(0, 100));
-      // console.log('file1 = ', evt.target.files[0]);
+      console.dir(myPop);
+      outputDiv.innerText = text;
     };
     reader.readAsText(myFile);
-    reader.onloadend = function(){
-        xmlData = $(reader.result);
-        console.log('xmlData = ', xmlData);
-    };
   }
 
-  $('#file-in').on("change", getFile);
+  $('#file-in').on("change", getFileJSON);
 
   $('#btn-submit').on("click", function() {
     console.log("submit button clicked");
@@ -450,3 +480,5 @@ $(document).ready(function() {
 });
 
 var xmlData;
+var xmlDataString;
+var domParserData;
