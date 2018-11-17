@@ -456,6 +456,44 @@ $(document).ready(function() {
   // }
 
 
+  function customParseJSON(someObj, indentLvl=0) {
+    let finalStr = "";
+    // let indentStr = "" + indentLvl;   // bebug indent lvl
+    let indentStr = "";
+    for (let j = 0; j < indentLvl; j++) {
+      // indentStr += "--";
+      indentStr += "  ";
+    }
+    for (let i in someObj) {
+      if( someObj.hasOwnProperty(i) ) {
+        if (typeof someObj[i] === 'object') {
+          if (Array.isArray(someObj[i]) === true) { // beginning of array
+            // finalStr += indentStr + i + ":[arr] " + "\n";
+            finalStr += indentStr + i + ": " + "[" + someObj[i].length + "]" + "\n";
+            finalStr += customParseJSON(someObj[i], indentLvl+1);
+          } else { // non-array obj
+            // finalStr += indentStr + i + ":[obj] " + "\n";
+            finalStr += indentStr + i + ":" + "\n";
+            finalStr += customParseJSON(someObj[i], indentLvl+1);
+          }
+        } else if (typeof someObj[i] === 'string') {
+          // finalStr += indentStr + i + ":[str] " + someObj[i] + "\n";
+          finalStr += indentStr + i + ": '" + someObj[i] + "'" + "\n";
+        } else if (typeof someObj[i] === 'number') {
+          // finalStr += indentStr + i + ":[num] " + someObj[i] + "\n";
+          finalStr += indentStr + i + ": " + someObj[i] + "\n";
+        } else {
+          // finalStr += indentStr + i + ":[other] " + someObj[i] + "\n";
+          finalStr += indentStr + i + ":" + someObj[i] + "\n";
+        }
+
+      }
+    }
+    return finalStr;
+  }
+
+
+
   function getFileJSON(evt) {
     let myFile = evt.target.files[0];
     let reader = new FileReader();
@@ -465,8 +503,10 @@ $(document).ready(function() {
       myPop = myJson.Population;
       var outputDiv = $('#output')[0];
       console.log("file preview: ", reader.result.substring(0, 100));
-      console.dir(myPop);
-      outputDiv.innerText = text;
+      console.log("text = ", text);
+      console.log("myPop = ", myPop);
+      // outputDiv.innerText = text;
+      outputDiv.innerText = customParseJSON(myPop);
     };
     reader.readAsText(myFile);
   }

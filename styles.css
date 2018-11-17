@@ -230,14 +230,14 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 }
 .file-output-container {
   margin: 10px 50px 10px 50px;
-  min-height: 500px;
+  min-height: 1000px;
   width: 85%;
   outline-color: green;
   outline-width: 2px;
   outline-style: solid;
 }
 #output {
-  min-height: 500px;
+  min-height: 1000px;
   width: 100%;
 }
 
