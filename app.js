@@ -456,12 +456,12 @@ $(document).ready(function() {
   // }
 
 
-  function customParseJSON(someObj, indentLvl=0) {
+  function parseJsonAsString(someObj, indentLvl=0) {
     let finalStr = "";
+    let finalStrHTML = "";
     // let indentStr = "" + indentLvl;   // bebug indent lvl
-    let indentStr = "";
+    let indentStr = indentLvl + "  ";
     for (let j = 0; j < indentLvl; j++) {
-      // indentStr += "--";
       indentStr += "  ";
     }
     for (let i in someObj) {
@@ -469,12 +469,12 @@ $(document).ready(function() {
         if (typeof someObj[i] === 'object') {
           if (Array.isArray(someObj[i]) === true) { // beginning of array
             // finalStr += indentStr + i + ":[arr] " + "\n";
-            finalStr += indentStr + i + ": " + "[" + someObj[i].length + "]" + "\n";
-            finalStr += customParseJSON(someObj[i], indentLvl+1);
+            finalStr += indentStr + i + ": " + "(arr length=" + someObj[i].length + ")" + "\n";
+            finalStr += parseJsonAsString(someObj[i], indentLvl+1);
           } else { // non-array obj
             // finalStr += indentStr + i + ":[obj] " + "\n";
-            finalStr += indentStr + i + ":" + "\n";
-            finalStr += customParseJSON(someObj[i], indentLvl+1);
+            finalStr += indentStr + i + ": " + "(obj length=" + Object.keys(someObj[i]).length + ")" + "\n";
+            finalStr += parseJsonAsString(someObj[i], indentLvl+1);
           }
         } else if (typeof someObj[i] === 'string') {
           // finalStr += indentStr + i + ":[str] " + someObj[i] + "\n";
@@ -483,14 +483,41 @@ $(document).ready(function() {
           // finalStr += indentStr + i + ":[num] " + someObj[i] + "\n";
           finalStr += indentStr + i + ": " + someObj[i] + "\n";
         } else {
-          // finalStr += indentStr + i + ":[other] " + someObj[i] + "\n";
-          finalStr += indentStr + i + ":" + someObj[i] + "\n";
+          console.log('undefined type');
         }
-
+      } else {
+        console.log("someObj.hasOwnProperty(i) = false");
       }
-    }
+    } // for
     return finalStr;
-  }
+  } // parseJsonAsString
+
+
+  function parseJsonAsHTML(someObj, indentLvl=0) {
+    let finalStrHTMLarr = "";
+    for (let i in someObj) {
+      if( someObj.hasOwnProperty(i) ) {
+        if (typeof someObj[i] === 'object') {
+          if (Array.isArray(someObj[i]) === true) { // beginning of array
+            finalStrHTMLarr += "<p>"+i+": " + "(arr length=" + someObj[i].length + ")" + "</p>";
+            finalStrHTMLarr += parseJsonAsHTML(someObj[i]);
+          } else { // non-array obj
+            finalStrHTMLarr += "<p>"+i+": " + "(obj length=" + Object.keys(someObj[i]).length + ")" + "</p>";
+            finalStrHTMLarr += parseJsonAsHTML(someObj[i]);
+          }
+        } else if (typeof someObj[i] === 'string') {
+          finalStrHTMLarr += "<p>"+i+": '" + "<span class='greenString'>" + someObj[i] + "</span>" + "'" + "</p>";
+        } else if (typeof someObj[i] === 'number') {
+          finalStrHTMLarr += "<p>"+i+": " + "<span class='redNum'>" + someObj[i] + "</span>" + "</p>";
+        } else {
+          console.log('undefined type');
+        }
+      } else {
+        console.log("someObj.hasOwnProperty(i) = false");
+      }
+    } // for
+    return finalStrHTMLarr;
+  } // parseJsonAsHTML
 
 
 
@@ -500,13 +527,27 @@ $(document).ready(function() {
     reader.onload = function(){
       var text = reader.result;
       myJson = JSON.parse(reader.result);
-      myPop = myJson.Population;
       var outputDiv = $('#output')[0];
       console.log("file preview: ", reader.result.substring(0, 100));
-      console.log("text = ", text);
-      console.log("myPop = ", myPop);
+      // console.log("text = ", text);
+      // console.log("myPop = ", myPop);
       // outputDiv.innerText = text;
-      outputDiv.innerText = customParseJSON(myPop);
+      let finalJsonStr = parseJsonAsString(myJson);
+      outputDiv.style.color = 'blue';
+      outputDiv.innerText = finalJsonStr;
+
+      let finalJsonStrHTML = parseJsonAsHTML(myJson);
+
+      // for (let i = 0; i < finalJsonStrHTML.length; i++) {
+      //   // let parser = new DOMParser();
+      //   // let myDom = parser.parseFromString(finalJsonStrHTML, "text/html");
+      //
+      //   $("#myFrame")[0].innerHTML = finalJsonStrHTML[i];
+      // }
+
+      $("#htmlOutput")[0].innerHTML = finalJsonStrHTML;
+
+
     };
     reader.readAsText(myFile);
   }

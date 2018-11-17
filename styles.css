@@ -229,16 +229,44 @@ input[type=range]:focus::-webkit-slider-runnable-track {
   margin: 10px auto;
 }
 .file-output-container {
-  margin: 10px 50px 10px 50px;
-  min-height: 1000px;
-  width: 85%;
+  margin: 10px auto 10px auto;
+  min-height: 500px;
+  height: auto;
+  width: 1000px;
   outline-color: green;
   outline-width: 2px;
   outline-style: solid;
 }
+.out-box {
+  float: left;
+  min-height: 500px;
+  height: auto;
+  width: 500px;
+  outline-color: blue;
+  outline-width: 1px;
+  outline-style: solid;
+}
 #output {
-  min-height: 1000px;
-  width: 100%;
+  min-height: 480px;
+  height: auto;
+  width: 480px;
+}
+#htmlOutput {
+  height: auto;
+  min-height: 480px;
+  width: 480px;
+  background-color: lightgrey;
+}
+#htmlOutput p {
+  font-size: 12px;
+  font-family: monospace;
+  margin: 0px 0px;
+}
+.redNum {
+  color: red;
+}
+.greenString {
+  color: green;
 }
 
 
