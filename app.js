@@ -456,7 +456,7 @@ $(document).ready(function() {
   // }
 
 
-  function parseJsonAsString(someObj, indentLvl=0) {
+  function printJsonAsString(someObj, indentLvl=0) {
     let finalStr = "";
     let finalStrHTML = "";
     // let indentStr = "" + indentLvl;   // bebug indent lvl
@@ -468,19 +468,15 @@ $(document).ready(function() {
       if( someObj.hasOwnProperty(i) ) {
         if (typeof someObj[i] === 'object') {
           if (Array.isArray(someObj[i]) === true) { // beginning of array
-            // finalStr += indentStr + i + ":[arr] " + "\n";
             finalStr += indentStr + i + ": " + "(arr length=" + someObj[i].length + ")" + "\n";
-            finalStr += parseJsonAsString(someObj[i], indentLvl+1);
+            finalStr += printJsonAsString(someObj[i], indentLvl+1);
           } else { // non-array obj
-            // finalStr += indentStr + i + ":[obj] " + "\n";
             finalStr += indentStr + i + ": " + "(obj length=" + Object.keys(someObj[i]).length + ")" + "\n";
-            finalStr += parseJsonAsString(someObj[i], indentLvl+1);
+            finalStr += printJsonAsString(someObj[i], indentLvl+1);
           }
         } else if (typeof someObj[i] === 'string') {
-          // finalStr += indentStr + i + ":[str] " + someObj[i] + "\n";
           finalStr += indentStr + i + ": '" + someObj[i] + "'" + "\n";
         } else if (typeof someObj[i] === 'number') {
-          // finalStr += indentStr + i + ":[num] " + someObj[i] + "\n";
           finalStr += indentStr + i + ": " + someObj[i] + "\n";
         } else {
           console.log('undefined type');
@@ -490,25 +486,26 @@ $(document).ready(function() {
       }
     } // for
     return finalStr;
-  } // parseJsonAsString
+  } // printJsonAsString
 
 
-  function parseJsonAsHTML(someObj, indentLvl=0) {
+  function printJsonAsHTML(someObj, indentLvl=0) {
     let finalStrHTMLarr = "";
+    let margin = indentLvl * 10;
     for (let i in someObj) {
       if( someObj.hasOwnProperty(i) ) {
         if (typeof someObj[i] === 'object') {
           if (Array.isArray(someObj[i]) === true) { // beginning of array
-            finalStrHTMLarr += "<p>"+i+": " + "(arr length=" + someObj[i].length + ")" + "</p>";
-            finalStrHTMLarr += parseJsonAsHTML(someObj[i]);
+            finalStrHTMLarr += "<p style='margin-left: "+margin+"px'>"+i+": " + "(arr length=" + someObj[i].length + ")" + "</p>";
+            finalStrHTMLarr += printJsonAsHTML(someObj[i], indentLvl+1);
           } else { // non-array obj
-            finalStrHTMLarr += "<p>"+i+": " + "(obj length=" + Object.keys(someObj[i]).length + ")" + "</p>";
-            finalStrHTMLarr += parseJsonAsHTML(someObj[i]);
+            finalStrHTMLarr += "<p style='margin-left: "+margin+"px'>"+i+": " + "(obj length=" + Object.keys(someObj[i]).length + ")" + "</p>";
+            finalStrHTMLarr += printJsonAsHTML(someObj[i], indentLvl+1);
           }
         } else if (typeof someObj[i] === 'string') {
-          finalStrHTMLarr += "<p>"+i+": '" + "<span class='greenString'>" + someObj[i] + "</span>" + "'" + "</p>";
+          finalStrHTMLarr += "<p style='margin-left: "+margin+"px'>"+i+": '" + "<span class='greenString'>" + someObj[i] + "</span>" + "'" + "</p>";
         } else if (typeof someObj[i] === 'number') {
-          finalStrHTMLarr += "<p>"+i+": " + "<span class='redNum'>" + someObj[i] + "</span>" + "</p>";
+          finalStrHTMLarr += "<p style='margin-left: "+margin+"px'>"+i+": " + "<span class='redNum'>" + someObj[i] + "</span>" + "</p>";
         } else {
           console.log('undefined type');
         }
@@ -517,7 +514,7 @@ $(document).ready(function() {
       }
     } // for
     return finalStrHTMLarr;
-  } // parseJsonAsHTML
+  } // printJsonAsHTML
 
 
 
@@ -527,16 +524,16 @@ $(document).ready(function() {
     reader.onload = function(){
       var text = reader.result;
       myJson = JSON.parse(reader.result);
-      var outputDiv = $('#output')[0];
+      var outputDiv = $('#stringOutput')[0];
       console.log("file preview: ", reader.result.substring(0, 100));
       // console.log("text = ", text);
       // console.log("myPop = ", myPop);
       // outputDiv.innerText = text;
-      let finalJsonStr = parseJsonAsString(myJson);
+      let finalJsonStr = printJsonAsString(myJson);
       outputDiv.style.color = 'blue';
       outputDiv.innerText = finalJsonStr;
 
-      let finalJsonStrHTML = parseJsonAsHTML(myJson);
+      let finalJsonStrHTML = printJsonAsHTML(myJson);
 
       // for (let i = 0; i < finalJsonStrHTML.length; i++) {
       //   // let parser = new DOMParser();
