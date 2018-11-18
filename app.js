@@ -4,6 +4,10 @@
 var myJson,
     myPop;
 
+var xmlData;
+var xmlDataString;
+var domParserData;
+
 var CANVAS,
     canH,
     canW,
@@ -456,6 +460,7 @@ $(document).ready(function() {
   // }
 
 
+
   function printJsonAsString(someObj, indentLvl=0) {
     let finalStr = "";
     let finalStrHTML = "";
@@ -488,24 +493,27 @@ $(document).ready(function() {
     return finalStr;
   } // printJsonAsString
 
+  let textSizeSwitch = true;
+  let textStartSize = 18;
 
   function printJsonAsHTML(someObj, indentLvl=0) {
     let finalStrHTMLarr = "";
     let margin = indentLvl * 10;
+    let textSize = textStartSize - indentLvl;
     for (let i in someObj) {
       if( someObj.hasOwnProperty(i) ) {
         if (typeof someObj[i] === 'object') {
           if (Array.isArray(someObj[i]) === true) { // beginning of array
-            finalStrHTMLarr += "<p style='margin-left: "+margin+"px'>"+i+": " + "(arr length=" + someObj[i].length + ")" + "</p>";
+            finalStrHTMLarr += "<p style='margin-left: "+margin+"px; font-size: "+textSize+"px;'>"+i+": " + "(arr length=" + someObj[i].length + ")" + "</p>";
             finalStrHTMLarr += printJsonAsHTML(someObj[i], indentLvl+1);
           } else { // non-array obj
-            finalStrHTMLarr += "<p style='margin-left: "+margin+"px'>"+i+": " + "(obj length=" + Object.keys(someObj[i]).length + ")" + "</p>";
+            finalStrHTMLarr += "<p style='margin-left: "+margin+"px; font-size: "+textSize+"px;'>"+i+": " + "(obj length=" + Object.keys(someObj[i]).length + ")" + "</p>";
             finalStrHTMLarr += printJsonAsHTML(someObj[i], indentLvl+1);
           }
         } else if (typeof someObj[i] === 'string') {
-          finalStrHTMLarr += "<p style='margin-left: "+margin+"px'>"+i+": '" + "<span class='greenString'>" + someObj[i] + "</span>" + "'" + "</p>";
+          finalStrHTMLarr += "<p style='margin-left: "+margin+"px; font-size: "+textSize+"px;'>"+i+": '" + "<span class='greenString'>" + someObj[i] + "</span>" + "'" + "</p>";
         } else if (typeof someObj[i] === 'number') {
-          finalStrHTMLarr += "<p style='margin-left: "+margin+"px'>"+i+": " + "<span class='redNum'>" + someObj[i] + "</span>" + "</p>";
+          finalStrHTMLarr += "<p style='margin-left: "+margin+"px; font-size: "+textSize+"px;'>"+i+": " + "<span class='redNum'>" + someObj[i] + "</span>" + "</p>";
         } else {
           console.log('undefined type');
         }
@@ -556,7 +564,3 @@ $(document).ready(function() {
   });
 
 });
-
-var xmlData;
-var xmlDataString;
-var domParserData;
