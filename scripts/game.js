@@ -12,11 +12,39 @@ function Game(updateDur) {
   this.boxy = undefined;
   this.pausedTxt = undefined;
   this.mode = 'init';
+  this.pop = undefined;
 
   this.init = function() {
     this.bg.src = 'bg1.png';
-    this.boxy = new Box(20,20,myColors.red,20,1);
+    this.boxy = new Box(20,
+                        20,
+                        myColors.red,
+                        20,
+                        1
+                      );
     this.lastUpdate = performance.now();
+  };
+
+  this.buildNets = function() {
+    if (myNets !== undefined) {
+      this.pop = [];
+      for (let i in myNets) {
+        let newHeight = 40; // pixels high of each net box
+        let netYOffset = 4; // pixels between net boxes
+        let newNet = new Net( /*   x     */  10,
+                              /*   y     */  (i*newHeight)+(i*netYOffset),
+                              /* width   */  200,
+                              /* height  */  newHeight,
+                              /*cellTotal*/  10,
+                              /* color   */  randColor('rgba')
+                            );
+        newNet.init();
+        // console.log('myPop[i].cells = ', myNets[i].cells);
+        this.pop.push(newNet);
+      }
+    } else {
+      console.log('nothing in myNets');
+    }
   };
 
   this.pauseIt = function() {
@@ -37,7 +65,12 @@ function Game(updateDur) {
   };
 
   this.draw = function() {  // draw everything!
-    this.boxy.draw();
+    // this.boxy.draw();
+    if (this.pop !== undefined) {
+      for (var i = 0; i < this.pop.length; i++) {
+        this.pop[i].draw();
+      }
+    }
   }; // end draw
 
   this.update = function() {

@@ -2,7 +2,7 @@
 
 
 var myJson,
-    myPop;
+    myNets;
 
 var xmlData;
 var xmlDataString;
@@ -374,6 +374,7 @@ $(document).ready(function() {
     if (myGame.mode === 'draw') {
       myGame.mode = 'sim';
       console.log('mode now sim');
+      myGame.buildNets();
       State.gameStarted = true;
       $('#mode-current-status')[0].innerText = 'simulate';
       let v = $('#speed-slider').val();
@@ -498,7 +499,7 @@ $(document).ready(function() {
 
   function printJsonAsHTML(someObj, indentLvl=0) {
     let finalStrHTMLarr = "";
-    let margin = indentLvl * 10;
+    let margin = indentLvl * 20;
     let textSize = textStartSize - indentLvl;
     for (let i in someObj) {
       if( someObj.hasOwnProperty(i) ) {
@@ -532,27 +533,17 @@ $(document).ready(function() {
     reader.onload = function(){
       var text = reader.result;
       myJson = JSON.parse(reader.result);
+      myNets = myJson.Population.nets;
       var outputDiv = $('#stringOutput')[0];
       console.log("file preview: ", reader.result.substring(0, 100));
       // console.log("text = ", text);
-      // console.log("myPop = ", myPop);
-      // outputDiv.innerText = text;
+      // console.log("myJson = ", myJson);
+      console.log("myNets = ", myNets);
       let finalJsonStr = printJsonAsString(myJson);
       outputDiv.style.color = 'blue';
       outputDiv.innerText = finalJsonStr;
-
       let finalJsonStrHTML = printJsonAsHTML(myJson);
-
-      // for (let i = 0; i < finalJsonStrHTML.length; i++) {
-      //   // let parser = new DOMParser();
-      //   // let myDom = parser.parseFromString(finalJsonStrHTML, "text/html");
-      //
-      //   $("#myFrame")[0].innerHTML = finalJsonStrHTML[i];
-      // }
-
       $("#htmlOutput")[0].innerHTML = finalJsonStrHTML;
-
-
     };
     reader.readAsText(myFile);
   }
