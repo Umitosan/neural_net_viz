@@ -298,6 +298,8 @@ function keyUp(event) {
 function mDown(evt) {
     if (evt.button === 0) {  // left-click
       // console.log('MOUSE: left down');
+      console.log('Mouse X,Y: '+State.mouseX+" , "+State.mouseY );
+      myGame.tryClickNet(State.mouseX,State.mouseY);
       if (State.mouseRightDown === false) { State.mouseLeftDown = true; } // only allow one mouse button down at a time, ignore change if both are down
     } else if (evt.button === 2) { // right-click
       // console.log('MOUSE: right down');
@@ -308,6 +310,7 @@ function mDown(evt) {
 function mUp(evt) {
     if (evt.button === 0) {  // left-click
       // console.log('MOUSE: left up');
+      myGame.revertNetClick();
       State.mouseLeftDown = false;
     } else if (evt.button === 2) { // right-click
       // console.log('MOUSE: left up');

@@ -13,6 +13,7 @@ function Game(updateDur) {
   this.pausedTxt = undefined;
   this.mode = 'init';
   this.pop = undefined;
+  this.curDragCell = undefined;
 
   this.init = function() {
     this.bg.src = 'bg1.png';
@@ -47,6 +48,25 @@ function Game(updateDur) {
       // }
     } else {
       console.log('nothing in myNets');
+    }
+  };
+
+  this.tryClickNet = function(mouseX,mouseY) {
+    for (let i = 0; i < this.pop[0].cells.length; i++) {
+      let cell = this.pop[0].cells[i];
+      if ( (mouseX > (cell.x-cell.rad)) && (mouseX < (cell.x+cell.rad)) &&
+           (mouseY > (cell.y-cell.rad)) && (mouseY < (cell.y+cell.rad)) ) {
+        // console.log("cell hit, change color");
+        this.curDragCell = this.pop[0].cells[i];
+        cell.curColor = "pink";
+      }
+    }
+  };
+
+  this.revertNetClick = function() {
+    this.curDragCell = undefined;
+    for (let i = 0; i < this.pop[0].cells.length; i++) {
+      this.pop[0].cells[i].curColor = this.pop[0].cells[i].baseColor;
     }
   };
 
@@ -86,8 +106,16 @@ function Game(updateDur) {
                 // if (timesToUpdate > 2) {
                 //   console.log('timesToUpdate = ', timesToUpdate);
                 // }
+
+                // general update area
+                // general update area
                 // general update area
                 // this.boxy.update();
+                if (State.mouseLeftDown) {
+                  if (this.curDragCell !== undefined) {
+                    this.curDragCell.changePos(State.mouseX,State.mouseY);
+                  }
+                }
               }
               this.lastUpdate = performance.now();
             } // end if

@@ -17,10 +17,13 @@ function Net(x,y,width,height,cellTotal,color) {
     console.log('diam = ', diameter);
     let leftOffset = 4;
     let xGap = 170;
-    let yGap = 30;
+    let yGap = 34;
     let curIndex = 0;
     for (let i = 0; i < 4; i++) {  // left column
-      let newCell = new Cell(   /*   x    */  this.x + diameter + leftOffset,
+      let off = leftOffset;
+      if (i === 1) { off = leftOffset*12*1; }
+      if (i === 2) { off = leftOffset*12*2; }
+      let newCell = new Cell(   /*   x    */  this.x + diameter + off,
                                 /*   y    */  (this.y + diameter/2) + (diameter*1.4) + ((diameter*i) + (yGap*i)),
                                 /* radius */  diameter/2,
                                 /* color  */  this.color,
@@ -31,7 +34,11 @@ function Net(x,y,width,height,cellTotal,color) {
       curIndex += 1;
     }
     for (let i = 0; i < 5; i++) {  // middle column
-      let newCell = new Cell(   /*   x    */  (this.width / 2) + (diameter/2),
+      let off = leftOffset;
+      if (i === 1) { off = leftOffset*12*1; }
+      if (i === 2) { off = leftOffset*12*2; }
+      if (i === 3) { off = leftOffset*12*1; }
+      let newCell = new Cell(   /*   x    */  (this.width / 2) + (diameter/2) + off,
                                 /*   y    */  (this.y + diameter/2) + (diameter) + ((diameter*i) + (yGap*i)),
                                 /* radius */  diameter/2,
                                 /* color  */  this.color,
@@ -57,7 +64,7 @@ function Net(x,y,width,height,cellTotal,color) {
     this.txtTitle = new TxtBox( /*  x       */  (canH / 2)+(tmpFontSize),
                                 /*  y       */  tmpFontSize+5,
                                 /* fontSize */  tmpFontSize,
-                                /* font     */  (""+tmpFontSize.toString()+"px bold courier"),
+                                /* font     */  (""+tmpFontSize.toString()+"px bold courier"),  // [font style][font weight][font size][font face]
                                 /* color    */  "black",
                                 /* text     */  "Net Index: 0"
                                 );
@@ -79,9 +86,9 @@ function Net(x,y,width,height,cellTotal,color) {
   };
 
   this.update = function() {
-    for (var i = 0; i < this.cells.length; i++) {
-      this.cells[i].update();
-    }
+    // for (var i = 0; i < this.cells.length; i++) {
+    //   this.cells[i].update();
+    // }
   };
 
 }
@@ -98,16 +105,24 @@ function Cell(x,y,rad,color,ind) {
   this.strokeColor = "black";
   this.txt = undefined;
   this.index = ind;
+  this.hover = false;
 
   this.init = function() {
     let tmpFontSize = 16;
     this.txt = new TxtBox(  /*  x       */  this.x-3,
                             /*  y       */  this.y+3,
                             /* fontSize */  tmpFontSize,
-                            /* font     */  (""+tmpFontSize.toString()+"px bold courier"),
+                            /* font     */  (""+tmpFontSize.toString()+"px bold courier"),  // [font style][font weight][font size][font face]
                             /* color    */  "black",
                             /* text     */  this.index.toString()
                           );
+  };
+
+  this.changePos = function(newX,newY) {
+    this.x = newX;
+    this.y = newY;
+    this.txt.x = this.x-3;
+    this.txt.y = this.y+3;
   };
 
   this.draw = function() {
@@ -121,11 +136,25 @@ function Cell(x,y,rad,color,ind) {
     ctx.arc(this.x,this.y,this.rad,0,2*Math.PI);
     ctx.fill();
     ctx.stroke();
+    // index at center of cell
     this.txt.draw();
+    // hitbox
+    // ctx.save();
+    // ctx.translate(this.x,this.y);
+    // ctx.beginPath();
+    // ctx.strokeStyle = "green";
+    // ctx.lineWidth = 1;
+    // ctx.moveTo(-this.rad,-this.rad);
+    // ctx.lineTo(this.rad,-this.rad);
+    // ctx.lineTo(this.rad,this.rad);
+    // ctx.lineTo(-this.rad,this.rad);
+    // ctx.lineTo(-this.rad,-this.rad);
+    // ctx.stroke();
+    // ctx.restore();
   };
 
   this.update = function() {
-    // nothin
+
   };
 
 }
