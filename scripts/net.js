@@ -9,19 +9,58 @@ function Net(x,y,width,height,cellTotal,color) {
   this.cellTotal = cellTotal;
   this.color = color;
   this.cells = undefined;
+  this.txtTitle = undefined;
 
   this.init = function() {
     this.cells = [];
-    let rad = this.height / 6;
-    let xSpacing = (this.width - (this.width*0.10)) / (this.cellTotal);
-    for (let i = 0; i < cellTotal; i++) {
-      this.cells.push(new Cell( /*   x    */  this.x + xSpacing + (xSpacing * i),
-                                /*   y    */  this.y + (this.height / 2),
-                                /* radius */  rad,
-                                /* color  */  this.color
-                              ));
+    let diameter = (this.width / 10) * 0.8;
+    console.log('diam = ', diameter);
+    let leftOffset = 4;
+    let xGap = 170;
+    let yGap = 30;
+    let curIndex = 0;
+    for (let i = 0; i < 4; i++) {  // left column
+      let newCell = new Cell(   /*   x    */  this.x + diameter + leftOffset,
+                                /*   y    */  (this.y + diameter/2) + (diameter*1.4) + ((diameter*i) + (yGap*i)),
+                                /* radius */  diameter/2,
+                                /* color  */  this.color,
+                                /* index  */  curIndex
+                              );
+      newCell.init();
+      this.cells.push(newCell);
+      curIndex += 1;
     }
-    console.dir(this.cells);
+    for (let i = 0; i < 5; i++) {  // middle column
+      let newCell = new Cell(   /*   x    */  (this.width / 2) + (diameter/2),
+                                /*   y    */  (this.y + diameter/2) + (diameter) + ((diameter*i) + (yGap*i)),
+                                /* radius */  diameter/2,
+                                /* color  */  this.color,
+                                /* index  */  curIndex
+                              );
+      newCell.init();
+      this.cells.push(newCell);
+      curIndex += 1;
+    }
+    for (let i = 0; i < 1; i++) { // right
+      let newCell = new Cell(   /*   x    */  (this.x + this.width) - diameter - leftOffset,
+                                /*   y    */  (this.height / 2) + (diameter/2),
+                                /* radius */  diameter/2,
+                                /* color  */  this.color,
+                                /* index  */  curIndex
+                              );
+      newCell.init();
+      this.cells.push(newCell);
+      curIndex += 1;
+    }
+    // console.dir(this.cells);
+    let tmpFontSize = 30;
+    this.txtTitle = new TxtBox( /*  x       */  (canH / 2)+(tmpFontSize),
+                                /*  y       */  tmpFontSize+5,
+                                /* fontSize */  tmpFontSize,
+                                /* font     */  (""+tmpFontSize.toString()+"px bold courier"),
+                                /* color    */  "black",
+                                /* text     */  "Net Index: 0"
+                                );
   };
 
   this.draw = function() {
@@ -36,6 +75,7 @@ function Net(x,y,width,height,cellTotal,color) {
     ctx.lineTo(this.x,this.y+this.height);
     ctx.lineTo(this.x,this.y);
     ctx.stroke();
+    this.txtTitle.draw();
   };
 
   this.update = function() {
@@ -49,14 +89,25 @@ function Net(x,y,width,height,cellTotal,color) {
 
 
 
-function Cell(x,y,rad,color) {
+function Cell(x,y,rad,color,ind) {
   this.x = x;
   this.y = y;
   this.rad = rad;
-  this.color = color;
+  this.baseColor = color;
+  this.curColor = color;
+  this.strokeColor = "black";
+  this.txt = undefined;
+  this.index = ind;
 
   this.init = function() {
-
+    let tmpFontSize = 16;
+    this.txt = new TxtBox(  /*  x       */  this.x-3,
+                            /*  y       */  this.y+3,
+                            /* fontSize */  tmpFontSize,
+                            /* font     */  (""+tmpFontSize.toString()+"px bold courier"),
+                            /* color    */  "black",
+                            /* text     */  this.index.toString()
+                          );
   };
 
   this.draw = function() {
@@ -64,12 +115,13 @@ function Cell(x,y,rad,color) {
     // sAngle = start angle, eAngle = end angle....   uses radiens
     // counterclockwise	Optional
     ctx.beginPath();
-    ctx.fillStyle = this.color;
-    ctx.strokeStyle = this.color;
-    ctx.lineWidth = 1;
+    ctx.fillStyle = this.curColor;
+    ctx.strokeStyle = this.strokeColor;
+    ctx.lineWidth = 2;
     ctx.arc(this.x,this.y,this.rad,0,2*Math.PI);
     ctx.fill();
     ctx.stroke();
+    this.txt.draw();
   };
 
   this.update = function() {

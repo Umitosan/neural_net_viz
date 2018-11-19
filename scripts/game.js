@@ -16,6 +16,7 @@ function Game(updateDur) {
 
   this.init = function() {
     this.bg.src = 'bg1.png';
+    // (x,y,color,size,vel)
     this.boxy = new Box(20,
                         20,
                         myColors.red,
@@ -28,20 +29,22 @@ function Game(updateDur) {
   this.buildNets = function() {
     if (myNets !== undefined) {
       this.pop = [];
-      for (let i in myNets) {
-        let newHeight = 40; // pixels high of each net box
-        let netYOffset = 4; // pixels between net boxes
-        let newNet = new Net( /*   x     */  10,
-                              /*   y     */  (i*newHeight)+(i*netYOffset),
-                              /* width   */  200,
-                              /* height  */  newHeight,
-                              /*cellTotal*/  10,
-                              /* color   */  randColor('rgba')
+      let cTotal = myJson.Population.totalCellCount;
+      let netBoxWidth = canW - 100 ;
+      let netBoxHeight = canH - 100;
+      // for (let i in myNets) {
+        // let netXYoffset = 4; // pixels between net boxes
+        // let newNet = new Net( /*   x     */  20 + (i*netBoxWidth)+(i*netXYoffset),
+        let newNet = new Net( /*   x     */  40,
+                              /*   y     */  40,
+                              /* width   */  netBoxWidth,
+                              /* height  */  netBoxHeight,
+                              /*cellTotal*/  cTotal,
+                              /* color   */  randColor('rgba',120,255) // randColor(type,lowBound,highBound,alphaSwitch = null)
                             );
         newNet.init();
-        // console.log('myPop[i].cells = ', myNets[i].cells);
         this.pop.push(newNet);
-      }
+      // }
     } else {
       console.log('nothing in myNets');
     }
@@ -67,7 +70,7 @@ function Game(updateDur) {
   this.draw = function() {  // draw everything!
     // this.boxy.draw();
     if (this.pop !== undefined) {
-      for (var i = 0; i < this.pop.length; i++) {
+      for (var i = 0; i < 1; i++) { // all nets or just 1
         this.pop[i].draw();
       }
     }
@@ -84,7 +87,7 @@ function Game(updateDur) {
                 //   console.log('timesToUpdate = ', timesToUpdate);
                 // }
                 // general update area
-                this.boxy.update();
+                // this.boxy.update();
               }
               this.lastUpdate = performance.now();
             } // end if

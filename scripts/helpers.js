@@ -21,7 +21,7 @@ function generalLoopReset() {
   State.myReq = requestAnimationFrame(gameLoop);
 }
 
-function randColor(type, alphaSwitch = null) { // default alpha = 1
+function randColor(type,lowBound,highBound,alphaSwitch = null) { // default alpha = 1
   // more muted colors example
       // return ( "#" + Math.round((getRandomIntInclusive(0,99999999) + 0x77000000)).toString(16) );
   // full spectum below
@@ -36,11 +36,28 @@ function randColor(type, alphaSwitch = null) { // default alpha = 1
       } else {
         endAlpha = alphaSwitch;
       }
-      return ( 'rgba('+ getRandomIntInclusive(0,255) +','+ getRandomIntInclusive(0,255) +','+ getRandomIntInclusive(0,255) +','+endAlpha+')' );
+      return ( 'rgba('+ getRandomIntInclusive(lowBound,highBound) +','+ getRandomIntInclusive(lowBound,highBound) +','+ getRandomIntInclusive(lowBound,highBound) +','+endAlpha+')' );
   } else {
     console.log("Not valid option for randColor()");
     return undefined;
   }
+}
+
+function TxtBox(x,y,fontSize,font,color,text) {
+  // aprox center for cell's txt TxtBox
+  this.x = x;
+  this.y = y;
+  this.fontSize = fontSize;
+  this.font = font;
+  this.color = color;
+  this.text = text;
+
+  this.draw = function() {
+    // black number
+    ctx.font = this.font;
+    ctx.fillStyle = this.color;
+    ctx.fillText(this.text,this.x,this.y);
+  };
 }
 
 

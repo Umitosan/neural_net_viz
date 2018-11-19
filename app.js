@@ -339,6 +339,7 @@ $(document).ready(function() {
 
   CANVAS =  $('#canvas')[0];
   ctx =  CANVAS.getContext('2d');
+  ctx.imageSmoothingEnabled = false;
   canH = CANVAS.height;
   canW = CANVAS.width;
   CANVAS.addEventListener("keydown",keyDown);
@@ -494,12 +495,12 @@ $(document).ready(function() {
     return finalStr;
   } // printJsonAsString
 
-  let textSizeSwitch = true;
-  let textStartSize = 18;
 
   function printJsonAsHTML(someObj, indentLvl=0) {
     let finalStrHTMLarr = "";
+    let textSizeSwitch = true;
     let margin = indentLvl * 20;
+    let textStartSize = 18;
     let textSize = textStartSize - indentLvl;
     for (let i in someObj) {
       if( someObj.hasOwnProperty(i) ) {
@@ -524,7 +525,6 @@ $(document).ready(function() {
     } // for
     return finalStrHTMLarr;
   } // printJsonAsHTML
-
 
 
   function getFileJSON(evt) {
