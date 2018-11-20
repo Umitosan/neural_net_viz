@@ -535,18 +535,22 @@ $(document).ready(function() {
   function getFileJSON1(evt) {
     let myFile = evt.target.files[0];
     let reader = new FileReader();
+    let outputDivLeft = $('#htmlOutputLeft')[0];
+    let errLeft = $("#err-msg-left")[0];
+    errLeft.innerText = "";
     reader.onload = function(){
       let text = reader.result;
       console.log("file preview: ", reader.result.substring(0, 100));
       myJson = JSON.parse(reader.result);
-      let outputDivLeft = $('#htmlOutputLeft')[0];
       if (myJson.Population !== undefined) {
         console.log('myJson.Population.nets = ',myJson.Population.nets );
         myNets = myJson.Population.nets;
         let finalJsonStrHTML = printJsonAsHTML(myJson);
+        errLeft.innerText = "File Good";
+        $("#err-msg-left").css('color', 'blue');
         outputDivLeft.innerHTML = finalJsonStrHTML;
       } else {
-        $("#err-msg-left")[0].innerText = "Bad File: no NETS!";
+        errLeft.innerText = "Bad File: no NETS!";
         outputDivLeft.innerHTML = "No Nets and or Population found in JSON";
         console.log('no nets found');
       }
@@ -557,23 +561,27 @@ $(document).ready(function() {
   function getFileJSON2(evt) {
     let myFile = evt.target.files[0];
     let reader = new FileReader();
+    let outputDivRight = $("#htmlOutputRight")[0];
+    let errRight = $("#err-msg-right")[0];
+    errRight.innerText = "";
     reader.onload = function(){
       let text = reader.result;
       console.log("file preview: ", reader.result.substring(0, 100));
       myJson2 = JSON.parse(reader.result);
-      let outputDivRight = $("#htmlOutputRight")[0];
       if (typeof myJson2[0] !== "object") {
         if (myJson2.net_0 !== undefined) {
           console.log('myJson2.net_0  = ', myJson2.net_0 );
           myStim = myJson2.net_0 ;
           let finalJsonStrHTML = printJsonAsHTML(myJson2);
+          errRight.innerText = "File Good";
+          $("#err-msg-right").css('color', 'blue');
           outputDivRight.innerHTML = finalJsonStrHTML;
         } else {
-          $("#err-msg-right")[0].innerText = "Bad File: no Net_0 found!";
+          errRight.innerText = "Bad File: no Net_0 found!";
           outputDivRight.innerHTML = "No stimulus / bad format";
         }
       } else {
-        $("#err-msg-right")[0].innerText = "Bad File: no Net Stimulus!";
+        errRight.innerText = "Bad File: no Net Stimulus!";
         outputDivRight.innerHTML = "No Nets and or Population found in JSON";
         console.log('no stimulus found');
       }
