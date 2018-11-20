@@ -22,8 +22,8 @@
 
       <div class="speed-container">
         <span class="speed-label">Game Speed</span>
-        <input id="speed-slider" type="range" name="speed-slider" min="1" max="200" step="1" value="60">
-        <input id="speed-input" type="number" name="speed-input" value="60" min="1" max="200">
+        <input id="speed-slider" type="range" name="speed-slider" min="1" max="200" step="1" value="70">
+        <input id="speed-input" type="number" name="speed-input" value="70" min="1" max="200">
         <span class="speed-label">(updates/sec)</span>
       </div>
 
@@ -98,16 +98,28 @@
     </div>
 
     <div class="file-in-container">
-      <label for="xml-file">Gimme File!</label>
-      <input type="file" id="file-in" name="xml-file" accept=".xml,.json" />
-      <button id="btn-submit" type="submit" name="submit">Display data</button>
+      <div class="file-group fgl">
+        <label class="file-group-lbl" for="file-ingest">Population init json</label>
+        <br>
+        <input type="file" id="file-in-left" name="file-ingest" accept=".xml,.json" />
+        <p class="err-msg" id="err-msg-left"></p>
+      </div>
+      <div class="file-group fgr">
+        <label class="file-group-lbl" for="file-ingest2">Net Stimulus json</label>
+        <br>
+        <input type="file" id="file-in-right" name="file-ingest2" accept=".xml,.json" />
+        <p class="err-msg" id="err-msg-right"></p>
+      </div>
+      <br>
     </div>
+
     <div class="file-output-container">
       <div class="out-box fl">
-        <textarea id="stringOutput" spellcheck="false"></textarea>
+        <div class="html-out" id="htmlOutputLeft"></div>
+        <!-- <textarea id="stringOutput" spellcheck="false"></textarea> -->
       </div>
       <div class="out-box fr">
-        <div id="htmlOutput"></div>
+        <div class="html-out" id="htmlOutputRight"></div>
       </div>
     </div>
 

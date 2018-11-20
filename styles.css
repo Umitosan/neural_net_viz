@@ -29,7 +29,7 @@ body {
 }
 
 .speed-container {
-  width: 576px;
+  width: 450px;
   display: flex;
   margin: 10px auto 0px auto;
   /* outline-color: red;
@@ -37,17 +37,17 @@ body {
   outline-width: 1px; */
 }
 .speed-label {
-  font-size: 24px;
+  font-size: 18px;
 }
 #speed-slider {
   margin: 0px 10px 0px 10px;
-  width: 230px;
+  width: 160px;
 }
 #speed-input {
   margin-left: 5px;
   margin-right: 10px;
   border-style: none;
-  width: 60px;
+  width: 50px;
   height: 26px;
   font-size: 16px;
 }
@@ -163,9 +163,11 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 .status-container {
   display: grid;
   margin: 12px auto 12px auto;
-  width: 600px;
+  width: 360px;
   height: 100px;
-  grid-template-columns: 200px 200px 200px;
+  font-size: 16px;
+  font-weight: 500;
+  grid-template-columns: 120px 120px 120px;
   grid-template-rows: 100px;
   /* outline-color: green;
   outline-style: solid;
@@ -175,14 +177,12 @@ input[type=range]:focus::-webkit-slider-runnable-track {
   margin: auto auto auto auto;
   text-align: center;
   font-family: 'Roboto', sans-serif;
-  font-size: 20px;
   /* outline-color: yellow;
   outline-style: solid;
   outline-width: 1px; */
 }
 .lastkey-container {
   margin: auto auto auto auto;
-  font-size: 20px;
   text-align: center;
   font-family: 'Roboto', sans-serif;
   /* outline-color: yellow;
@@ -194,7 +194,6 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 }
 .coords-container {
   margin: auto auto auto auto;
-  font-size: 20px;
   font-family: 'Roboto', sans-serif;
   /* outline-color: yellow;
   outline-style: solid;
@@ -203,7 +202,6 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 #coords {
   margin: auto auto auto auto;
   text-align: center;
-  font-size: 20px;
 }
 
 .canvas-container {
@@ -218,10 +216,33 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 
 
 .file-in-container {
-  display: block;
-  width: 200px;
+  width: 900px;
+  height: 100px;
   margin: 10px auto;
+  /* outline-color: darkgrey;
+  outline-style: solid;
+  outline-width: 1px; */
 }
+.file-group {
+  outline-color: grey;
+  outline-style: solid;
+  outline-width: 1px;
+}
+.fgl {
+  float: left;
+}
+.fgr {
+  float: right;
+}
+.file-group input {
+  margin-top: 10px;
+}
+.err-msg {
+  color: red;
+  font-weight: bold;
+}
+
+
 .file-output-container {
   margin: 10px auto 10px auto;
   overflow: auto;
@@ -243,18 +264,18 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 .fr {
   float: right;
 }
-#stringOutput {
+/* #stringOutput {
   min-height: 1000px;
   height: auto;
   width: 600px;
-}
-#htmlOutput {
+} */
+.html-out {
   min-height: 1000px;
   height: auto;
   width: 600px;
   background-color: lightgrey;
 }
-#htmlOutput p {
+.html-out p {
   font-family: 'Roboto', sans-serif;
   /* font-family: Ariel, sans-serif; */
   /* font-family: Helvetica, sans-serif; */

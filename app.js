@@ -2,7 +2,9 @@
 
 
 var myJson,
-    myNets;
+    myNets,
+    myJson2,
+    myStim;
 
 var xmlData;
 var xmlDataString;
@@ -530,28 +532,58 @@ $(document).ready(function() {
   } // printJsonAsHTML
 
 
-  function getFileJSON(evt) {
+  function getFileJSON1(evt) {
     let myFile = evt.target.files[0];
     let reader = new FileReader();
     reader.onload = function(){
-      var text = reader.result;
-      myJson = JSON.parse(reader.result);
-      myNets = myJson.Population.nets;
-      var outputDiv = $('#stringOutput')[0];
+      let text = reader.result;
       console.log("file preview: ", reader.result.substring(0, 100));
-      // console.log("text = ", text);
-      // console.log("myJson = ", myJson);
-      console.log("myNets = ", myNets);
-      let finalJsonStr = printJsonAsString(myJson);
-      outputDiv.style.color = 'blue';
-      outputDiv.innerText = finalJsonStr;
-      let finalJsonStrHTML = printJsonAsHTML(myJson);
-      $("#htmlOutput")[0].innerHTML = finalJsonStrHTML;
+      myJson = JSON.parse(reader.result);
+      let outputDivLeft = $('#htmlOutputLeft')[0];
+      if (myJson.Population !== undefined) {
+        console.log('myJson.Population.nets = ',myJson.Population.nets );
+        myNets = myJson.Population.nets;
+        let finalJsonStrHTML = printJsonAsHTML(myJson);
+        outputDivLeft.innerHTML = finalJsonStrHTML;
+      } else {
+        $("#err-msg-left")[0].innerText = "Bad File: no NETS!";
+        outputDivLeft.innerHTML = "No Nets and or Population found in JSON";
+        console.log('no nets found');
+      }
     };
     reader.readAsText(myFile);
   }
 
-  $('#file-in').on("change", getFileJSON);
+  function getFileJSON2(evt) {
+    let myFile = evt.target.files[0];
+    let reader = new FileReader();
+    reader.onload = function(){
+      let text = reader.result;
+      console.log("file preview: ", reader.result.substring(0, 100));
+      myJson2 = JSON.parse(reader.result);
+      let outputDivRight = $("#htmlOutputRight")[0];
+      if (typeof myJson2[0] !== "object") {
+        if (myJson2.net_0 !== undefined) {
+          console.log('myJson2.net_0  = ', myJson2.net_0 );
+          myStim = myJson2.net_0 ;
+          let finalJsonStrHTML = printJsonAsHTML(myJson2);
+          outputDivRight.innerHTML = finalJsonStrHTML;
+        } else {
+          $("#err-msg-right")[0].innerText = "Bad File: no Net_0 found!";
+          outputDivRight.innerHTML = "No stimulus / bad format";
+        }
+      } else {
+        $("#err-msg-right")[0].innerText = "Bad File: no Net Stimulus!";
+        outputDivRight.innerHTML = "No Nets and or Population found in JSON";
+        console.log('no stimulus found');
+      }
+    };
+    reader.readAsText(myFile);
+  }
+
+  $('#file-in-left').on("change", getFileJSON1);
+
+  $('#file-in-right').on("change", getFileJSON2);
 
   $('#btn-submit').on("click", function() {
     console.log("submit button clicked");

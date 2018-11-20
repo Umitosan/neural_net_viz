@@ -14,7 +14,6 @@ function Net(x,y,width,height,cellTotal,color) {
   this.init = function() {
     this.cells = [];
     let diameter = (this.width / 10) * 0.8;
-    console.log('diam = ', diameter);
     let leftOffset = 4;
     let xGap = 170;
     let yGap = 34;
