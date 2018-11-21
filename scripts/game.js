@@ -9,7 +9,6 @@ function Game(updateDur) {
   this.updateDuration = updateDur; // milliseconds duration between update()
   this.paused = false;
   this.bg = new Image();
-  this.boxy = undefined;
   this.pausedTxt = undefined;
   this.mode = 'init';
   this.pop = undefined;
@@ -17,13 +16,6 @@ function Game(updateDur) {
 
   this.init = function() {
     this.bg.src = 'bg1.png';
-    // (x,y,color,size,vel)
-    this.boxy = new Box(20,
-                        20,
-                        myColors.red,
-                        20,
-                        1
-                      );
     this.lastUpdate = performance.now();
   };
 
@@ -94,7 +86,6 @@ function Game(updateDur) {
   };
 
   this.draw = function() {  // draw everything!
-    // this.boxy.draw();
     if (this.pop !== undefined) {
       for (var i = 0; i < 1; i++) { // all nets or just 1
         this.pop[i].draw();
@@ -116,7 +107,6 @@ function Game(updateDur) {
                 // general update area
                 // general update area
                 // general update area
-                // this.boxy.update();
                 if (State.mouseLeftDown) {
                   if (this.curDragCell !== undefined) {
                     this.curDragCell.changePos(State.mouseX,State.mouseY);

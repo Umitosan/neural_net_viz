@@ -10,11 +10,16 @@ function Net(x,y,width,height,cellTotal,color) {
   this.color = color;
   this.cells = undefined;
   this.txtTitle = undefined;
-  this.txtStatus = undefined;
+  this.txtStatusRight = undefined;
+  this.txtStatusLeft = undefined;
+  this.currentDataFrame = undefined;
+  this.currentDataFrameSlider = undefined;
   this.stimRound = undefined;
+  this.stimRoundPostLinkList = undefined;
 
   this.init = function() {
     this.cells = [];
+    this.stimRoundPostLinkList = myNets[0].cells;
     let diameter = (this.width / 10) * 0.8;
     let leftOffset = 4;
     let xGap = 170;
@@ -25,7 +30,7 @@ function Net(x,y,width,height,cellTotal,color) {
       if (i === 1) { off = leftOffset*12*1; }
       if (i === 2) { off = leftOffset*12*2; }
       let newCell = new Cell(   /*   x    */  this.x + diameter + off,
-                                /*   y    */  (this.y + diameter/2) + (diameter*1.4) + ((diameter*i) + (yGap*i)),
+                                /*   y    */  (this.y + diameter/2 + 40) + (diameter*1.4) + ((diameter*i) + (yGap*i)),
                                 /* radius */  diameter/2,
                                 /* color  */  this.color,
                                 /* index  */  curIndex
@@ -40,7 +45,7 @@ function Net(x,y,width,height,cellTotal,color) {
       if (i === 2) { off = leftOffset*12*2; }
       if (i === 3) { off = leftOffset*12*1; }
       let newCell = new Cell(   /*   x    */  (this.width / 2) + (diameter/2) + off,
-                                /*   y    */  (this.y + diameter/2) + (diameter) + ((diameter*i) + (yGap*i)),
+                                /*   y    */  (this.y + diameter/2 + 40) + (diameter) + ((diameter*i) + (yGap*i)),
                                 /* radius */  diameter/2,
                                 /* color  */  this.color,
                                 /* index  */  curIndex
@@ -51,7 +56,7 @@ function Net(x,y,width,height,cellTotal,color) {
     }
     for (let i = 0; i < 1; i++) { // right
       let newCell = new Cell(   /*   x    */  (this.x + this.width) - diameter - leftOffset,
-                                /*   y    */  (this.height / 2) + (diameter/2),
+                                /*   y    */  (this.height / 2 + 40) + (diameter/2),
                                 /* radius */  diameter/2,
                                 /* color  */  this.color,
                                 /* index  */  curIndex
@@ -69,40 +74,70 @@ function Net(x,y,width,height,cellTotal,color) {
                                 /* color    */  "black",
                                 /* text     */  "Net Index: 0"
                                 );
-    let statusFontSize = 20;
-    this.txtStatus = new TxtBox( /*  x      */  canW-200,
-                                /*   y      */  40,
-                                /* fontSize */  statusFontSize,
-                                /* font     */  (""+statusFontSize.toString()+"px bold courier"),  // [font style][font weight][font size][font face]
-                                /* color    */  "black",
-                                /* text     */  "Status"+"\n"+"-prop 1\n"
-                                );
     // TxtGroup(x,y,height,width,font,color="black")
-    this.txtStatus = new TxtGroup(  /* x      */  canW - 202,
-                                    /* y      */  2,
-                                    /* height */  200,
-                                    /* width  */  200,
-                                    /* font   */  "20px courier",
-                                    /* color  */  "blue"
+    this.txtStatusRight = new TxtGroup( /* x      */  canW - 202,
+                                        /* y      */  2,
+                                        /* width  */  200,
+                                        /* height */  140,
+                                        /* font   */  "16px Ariel",
+                                        /* color  */  "blue"
     );
-    this.txtStatus.init();
-    this.txtStatus.addLine("Need Stimulus");
+    this.txtStatusRight.init();
+    this.txtStatusRight.addLine("Need Stimulus");
+    this.txtStatusLeft = new TxtGroup( /* x       */  2,
+                                        /* y      */  2,
+                                        /* width  */  200,
+                                        /* height */  140,
+                                        /* font   */  "16px Ariel",
+                                        /* color  */  "blue"
+    );
+    this.txtStatusLeft.init();
+    this.txtStatusLeft.addLine("Need Stimulus");
   };
 
   this.loadNetStim = function() {
-    this.stimRound = myStim.dataSetRow_0.dataFrame_0.stimulusRound_1;
-    this.txtStatus.clear();
-    this.txtStatus.addLine("DataSetRow: 0");
-    this.txtStatus.addLine("DataFrame: 0");
-    this.txtStatus.addLine("StimRound: 1");
+    this.currentDataFrame = myStim.dataSetRow_0.dataFrame_0;
+    this.txtStatusRight.clear();
+    this.txtStatusRight.addLine("DataSetRow: 0");
+    this.txtStatusRight.addLine("DataFrame: 0");
+    this.txtStatusRight.addLine("StimRound: 1");
+    this.buildDataFrameInterface();
+    this.buildPostLinks();
+  };
+
+  this.buildPostLinks = function() {
+    for (let i = 0; i < this.stimRoundPostLinkList.length; i++) {
+      this.cells[i].loadPostLinks(this.stimRoundPostLinkList[i]);
+      // console.log("this.stimRoundPostLinkList[i] = ", this.stimRoundPostLinkList[i]);
+    }
+  };
+
+  this.buildDataFrameInterface = function() {
+    console.log('building data frame interface');
+    // Slider(x,y,width,height,nodeTotal)
+    let newSlider = new Slider( /* x         */  (canW-504)/2,
+                                /* y         */  40,
+                                /* width     */  504,
+                                /* height    */  60,
+                                /* nodeTotal */  8,
+                                /* pColor    */  this.color
+                              );
+    this.currentDataFrameSlider = newSlider;
   };
 
   this.draw = function() {
-    for (var i = 0; i < this.cells.length; i++) {
+    if (this.stimRoundPostLinkList !== undefined) {
+      for (let i = 0; i < this.cells.length; i++) {
+        this.cells[i].drawLinks();
+      }
+    }
+    for (let i = 0; i < this.cells.length; i++) {
       this.cells[i].draw();
     }
     this.txtTitle.draw();
-    this.txtStatus.draw();
+    this.txtStatusLeft.draw();
+    this.txtStatusRight.draw();
+    if (this.currentDataFrameSlider !== undefined) { this.currentDataFrameSlider.draw(); }
   };
 
   this.update = function() {
@@ -112,7 +147,9 @@ function Net(x,y,width,height,cellTotal,color) {
 
 
 
-
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 function Cell(x,y,rad,color,ind) {
   this.x = x;
   this.y = y;
@@ -123,6 +160,7 @@ function Cell(x,y,rad,color,ind) {
   this.txt = undefined;
   this.index = ind;
   this.hover = false;
+  this.curPostLinks = undefined;
 
   this.init = function() {
     let tmpFontSize = 16;
@@ -142,6 +180,34 @@ function Cell(x,y,rad,color,ind) {
     this.txt.y = this.y+3;
   };
 
+  this.loadPostLinks = function(cellsObj) {
+    this.curPostLinks = [];
+    let linksObj = cellsObj.postLinks;
+    for (var i = 0; i < linksObj.length; i++) {
+      this.curPostLinks.push(linksObj[i].postCellIndex);
+    }
+    // console.log('this.curPostLinks = ', this.curPostLinks);
+  };
+
+  this.drawLinks = function() {
+    // DRAW POST LINKS
+    if (this.curPostLinks !== undefined) { // draw each post link
+      for (var i = 0; i < this.curPostLinks.length; i++) {
+        let postIndex = this.curPostLinks[i];
+        let cell1x = this.x;
+        let cell1y = this.y;
+        let cell2x = myGame.pop[0].cells[postIndex].x;
+        let cell2y = myGame.pop[0].cells[postIndex].y;
+        ctx.beginPath();
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = 'black';
+        ctx.moveTo(cell1x,cell1y);
+        ctx.lineTo(cell2x,cell2y);
+        ctx.stroke();
+      }
+    }
+  };
+
   this.draw = function() {
     // context.arc(x,y,r,sAngle,eAngle,counterclockwise);
     // sAngle = start angle, eAngle = end angle....   uses radiens
@@ -155,59 +221,19 @@ function Cell(x,y,rad,color,ind) {
     ctx.stroke();
     // index at center of cell
     this.txt.draw();
-    // hitbox
+    // HITBOXES
     // ctx.save();
     // ctx.translate(this.x,this.y);
     // ctx.beginPath();
     // ctx.strokeStyle = "green";
     // ctx.lineWidth = 1;
-    // ctx.moveTo(-this.rad,-this.rad);
-    // ctx.lineTo(this.rad,-this.rad);
-    // ctx.lineTo(this.rad,this.rad);
-    // ctx.lineTo(-this.rad,this.rad);
-    // ctx.lineTo(-this.rad,-this.rad);
+    // ctx.rect(-this.rad,-this.rad,this.rad*2,this.rad*2);
     // ctx.stroke();
     // ctx.restore();
-  };
+  }; // draw
 
   this.update = function() {
 
   };
 
 }
-
-
-// function Box(x,y,color,size,vel) {
-//   this.x = x;
-//   this.y = y;
-//   this.color = color;
-//   this.size =  size;
-//   this.xVel = vel;
-//   this.yVel = vel;
-//
-//   this.draw = function() {
-//     ctx.beginPath();
-//     ctx.rect(this.x,this.y,this.size,this.size);
-//     ctx.fillStyle = this.color;
-//     ctx.fill();
-//     // ctx.stroke();
-//   };
-//
-//   this.update = function() {
-//     if ((this.xVel > 0) && ((this.x + this.size + this.xVel) > canW)) {
-//       this.xVel *= -1;
-//     }
-//     if ((this.xVel < 0) && ((this.x + this.xVel) < 0)) {
-//       this.xVel *= -1;
-//     }
-//     if ((this.yVel > 0) && ((this.y + this.size + this.yVel) > canH)) {
-//       this.yVel *= -1;
-//     }
-//     if ((this.yVel < 0) && ((this.y + this.yVel) < 0)) {
-//       this.yVel *= -1;
-//     }
-//     this.x += this.xVel;
-//     this.y += this.yVel;
-//   };
-//
-// } // end box
