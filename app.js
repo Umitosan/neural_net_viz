@@ -381,6 +381,7 @@ $(document).ready(function() {
       myGame.mode = 'sim';
       console.log('mode now sim');
       myGame.buildNets();
+      myGame.loadStimulus();
       State.gameStarted = true;
       $('#mode-current-status')[0].innerText = 'simulate';
       let v = $('#speed-slider').val();
@@ -576,6 +577,7 @@ $(document).ready(function() {
           errRight.innerText = "File Good";
           $("#err-msg-right").css('color', 'blue');
           outputDivRight.innerHTML = finalJsonStrHTML;
+          myGame.loadStimulus(); // add simulus box info
         } else {
           errRight.innerText = "Bad File: no Net_0 found!";
           outputDivRight.innerHTML = "No stimulus / bad format";

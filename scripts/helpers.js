@@ -43,23 +43,6 @@ function randColor(type,lowBound,highBound,alphaSwitch = null) { // default alph
   }
 }
 
-function TxtBox(x,y,fontSize,font,color,text) {
-  // aprox center for cell's txt TxtBox
-  this.x = x;
-  this.y = y;
-  this.fontSize = fontSize;
-  this.font = font;
-  this.color = color;
-  this.text = text;
-
-  this.draw = function() {
-    // black number
-    ctx.font = this.font;
-    ctx.fillStyle = this.color;
-    ctx.fillText(this.text,this.x,this.y);
-  };
-}
-
 
 // Changes XML to JSON
 function xmlToJson(xml) {

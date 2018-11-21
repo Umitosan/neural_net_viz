@@ -10,6 +10,8 @@ function Net(x,y,width,height,cellTotal,color) {
   this.color = color;
   this.cells = undefined;
   this.txtTitle = undefined;
+  this.txtStatus = undefined;
+  this.stimRound = undefined;
 
   this.init = function() {
     this.cells = [];
@@ -67,30 +69,46 @@ function Net(x,y,width,height,cellTotal,color) {
                                 /* color    */  "black",
                                 /* text     */  "Net Index: 0"
                                 );
+    let statusFontSize = 20;
+    this.txtStatus = new TxtBox( /*  x      */  canW-200,
+                                /*   y      */  40,
+                                /* fontSize */  statusFontSize,
+                                /* font     */  (""+statusFontSize.toString()+"px bold courier"),  // [font style][font weight][font size][font face]
+                                /* color    */  "black",
+                                /* text     */  "Status"+"\n"+"-prop 1\n"
+                                );
+    // TxtGroup(x,y,height,width,font,color="black")
+    this.txtStatus = new TxtGroup(  /* x      */  canW - 202,
+                                    /* y      */  2,
+                                    /* height */  200,
+                                    /* width  */  200,
+                                    /* font   */  "20px courier",
+                                    /* color  */  "blue"
+    );
+    this.txtStatus.init();
+    this.txtStatus.addLine("Need Stimulus");
+  };
+
+  this.loadNetStim = function() {
+    this.stimRound = myStim.dataSetRow_0.dataFrame_0.stimulusRound_1;
+    this.txtStatus.clear();
+    this.txtStatus.addLine("DataSetRow: 0");
+    this.txtStatus.addLine("DataFrame: 0");
+    this.txtStatus.addLine("StimRound: 1");
   };
 
   this.draw = function() {
     for (var i = 0; i < this.cells.length; i++) {
       this.cells[i].draw();
     }
-    ctx.beginPath();
-    ctx.strokeStyle = this.color;
-    ctx.moveTo(this.x,this.y);
-    ctx.lineTo(this.x+this.width,this.y);
-    ctx.lineTo(this.x+this.width,this.y+this.height);
-    ctx.lineTo(this.x,this.y+this.height);
-    ctx.lineTo(this.x,this.y);
-    ctx.stroke();
     this.txtTitle.draw();
+    this.txtStatus.draw();
   };
 
   this.update = function() {
-    // for (var i = 0; i < this.cells.length; i++) {
-    //   this.cells[i].update();
-    // }
   };
 
-}
+} // Net
 
 
 

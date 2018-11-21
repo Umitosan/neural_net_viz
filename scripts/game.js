@@ -51,6 +51,12 @@ function Game(updateDur) {
     }
   };
 
+  this.loadStimulus = function() {
+    if ( (this.pop !== undefined) && (myStim !== undefined) ) {
+      this.pop[0].loadNetStim();
+    }
+  };
+
   this.tryClickNet = function(mouseX,mouseY) {
     for (let i = 0; i < this.pop[0].cells.length; i++) {
       let cell = this.pop[0].cells[i];
