@@ -49,6 +49,11 @@ function Game(updateDur) {
     }
   };
 
+  this.tryLeftClick = function(mouseX,mouseY) {
+    this.tryClickNet(mouseX,mouseY);
+    this.pop[0].currentDataFrameSlider.checkNodeClicked(mouseX,mouseY);
+  };
+
   this.tryClickNet = function(mouseX,mouseY) {
     for (let i = 0; i < this.pop[0].cells.length; i++) {
       let cell = this.pop[0].cells[i];

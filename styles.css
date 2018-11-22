@@ -237,6 +237,8 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 .file-group input {
   margin-top: 10px;
 }
+#file-in-left, #file-in-right {
+}
 .err-msg {
   color: red;
   font-weight: bold;

@@ -122,6 +122,7 @@ function Net(x,y,width,height,cellTotal,color) {
                                 /* nodeTotal */  8,
                                 /* pColor    */  this.color
                               );
+    newSlider.init();                          
     this.currentDataFrameSlider = newSlider;
   };
 
