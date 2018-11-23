@@ -1,0 +1,2646 @@
+{
+  "Population": {
+    "totalNetCount": "6",
+    "inputCellCount": "4",
+    "outputCellCount": "10",
+    "totalCellCount": "20",
+    "maxRoundsPerStimulate": "100",
+    "dataSetColumnCount": "1",
+    "dataSetRowCount": "1",
+    "totalDataFrameCount": "9",
+    "calculatedInputsCount": "2",
+    "fixedInputs": {
+      "name": "random_bool_sequence",
+      "columns": {
+        "c_0": {
+          "name": "values",
+          "frameLength": "2",
+          "shiftLength": "1"
+        }
+      },
+      "rows": {
+        "r_0": {
+          "name": "row_1",
+          "dataSets": {
+            "ds_0": {
+              "dataPoints": {
+                "dp_0": "0",
+                "dp_1": "3",
+                "dp_2": "6",
+                "dp_3": "9",
+                "dp_4": "12",
+                "dp_5": "15",
+                "dp_6": "18",
+                "dp_7": "21",
+                "dp_8": "24",
+                "dp_9": "27",
+                "dp_10": "30"
+              }
+            }
+          }
+        }
+      }
+    },
+    "calculatedInputs": {
+      "ci_0": {
+        "name": "round_count",
+        "defaultValue": "0"
+      },
+      "ci_1": {
+        "name": "tracked_score",
+        "defaultValue": "0"
+      }
+    },
+    "outputs": {
+      "o_0": {
+        "name": "guess1",
+        "maxActivations": "3"
+      },
+      "o_1": {
+        "name": "guess2",
+        "maxActivations": "3"
+      },
+      "o_2": {
+        "name": "guess3",
+        "maxActivations": "3"
+      },
+      "o_3": {
+        "name": "guess4",
+        "maxActivations": "3"
+      },
+      "o_4": {
+        "name": "guess5",
+        "maxActivations": "3"
+      },
+      "o_5": {
+        "name": "guess6",
+        "maxActivations": "3"
+      },
+      "o_6": {
+        "name": "guess7",
+        "maxActivations": "3"
+      },
+      "o_7": {
+        "name": "guess8",
+        "maxActivations": "3"
+      },
+      "o_8": {
+        "name": "guess9",
+        "maxActivations": "3"
+      },
+      "o_9": {
+        "name": "guess10",
+        "maxActivations": "3"
+      }
+    },
+    "evaluationCriteriaExpressions": { "ece_0": "tracked_score" },
+    "calculatedInputUpdateExpressions": {
+      "ciue_0": "round_count+1",
+      "ciue_1": "tracked_score+((guess1*3+guess2*3+guess3*3+guess4*3+guess5*3+guess6*3+guess7*3+guess8*3+guess9*3+guess10*3)-values[1])^2"
+    },
+    "cellControls": {
+      "cc_0": {
+        "linksCoeffCenter": "1",
+        "internalSpread": "1",
+        "broadcastSpread": "1",
+        "linksCoeffSpread": "1",
+        "decayRateSpread": "1",
+        "refractoryPeriodSpread": "1",
+        "broadcastSwitchSignFreq": "0.01",
+        "linksSwitchSignFreq": "0.01"
+      },
+      "cc_1": {
+        "linksCoeffCenter": "1",
+        "internalSpread": "1",
+        "broadcastSpread": "1",
+        "linksCoeffSpread": "1",
+        "decayRateSpread": "1",
+        "refractoryPeriodSpread": "1",
+        "broadcastSwitchSignFreq": "0.01",
+        "linksSwitchSignFreq": "0.01"
+      },
+      "cc_2": {
+        "linksCoeffCenter": "1",
+        "internalSpread": "1",
+        "broadcastSpread": "1",
+        "linksCoeffSpread": "1",
+        "decayRateSpread": "1",
+        "refractoryPeriodSpread": "1",
+        "broadcastSwitchSignFreq": "0.01",
+        "linksSwitchSignFreq": "0.01"
+      },
+      "cc_3": {
+        "linksCoeffCenter": "1",
+        "internalSpread": "1",
+        "broadcastSpread": "1",
+        "linksCoeffSpread": "1",
+        "decayRateSpread": "1",
+        "refractoryPeriodSpread": "1",
+        "broadcastSwitchSignFreq": "0.01",
+        "linksSwitchSignFreq": "0.01"
+      },
+      "cc_4": {
+        "linksCoeffCenter": "1",
+        "internalSpread": "1",
+        "broadcastSpread": "1",
+        "linksCoeffSpread": "1",
+        "decayRateSpread": "1",
+        "refractoryPeriodSpread": "1",
+        "broadcastSwitchSignFreq": "0.01",
+        "linksSwitchSignFreq": "0.01"
+      },
+      "cc_5": {
+        "linksCoeffCenter": "1",
+        "internalSpread": "1",
+        "broadcastSpread": "1",
+        "linksCoeffSpread": "1",
+        "decayRateSpread": "1",
+        "refractoryPeriodSpread": "1",
+        "broadcastSwitchSignFreq": "0.01",
+        "linksSwitchSignFreq": "0.01"
+      },
+      "cc_6": {
+        "linksCoeffCenter": "1",
+        "internalSpread": "1",
+        "broadcastSpread": "1",
+        "linksCoeffSpread": "1",
+        "decayRateSpread": "1",
+        "refractoryPeriodSpread": "1",
+        "broadcastSwitchSignFreq": "0.01",
+        "linksSwitchSignFreq": "0.01"
+      },
+      "cc_7": {
+        "linksCoeffCenter": "1",
+        "internalSpread": "1",
+        "broadcastSpread": "1",
+        "linksCoeffSpread": "1",
+        "decayRateSpread": "1",
+        "refractoryPeriodSpread": "1",
+        "broadcastSwitchSignFreq": "0.01",
+        "linksSwitchSignFreq": "0.01"
+      },
+      "cc_8": {
+        "linksCoeffCenter": "1",
+        "internalSpread": "1",
+        "broadcastSpread": "1",
+        "linksCoeffSpread": "1",
+        "decayRateSpread": "1",
+        "refractoryPeriodSpread": "1",
+        "broadcastSwitchSignFreq": "0.01",
+        "linksSwitchSignFreq": "0.01"
+      },
+      "cc_9": {
+        "linksCoeffCenter": "1",
+        "internalSpread": "1",
+        "broadcastSpread": "1",
+        "linksCoeffSpread": "1",
+        "decayRateSpread": "1",
+        "refractoryPeriodSpread": "1",
+        "broadcastSwitchSignFreq": "0.01",
+        "linksSwitchSignFreq": "0.01"
+      },
+      "cc_10": {
+        "linksCoeffCenter": "1",
+        "internalSpread": "1",
+        "broadcastSpread": "1",
+        "linksCoeffSpread": "1",
+        "decayRateSpread": "1",
+        "refractoryPeriodSpread": "1",
+        "broadcastSwitchSignFreq": "0.01",
+        "linksSwitchSignFreq": "0.01"
+      },
+      "cc_11": {
+        "linksCoeffCenter": "1",
+        "internalSpread": "1",
+        "broadcastSpread": "1",
+        "linksCoeffSpread": "1",
+        "decayRateSpread": "1",
+        "refractoryPeriodSpread": "1",
+        "broadcastSwitchSignFreq": "0.01",
+        "linksSwitchSignFreq": "0.01"
+      },
+      "cc_12": {
+        "linksCoeffCenter": "1",
+        "internalSpread": "1",
+        "broadcastSpread": "1",
+        "linksCoeffSpread": "1",
+        "decayRateSpread": "1",
+        "refractoryPeriodSpread": "1",
+        "broadcastSwitchSignFreq": "0.01",
+        "linksSwitchSignFreq": "0.01"
+      },
+      "cc_13": {
+        "linksCoeffCenter": "1",
+        "internalSpread": "1",
+        "broadcastSpread": "1",
+        "linksCoeffSpread": "1",
+        "decayRateSpread": "1",
+        "refractoryPeriodSpread": "1",
+        "broadcastSwitchSignFreq": "0.01",
+        "linksSwitchSignFreq": "0.01"
+      },
+      "cc_14": {
+        "linksCoeffCenter": "1",
+        "internalSpread": "1",
+        "broadcastSpread": "1",
+        "linksCoeffSpread": "1",
+        "decayRateSpread": "1",
+        "refractoryPeriodSpread": "1",
+        "broadcastSwitchSignFreq": "0.01",
+        "linksSwitchSignFreq": "0.01"
+      },
+      "cc_15": {
+        "linksCoeffCenter": "1",
+        "internalSpread": "1",
+        "broadcastSpread": "1",
+        "linksCoeffSpread": "1",
+        "decayRateSpread": "1",
+        "refractoryPeriodSpread": "1",
+        "broadcastSwitchSignFreq": "0.01",
+        "linksSwitchSignFreq": "0.01"
+      },
+      "cc_16": {
+        "linksCoeffCenter": "1",
+        "internalSpread": "1",
+        "broadcastSpread": "1",
+        "linksCoeffSpread": "1",
+        "decayRateSpread": "1",
+        "refractoryPeriodSpread": "1",
+        "broadcastSwitchSignFreq": "0.01",
+        "linksSwitchSignFreq": "0.01"
+      },
+      "cc_17": {
+        "linksCoeffCenter": "1",
+        "internalSpread": "1",
+        "broadcastSpread": "1",
+        "linksCoeffSpread": "1",
+        "decayRateSpread": "1",
+        "refractoryPeriodSpread": "1",
+        "broadcastSwitchSignFreq": "0.01",
+        "linksSwitchSignFreq": "0.01"
+      },
+      "cc_18": {
+        "linksCoeffCenter": "1",
+        "internalSpread": "1",
+        "broadcastSpread": "1",
+        "linksCoeffSpread": "1",
+        "decayRateSpread": "1",
+        "refractoryPeriodSpread": "1",
+        "broadcastSwitchSignFreq": "0.01",
+        "linksSwitchSignFreq": "0.01"
+      },
+      "cc_19": {
+        "linksCoeffCenter": "1",
+        "internalSpread": "1",
+        "broadcastSpread": "1",
+        "linksCoeffSpread": "1",
+        "decayRateSpread": "1",
+        "refractoryPeriodSpread": "1",
+        "broadcastSwitchSignFreq": "0.01",
+        "linksSwitchSignFreq": "0.01"
+      }
+    },
+    "nets": {
+      "n_0": {
+        "cells": {
+          "c_0": {
+            "internalCoeff": "1.7214",
+            "broadcastCoeff": "1.002",
+            "decayRate": "0.28654",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "13",
+                "linkCoeff": "1"
+              },
+              "pl_1": {
+                "postCellIndex": "14",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "18",
+                "linkCoeff": "1.4068"
+              }
+            }
+          },
+          "c_1": {
+            "internalCoeff": "0.9085",
+            "broadcastCoeff": "1.2925",
+            "decayRate": "0.3277",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "2",
+                "linkCoeff": "1.0327"
+              },
+              "pl_1": {
+                "postCellIndex": "10",
+                "linkCoeff": "0.7779"
+              },
+              "pl_2": {
+                "postCellIndex": "11",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_2": {
+            "internalCoeff": "1.1385",
+            "broadcastCoeff": "1.152",
+            "decayRate": "0.22326",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "4",
+                "linkCoeff": "0.3887"
+              },
+              "pl_1": {
+                "postCellIndex": "7",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "11",
+                "linkCoeff": "0.6596"
+              },
+              "pl_3": {
+                "postCellIndex": "13",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_3": {
+            "internalCoeff": "0.1028",
+            "broadcastCoeff": "0.3914",
+            "decayRate": "0.25",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "0",
+                "linkCoeff": "1"
+              },
+              "pl_1": {
+                "postCellIndex": "4",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "8",
+                "linkCoeff": "1"
+              },
+              "pl_3": {
+                "postCellIndex": "9",
+                "linkCoeff": "1"
+              },
+              "pl_4": {
+                "postCellIndex": "10",
+                "linkCoeff": "1"
+              },
+              "pl_5": {
+                "postCellIndex": "11",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_4": {
+            "internalCoeff": "1.5104",
+            "broadcastCoeff": "0.379",
+            "decayRate": "0.21119",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "5",
+                "linkCoeff": "1.9187"
+              },
+              "pl_1": {
+                "postCellIndex": "7",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_5": {
+            "internalCoeff": "1.39",
+            "broadcastCoeff": "1.4326",
+            "decayRate": "0.19219",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "6",
+                "linkCoeff": "1.0969"
+              },
+              "pl_1": {
+                "postCellIndex": "8",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "9",
+                "linkCoeff": "1"
+              },
+              "pl_3": {
+                "postCellIndex": "15",
+                "linkCoeff": "0.8353"
+              }
+            }
+          },
+          "c_6": {
+            "internalCoeff": "1.0855",
+            "broadcastCoeff": "0.9785",
+            "decayRate": "0.39029",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "9",
+                "linkCoeff": "1.3213"
+              }
+            }
+          },
+          "c_7": {
+            "internalCoeff": "1.2054",
+            "broadcastCoeff": "1.9001",
+            "decayRate": "0.11453",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "1",
+                "linkCoeff": "0.5328"
+              },
+              "pl_1": {
+                "postCellIndex": "2",
+                "linkCoeff": "-0.252"
+              },
+              "pl_2": {
+                "postCellIndex": "6",
+                "linkCoeff": "1"
+              },
+              "pl_3": {
+                "postCellIndex": "16",
+                "linkCoeff": "1"
+              },
+              "pl_4": {
+                "postCellIndex": "17",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_8": {
+            "internalCoeff": "1.1077",
+            "broadcastCoeff": "1.2147",
+            "decayRate": "0.18089",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "14",
+                "linkCoeff": "1.4904"
+              }
+            }
+          },
+          "c_9": {
+            "internalCoeff": "0.5174",
+            "broadcastCoeff": "-0.2925",
+            "decayRate": "0.20682",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "17",
+                "linkCoeff": "0.9224"
+              }
+            }
+          },
+          "c_10": {
+            "internalCoeff": "1.5357",
+            "broadcastCoeff": "0.7461",
+            "decayRate": "0.30505",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "3",
+                "linkCoeff": "1.1748"
+              },
+              "pl_1": {
+                "postCellIndex": "4",
+                "linkCoeff": "1.2749"
+              },
+              "pl_2": {
+                "postCellIndex": "7",
+                "linkCoeff": "1"
+              },
+              "pl_3": {
+                "postCellIndex": "17",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_11": {
+            "internalCoeff": "0.8964",
+            "broadcastCoeff": "1.3194",
+            "decayRate": "0.25",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "15",
+                "linkCoeff": "1"
+              },
+              "pl_1": {
+                "postCellIndex": "16",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_12": {
+            "internalCoeff": "1.1512",
+            "broadcastCoeff": "0.6035",
+            "decayRate": "0.21216",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "2",
+                "linkCoeff": "1.3403"
+              },
+              "pl_1": {
+                "postCellIndex": "11",
+                "linkCoeff": "0.7403"
+              }
+            }
+          },
+          "c_13": {
+            "internalCoeff": "1.3555",
+            "broadcastCoeff": "0.6824",
+            "decayRate": "0.23678",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "2",
+                "linkCoeff": "0.863"
+              },
+              "pl_1": {
+                "postCellIndex": "3",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_14": {
+            "internalCoeff": "1.3612",
+            "broadcastCoeff": "1.9803",
+            "decayRate": "0.2153",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "2",
+                "linkCoeff": "1"
+              },
+              "pl_1": {
+                "postCellIndex": "13",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "16",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_15": {
+            "internalCoeff": "0.6502",
+            "broadcastCoeff": "1.0839",
+            "decayRate": "0.18821",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "1",
+                "linkCoeff": "1"
+              },
+              "pl_1": {
+                "postCellIndex": "14",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "17",
+                "linkCoeff": "1.2329"
+              },
+              "pl_3": {
+                "postCellIndex": "18",
+                "linkCoeff": "1"
+              },
+              "pl_4": {
+                "postCellIndex": "19",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_16": {
+            "internalCoeff": "0.6782",
+            "broadcastCoeff": "1.7873",
+            "decayRate": "0.27487",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "1",
+                "linkCoeff": "0.7009"
+              }
+            }
+          },
+          "c_17": {
+            "internalCoeff": "1.2521",
+            "broadcastCoeff": "0.4235",
+            "decayRate": "0.10519",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "1",
+                "linkCoeff": "1.2836"
+              },
+              "pl_1": {
+                "postCellIndex": "2",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "3",
+                "linkCoeff": "1.1183"
+              },
+              "pl_3": {
+                "postCellIndex": "16",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_18": {
+            "internalCoeff": "1.4172",
+            "broadcastCoeff": "1.763",
+            "decayRate": "0.20383",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "16",
+                "linkCoeff": "1.1679"
+              }
+            }
+          },
+          "c_19": {
+            "internalCoeff": "1.2717",
+            "broadcastCoeff": "1.4652",
+            "decayRate": "0.12777",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "3",
+                "linkCoeff": "0.9194"
+              },
+              "pl_1": {
+                "postCellIndex": "15",
+                "linkCoeff": "1"
+              }
+            }
+          }
+        }
+      },
+      "n_1": {
+        "cells": {
+          "c_0": {
+            "internalCoeff": "1.7214",
+            "broadcastCoeff": "1.002",
+            "decayRate": "0.28654",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "13",
+                "linkCoeff": "1"
+              },
+              "pl_1": {
+                "postCellIndex": "14",
+                "linkCoeff": "1.4631"
+              },
+              "pl_2": {
+                "postCellIndex": "18",
+                "linkCoeff": "1.4068"
+              }
+            }
+          },
+          "c_1": {
+            "internalCoeff": "0.9085",
+            "broadcastCoeff": "1.2925",
+            "decayRate": "0.3277",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "2",
+                "linkCoeff": "1.0327"
+              },
+              "pl_1": {
+                "postCellIndex": "10",
+                "linkCoeff": "0.7779"
+              },
+              "pl_2": {
+                "postCellIndex": "11",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_2": {
+            "internalCoeff": "1.1385",
+            "broadcastCoeff": "1.152",
+            "decayRate": "0.22326",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "4",
+                "linkCoeff": "0.3887"
+              },
+              "pl_1": {
+                "postCellIndex": "7",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "11",
+                "linkCoeff": "0.6596"
+              },
+              "pl_3": {
+                "postCellIndex": "13",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_3": {
+            "internalCoeff": "0.1028",
+            "broadcastCoeff": "0.3914",
+            "decayRate": "0.25",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "0",
+                "linkCoeff": "1"
+              },
+              "pl_1": {
+                "postCellIndex": "4",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "8",
+                "linkCoeff": "1"
+              },
+              "pl_3": {
+                "postCellIndex": "9",
+                "linkCoeff": "1"
+              },
+              "pl_4": {
+                "postCellIndex": "10",
+                "linkCoeff": "1"
+              },
+              "pl_5": {
+                "postCellIndex": "11",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_4": {
+            "internalCoeff": "1.5104",
+            "broadcastCoeff": "0.379",
+            "decayRate": "0.21119",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "5",
+                "linkCoeff": "1.9187"
+              },
+              "pl_1": {
+                "postCellIndex": "7",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "8",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_5": {
+            "internalCoeff": "1.39",
+            "broadcastCoeff": "1.4326",
+            "decayRate": "0.16996",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "6",
+                "linkCoeff": "1.0969"
+              },
+              "pl_1": {
+                "postCellIndex": "8",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "9",
+                "linkCoeff": "1"
+              },
+              "pl_3": {
+                "postCellIndex": "15",
+                "linkCoeff": "0.8353"
+              }
+            }
+          },
+          "c_6": {
+            "internalCoeff": "0.9351",
+            "broadcastCoeff": "0.9785",
+            "decayRate": "0.39029",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "9",
+                "linkCoeff": "1.3213"
+              }
+            }
+          },
+          "c_7": {
+            "internalCoeff": "1.2054",
+            "broadcastCoeff": "1.9001",
+            "decayRate": "0.11453",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "1",
+                "linkCoeff": "0.5328"
+              },
+              "pl_1": {
+                "postCellIndex": "2",
+                "linkCoeff": "-0.252"
+              },
+              "pl_2": {
+                "postCellIndex": "6",
+                "linkCoeff": "1"
+              },
+              "pl_3": {
+                "postCellIndex": "16",
+                "linkCoeff": "1"
+              },
+              "pl_4": {
+                "postCellIndex": "17",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_8": {
+            "internalCoeff": "1.1077",
+            "broadcastCoeff": "1.2147",
+            "decayRate": "0.18089",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "14",
+                "linkCoeff": "1.4904"
+              }
+            }
+          },
+          "c_9": {
+            "internalCoeff": "0.5174",
+            "broadcastCoeff": "-0.2528",
+            "decayRate": "0.20682",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "17",
+                "linkCoeff": "0.9224"
+              }
+            }
+          },
+          "c_10": {
+            "internalCoeff": "1.5357",
+            "broadcastCoeff": "0.7461",
+            "decayRate": "0.30505",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "3",
+                "linkCoeff": "1.1748"
+              },
+              "pl_1": {
+                "postCellIndex": "4",
+                "linkCoeff": "1.2749"
+              },
+              "pl_2": {
+                "postCellIndex": "7",
+                "linkCoeff": "1"
+              },
+              "pl_3": {
+                "postCellIndex": "17",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_11": {
+            "internalCoeff": "0.8964",
+            "broadcastCoeff": "1.3194",
+            "decayRate": "0.25",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "15",
+                "linkCoeff": "1"
+              },
+              "pl_1": {
+                "postCellIndex": "16",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_12": {
+            "internalCoeff": "1.1512",
+            "broadcastCoeff": "0.6035",
+            "decayRate": "0.21216",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "2",
+                "linkCoeff": "1.3403"
+              },
+              "pl_1": {
+                "postCellIndex": "11",
+                "linkCoeff": "0.7403"
+              }
+            }
+          },
+          "c_13": {
+            "internalCoeff": "1.3555",
+            "broadcastCoeff": "0.6824",
+            "decayRate": "0.23678",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "2",
+                "linkCoeff": "0.863"
+              },
+              "pl_1": {
+                "postCellIndex": "3",
+                "linkCoeff": "1.3849"
+              }
+            }
+          },
+          "c_14": {
+            "internalCoeff": "1.3612",
+            "broadcastCoeff": "1.9803",
+            "decayRate": "0.2153",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "2",
+                "linkCoeff": "1"
+              },
+              "pl_1": {
+                "postCellIndex": "8",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "13",
+                "linkCoeff": "1.258"
+              },
+              "pl_3": {
+                "postCellIndex": "16",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_15": {
+            "internalCoeff": "0.6502",
+            "broadcastCoeff": "0.928",
+            "decayRate": "0.18821",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "1",
+                "linkCoeff": "1"
+              },
+              "pl_1": {
+                "postCellIndex": "14",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "17",
+                "linkCoeff": "1.2329"
+              },
+              "pl_3": {
+                "postCellIndex": "18",
+                "linkCoeff": "1"
+              },
+              "pl_4": {
+                "postCellIndex": "19",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_16": {
+            "internalCoeff": "0.6782",
+            "broadcastCoeff": "1.7873",
+            "decayRate": "0.27487",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "1",
+                "linkCoeff": "0.7009"
+              }
+            }
+          },
+          "c_17": {
+            "internalCoeff": "1.2521",
+            "broadcastCoeff": "0.4235",
+            "decayRate": "0.10734",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "1",
+                "linkCoeff": "1.2836"
+              },
+              "pl_1": {
+                "postCellIndex": "2",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "3",
+                "linkCoeff": "0.6394"
+              },
+              "pl_3": {
+                "postCellIndex": "16",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_18": {
+            "internalCoeff": "1.1183",
+            "broadcastCoeff": "1.763",
+            "decayRate": "0.20383",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "16",
+                "linkCoeff": "1.1679"
+              }
+            }
+          },
+          "c_19": {
+            "internalCoeff": "1.2717",
+            "broadcastCoeff": "1.4652",
+            "decayRate": "0.12777",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "3",
+                "linkCoeff": "0.9194"
+              },
+              "pl_1": {
+                "postCellIndex": "15",
+                "linkCoeff": "1"
+              }
+            }
+          }
+        }
+      },
+      "n_2": {
+        "cells": {
+          "c_0": {
+            "internalCoeff": "1.7214",
+            "broadcastCoeff": "1.002",
+            "decayRate": "0.28654",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "13",
+                "linkCoeff": "1"
+              },
+              "pl_1": {
+                "postCellIndex": "14",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "18",
+                "linkCoeff": "1.4068"
+              }
+            }
+          },
+          "c_1": {
+            "internalCoeff": "0.9085",
+            "broadcastCoeff": "1.2925",
+            "decayRate": "0.3277",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "2",
+                "linkCoeff": "1.0327"
+              },
+              "pl_1": {
+                "postCellIndex": "10",
+                "linkCoeff": "0.7779"
+              },
+              "pl_2": {
+                "postCellIndex": "11",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_2": {
+            "internalCoeff": "1.1385",
+            "broadcastCoeff": "1.152",
+            "decayRate": "0.22326",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "4",
+                "linkCoeff": "0.3887"
+              },
+              "pl_1": {
+                "postCellIndex": "7",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "11",
+                "linkCoeff": "0.6596"
+              },
+              "pl_3": {
+                "postCellIndex": "13",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_3": {
+            "internalCoeff": "0.1028",
+            "broadcastCoeff": "0.3914",
+            "decayRate": "0.25",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "0",
+                "linkCoeff": "1"
+              },
+              "pl_1": {
+                "postCellIndex": "8",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "9",
+                "linkCoeff": "1"
+              },
+              "pl_3": {
+                "postCellIndex": "10",
+                "linkCoeff": "1"
+              },
+              "pl_4": {
+                "postCellIndex": "11",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_4": {
+            "internalCoeff": "1.5104",
+            "broadcastCoeff": "0.379",
+            "decayRate": "0.22375",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "5",
+                "linkCoeff": "1.9187"
+              },
+              "pl_1": {
+                "postCellIndex": "7",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "8",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_5": {
+            "internalCoeff": "1.39",
+            "broadcastCoeff": "1.4326",
+            "decayRate": "0.19219",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "6",
+                "linkCoeff": "1.0969"
+              },
+              "pl_1": {
+                "postCellIndex": "8",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "9",
+                "linkCoeff": "1"
+              },
+              "pl_3": {
+                "postCellIndex": "15",
+                "linkCoeff": "0.8353"
+              }
+            }
+          },
+          "c_6": {
+            "internalCoeff": "0.7459",
+            "broadcastCoeff": "0.9785",
+            "decayRate": "0.39029",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "9",
+                "linkCoeff": "1.3213"
+              }
+            }
+          },
+          "c_7": {
+            "internalCoeff": "1.2054",
+            "broadcastCoeff": "1.9001",
+            "decayRate": "0.11453",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "1",
+                "linkCoeff": "0.5328"
+              },
+              "pl_1": {
+                "postCellIndex": "2",
+                "linkCoeff": "-0.252"
+              },
+              "pl_2": {
+                "postCellIndex": "6",
+                "linkCoeff": "1"
+              },
+              "pl_3": {
+                "postCellIndex": "16",
+                "linkCoeff": "1"
+              },
+              "pl_4": {
+                "postCellIndex": "17",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_8": {
+            "internalCoeff": "1.1077",
+            "broadcastCoeff": "1.2147",
+            "decayRate": "0.18089",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "14",
+                "linkCoeff": "1.4904"
+              }
+            }
+          },
+          "c_9": {
+            "internalCoeff": "0.5174",
+            "broadcastCoeff": "-0.2528",
+            "decayRate": "0.20682",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "17",
+                "linkCoeff": "0.9224"
+              }
+            }
+          },
+          "c_10": {
+            "internalCoeff": "1.5357",
+            "broadcastCoeff": "0.7461",
+            "decayRate": "0.26975",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "3",
+                "linkCoeff": "1.1748"
+              },
+              "pl_1": {
+                "postCellIndex": "4",
+                "linkCoeff": "1.2749"
+              },
+              "pl_2": {
+                "postCellIndex": "7",
+                "linkCoeff": "1"
+              },
+              "pl_3": {
+                "postCellIndex": "17",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_11": {
+            "internalCoeff": "0.8964",
+            "broadcastCoeff": "1.3194",
+            "decayRate": "0.25",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "15",
+                "linkCoeff": "1"
+              },
+              "pl_1": {
+                "postCellIndex": "16",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_12": {
+            "internalCoeff": "1.1512",
+            "broadcastCoeff": "0.6035",
+            "decayRate": "0.21216",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "2",
+                "linkCoeff": "1.3403"
+              },
+              "pl_1": {
+                "postCellIndex": "11",
+                "linkCoeff": "0.7403"
+              }
+            }
+          },
+          "c_13": {
+            "internalCoeff": "1.3555",
+            "broadcastCoeff": "0.6824",
+            "decayRate": "0.23678",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "2",
+                "linkCoeff": "0.863"
+              },
+              "pl_1": {
+                "postCellIndex": "3",
+                "linkCoeff": "1.3849"
+              }
+            }
+          },
+          "c_14": {
+            "internalCoeff": "1.3612",
+            "broadcastCoeff": "1.9803",
+            "decayRate": "0.2153",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "2",
+                "linkCoeff": "1"
+              },
+              "pl_1": {
+                "postCellIndex": "13",
+                "linkCoeff": "1.258"
+              },
+              "pl_2": {
+                "postCellIndex": "16",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_15": {
+            "internalCoeff": "0.6502",
+            "broadcastCoeff": "0.928",
+            "decayRate": "0.18821",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "1",
+                "linkCoeff": "1"
+              },
+              "pl_1": {
+                "postCellIndex": "14",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "17",
+                "linkCoeff": "1.2329"
+              },
+              "pl_3": {
+                "postCellIndex": "18",
+                "linkCoeff": "1"
+              },
+              "pl_4": {
+                "postCellIndex": "19",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_16": {
+            "internalCoeff": "0.6782",
+            "broadcastCoeff": "1.7873",
+            "decayRate": "0.27487",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "1",
+                "linkCoeff": "0.7009"
+              }
+            }
+          },
+          "c_17": {
+            "internalCoeff": "1.2521",
+            "broadcastCoeff": "0.4235",
+            "decayRate": "0.10734",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "1",
+                "linkCoeff": "1.2836"
+              },
+              "pl_1": {
+                "postCellIndex": "2",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "3",
+                "linkCoeff": "1.1183"
+              },
+              "pl_3": {
+                "postCellIndex": "16",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_18": {
+            "internalCoeff": "1.1183",
+            "broadcastCoeff": "1.763",
+            "decayRate": "0.20383",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "16",
+                "linkCoeff": "1.1679"
+              }
+            }
+          },
+          "c_19": {
+            "internalCoeff": "1.2717",
+            "broadcastCoeff": "1.4652",
+            "decayRate": "0.12777",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "3",
+                "linkCoeff": "0.9194"
+              },
+              "pl_1": {
+                "postCellIndex": "15",
+                "linkCoeff": "1"
+              }
+            }
+          }
+        }
+      },
+      "n_3": {
+        "cells": {
+          "c_0": {
+            "internalCoeff": "1.7214",
+            "broadcastCoeff": "1.002",
+            "decayRate": "0.28654",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "13",
+                "linkCoeff": "1"
+              },
+              "pl_1": {
+                "postCellIndex": "14",
+                "linkCoeff": "1.4631"
+              }
+            }
+          },
+          "c_1": {
+            "internalCoeff": "0.9085",
+            "broadcastCoeff": "1.2925",
+            "decayRate": "0.3277",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "2",
+                "linkCoeff": "1.0327"
+              },
+              "pl_1": {
+                "postCellIndex": "10",
+                "linkCoeff": "0.7779"
+              },
+              "pl_2": {
+                "postCellIndex": "11",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_2": {
+            "internalCoeff": "1.1385",
+            "broadcastCoeff": "1.152",
+            "decayRate": "0.22326",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "4",
+                "linkCoeff": "0.3887"
+              },
+              "pl_1": {
+                "postCellIndex": "7",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "11",
+                "linkCoeff": "0.6596"
+              },
+              "pl_3": {
+                "postCellIndex": "13",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_3": {
+            "internalCoeff": "0.1028",
+            "broadcastCoeff": "0.3914",
+            "decayRate": "0.25",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "0",
+                "linkCoeff": "1"
+              },
+              "pl_1": {
+                "postCellIndex": "4",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "8",
+                "linkCoeff": "1"
+              },
+              "pl_3": {
+                "postCellIndex": "9",
+                "linkCoeff": "1"
+              },
+              "pl_4": {
+                "postCellIndex": "10",
+                "linkCoeff": "1"
+              },
+              "pl_5": {
+                "postCellIndex": "11",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_4": {
+            "internalCoeff": "1.5104",
+            "broadcastCoeff": "0.379",
+            "decayRate": "0.21119",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "5",
+                "linkCoeff": "1.9187"
+              },
+              "pl_1": {
+                "postCellIndex": "7",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "8",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_5": {
+            "internalCoeff": "1.39",
+            "broadcastCoeff": "1.4326",
+            "decayRate": "0.16996",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "6",
+                "linkCoeff": "1.0969"
+              },
+              "pl_1": {
+                "postCellIndex": "8",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "9",
+                "linkCoeff": "1"
+              },
+              "pl_3": {
+                "postCellIndex": "15",
+                "linkCoeff": "0.8353"
+              }
+            }
+          },
+          "c_6": {
+            "internalCoeff": "0.9351",
+            "broadcastCoeff": "0.9785",
+            "decayRate": "0.39029",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "9",
+                "linkCoeff": "1.3213"
+              }
+            }
+          },
+          "c_7": {
+            "internalCoeff": "1.2054",
+            "broadcastCoeff": "1.9001",
+            "decayRate": "0.11453",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "1",
+                "linkCoeff": "0.5328"
+              },
+              "pl_1": {
+                "postCellIndex": "2",
+                "linkCoeff": "-0.252"
+              },
+              "pl_2": {
+                "postCellIndex": "6",
+                "linkCoeff": "1"
+              },
+              "pl_3": {
+                "postCellIndex": "16",
+                "linkCoeff": "1"
+              },
+              "pl_4": {
+                "postCellIndex": "17",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_8": {
+            "internalCoeff": "1.1077",
+            "broadcastCoeff": "1.2147",
+            "decayRate": "0.18089",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "14",
+                "linkCoeff": "1.4904"
+              }
+            }
+          },
+          "c_9": {
+            "internalCoeff": "0.5174",
+            "broadcastCoeff": "-0.2528",
+            "decayRate": "0.20682",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "17",
+                "linkCoeff": "0.9224"
+              }
+            }
+          },
+          "c_10": {
+            "internalCoeff": "1.5357",
+            "broadcastCoeff": "0.7461",
+            "decayRate": "0.30505",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "3",
+                "linkCoeff": "1.1748"
+              },
+              "pl_1": {
+                "postCellIndex": "4",
+                "linkCoeff": "1.2749"
+              },
+              "pl_2": {
+                "postCellIndex": "7",
+                "linkCoeff": "1"
+              },
+              "pl_3": {
+                "postCellIndex": "17",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_11": {
+            "internalCoeff": "0.8964",
+            "broadcastCoeff": "1.3194",
+            "decayRate": "0.25",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "0",
+                "linkCoeff": "1"
+              },
+              "pl_1": {
+                "postCellIndex": "15",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_12": {
+            "internalCoeff": "1.1512",
+            "broadcastCoeff": "0.6035",
+            "decayRate": "0.21216",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "2",
+                "linkCoeff": "1.3403"
+              },
+              "pl_1": {
+                "postCellIndex": "11",
+                "linkCoeff": "0.7403"
+              }
+            }
+          },
+          "c_13": {
+            "internalCoeff": "1.3555",
+            "broadcastCoeff": "0.6824",
+            "decayRate": "0.23678",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "2",
+                "linkCoeff": "0.863"
+              },
+              "pl_1": {
+                "postCellIndex": "3",
+                "linkCoeff": "1.3849"
+              }
+            }
+          },
+          "c_14": {
+            "internalCoeff": "1.3612",
+            "broadcastCoeff": "1.9803",
+            "decayRate": "0.2153",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "2",
+                "linkCoeff": "1"
+              },
+              "pl_1": {
+                "postCellIndex": "13",
+                "linkCoeff": "1.258"
+              },
+              "pl_2": {
+                "postCellIndex": "16",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_15": {
+            "internalCoeff": "0.6502",
+            "broadcastCoeff": "0.928",
+            "decayRate": "0.18821",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "1",
+                "linkCoeff": "1"
+              },
+              "pl_1": {
+                "postCellIndex": "14",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "17",
+                "linkCoeff": "1.2329"
+              },
+              "pl_3": {
+                "postCellIndex": "18",
+                "linkCoeff": "1"
+              },
+              "pl_4": {
+                "postCellIndex": "19",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_16": {
+            "internalCoeff": "0.6782",
+            "broadcastCoeff": "1.7873",
+            "decayRate": "0.27487",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "1",
+                "linkCoeff": "0.7009"
+              }
+            }
+          },
+          "c_17": {
+            "internalCoeff": "1.2521",
+            "broadcastCoeff": "0.4235",
+            "decayRate": "0.10734",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "1",
+                "linkCoeff": "1.2836"
+              },
+              "pl_1": {
+                "postCellIndex": "2",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "3",
+                "linkCoeff": "1.1183"
+              },
+              "pl_3": {
+                "postCellIndex": "16",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_18": {
+            "internalCoeff": "1.1183",
+            "broadcastCoeff": "1.763",
+            "decayRate": "0.20383",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "16",
+                "linkCoeff": "1.1679"
+              }
+            }
+          },
+          "c_19": {
+            "internalCoeff": "1.2717",
+            "broadcastCoeff": "1.4652",
+            "decayRate": "0.12777",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "3",
+                "linkCoeff": "0.9194"
+              },
+              "pl_1": {
+                "postCellIndex": "15",
+                "linkCoeff": "1"
+              }
+            }
+          }
+        }
+      },
+      "n_4": {
+        "cells": {
+          "c_0": {
+            "internalCoeff": "1.7214",
+            "broadcastCoeff": "1.002",
+            "decayRate": "0.28654",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "13",
+                "linkCoeff": "1"
+              },
+              "pl_1": {
+                "postCellIndex": "14",
+                "linkCoeff": "1.4631"
+              },
+              "pl_2": {
+                "postCellIndex": "18",
+                "linkCoeff": "1.4068"
+              }
+            }
+          },
+          "c_1": {
+            "internalCoeff": "0.9085",
+            "broadcastCoeff": "1.2925",
+            "decayRate": "0.3277",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "2",
+                "linkCoeff": "1.0327"
+              },
+              "pl_1": {
+                "postCellIndex": "10",
+                "linkCoeff": "0.7779"
+              },
+              "pl_2": {
+                "postCellIndex": "11",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_2": {
+            "internalCoeff": "1.1385",
+            "broadcastCoeff": "1.152",
+            "decayRate": "0.22326",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "4",
+                "linkCoeff": "0.3887"
+              },
+              "pl_1": {
+                "postCellIndex": "7",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "11",
+                "linkCoeff": "0.6596"
+              },
+              "pl_3": {
+                "postCellIndex": "13",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_3": {
+            "internalCoeff": "0.1028",
+            "broadcastCoeff": "0.3914",
+            "decayRate": "0.25",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "0",
+                "linkCoeff": "1"
+              },
+              "pl_1": {
+                "postCellIndex": "4",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "8",
+                "linkCoeff": "1"
+              },
+              "pl_3": {
+                "postCellIndex": "9",
+                "linkCoeff": "1"
+              },
+              "pl_4": {
+                "postCellIndex": "10",
+                "linkCoeff": "1"
+              },
+              "pl_5": {
+                "postCellIndex": "11",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_4": {
+            "internalCoeff": "1.5104",
+            "broadcastCoeff": "0.379",
+            "decayRate": "0.21119",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "5",
+                "linkCoeff": "1.9187"
+              },
+              "pl_1": {
+                "postCellIndex": "7",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "8",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_5": {
+            "internalCoeff": "1.39",
+            "broadcastCoeff": "1.4326",
+            "decayRate": "0.16996",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "6",
+                "linkCoeff": "1.0969"
+              },
+              "pl_1": {
+                "postCellIndex": "8",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "9",
+                "linkCoeff": "1"
+              },
+              "pl_3": {
+                "postCellIndex": "15",
+                "linkCoeff": "0.8353"
+              }
+            }
+          },
+          "c_6": {
+            "internalCoeff": "0.9351",
+            "broadcastCoeff": "0.9785",
+            "decayRate": "0.39029",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "9",
+                "linkCoeff": "1.3213"
+              }
+            }
+          },
+          "c_7": {
+            "internalCoeff": "1.2054",
+            "broadcastCoeff": "1.9001",
+            "decayRate": "0.11453",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "1",
+                "linkCoeff": "0.5328"
+              },
+              "pl_1": {
+                "postCellIndex": "2",
+                "linkCoeff": "-0.252"
+              },
+              "pl_2": {
+                "postCellIndex": "6",
+                "linkCoeff": "1"
+              },
+              "pl_3": {
+                "postCellIndex": "16",
+                "linkCoeff": "1"
+              },
+              "pl_4": {
+                "postCellIndex": "17",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_8": {
+            "internalCoeff": "1.1077",
+            "broadcastCoeff": "1.2147",
+            "decayRate": "0.18089",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "14",
+                "linkCoeff": "1.4904"
+              }
+            }
+          },
+          "c_9": {
+            "internalCoeff": "0.5174",
+            "broadcastCoeff": "-0.2528",
+            "decayRate": "0.20682",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "17",
+                "linkCoeff": "0.9224"
+              }
+            }
+          },
+          "c_10": {
+            "internalCoeff": "1.5357",
+            "broadcastCoeff": "0.7461",
+            "decayRate": "0.26975",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "3",
+                "linkCoeff": "1.1748"
+              },
+              "pl_1": {
+                "postCellIndex": "4",
+                "linkCoeff": "1.2749"
+              },
+              "pl_2": {
+                "postCellIndex": "7",
+                "linkCoeff": "1"
+              },
+              "pl_3": {
+                "postCellIndex": "17",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_11": {
+            "internalCoeff": "0.8964",
+            "broadcastCoeff": "1.3194",
+            "decayRate": "0.25",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "15",
+                "linkCoeff": "1"
+              },
+              "pl_1": {
+                "postCellIndex": "16",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_12": {
+            "internalCoeff": "1.1512",
+            "broadcastCoeff": "0.6035",
+            "decayRate": "0.21216",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "2",
+                "linkCoeff": "1.3403"
+              },
+              "pl_1": {
+                "postCellIndex": "11",
+                "linkCoeff": "0.7403"
+              }
+            }
+          },
+          "c_13": {
+            "internalCoeff": "1.3555",
+            "broadcastCoeff": "0.6824",
+            "decayRate": "0.23678",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "2",
+                "linkCoeff": "0.863"
+              },
+              "pl_1": {
+                "postCellIndex": "3",
+                "linkCoeff": "1.3849"
+              }
+            }
+          },
+          "c_14": {
+            "internalCoeff": "1.3612",
+            "broadcastCoeff": "1.9803",
+            "decayRate": "0.2153",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "2",
+                "linkCoeff": "1"
+              },
+              "pl_1": {
+                "postCellIndex": "13",
+                "linkCoeff": "1.258"
+              },
+              "pl_2": {
+                "postCellIndex": "16",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_15": {
+            "internalCoeff": "0.6502",
+            "broadcastCoeff": "0.928",
+            "decayRate": "0.18821",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "1",
+                "linkCoeff": "1"
+              },
+              "pl_1": {
+                "postCellIndex": "14",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "17",
+                "linkCoeff": "1.2329"
+              },
+              "pl_3": {
+                "postCellIndex": "18",
+                "linkCoeff": "1"
+              },
+              "pl_4": {
+                "postCellIndex": "19",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_16": {
+            "internalCoeff": "0.6782",
+            "broadcastCoeff": "1.7873",
+            "decayRate": "0.27487",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "1",
+                "linkCoeff": "0.4921"
+              }
+            }
+          },
+          "c_17": {
+            "internalCoeff": "1.2521",
+            "broadcastCoeff": "0.4235",
+            "decayRate": "0.10734",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "1",
+                "linkCoeff": "1.2836"
+              },
+              "pl_1": {
+                "postCellIndex": "2",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "3",
+                "linkCoeff": "0.6394"
+              },
+              "pl_3": {
+                "postCellIndex": "16",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_18": {
+            "internalCoeff": "1.1183",
+            "broadcastCoeff": "1.763",
+            "decayRate": "0.20383",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "16",
+                "linkCoeff": "1.1679"
+              }
+            }
+          },
+          "c_19": {
+            "internalCoeff": "1.2717",
+            "broadcastCoeff": "1.4652",
+            "decayRate": "0.12777",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "3",
+                "linkCoeff": "0.9194"
+              },
+              "pl_1": {
+                "postCellIndex": "15",
+                "linkCoeff": "1"
+              }
+            }
+          }
+        }
+      },
+      "n_5": {
+        "cells": {
+          "c_0": {
+            "internalCoeff": "1.7214",
+            "broadcastCoeff": "1.002",
+            "decayRate": "0.28654",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "6",
+                "linkCoeff": "1"
+              },
+              "pl_1": {
+                "postCellIndex": "14",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "18",
+                "linkCoeff": "1.4068"
+              }
+            }
+          },
+          "c_1": {
+            "internalCoeff": "0.9085",
+            "broadcastCoeff": "1.2925",
+            "decayRate": "0.3277",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "2",
+                "linkCoeff": "1.0327"
+              },
+              "pl_1": {
+                "postCellIndex": "10",
+                "linkCoeff": "0.7779"
+              },
+              "pl_2": {
+                "postCellIndex": "11",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_2": {
+            "internalCoeff": "1.1385",
+            "broadcastCoeff": "1.152",
+            "decayRate": "0.22326",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "4",
+                "linkCoeff": "0.3887"
+              },
+              "pl_1": {
+                "postCellIndex": "7",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "11",
+                "linkCoeff": "0.6596"
+              },
+              "pl_3": {
+                "postCellIndex": "13",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_3": {
+            "internalCoeff": "0.1028",
+            "broadcastCoeff": "0.3914",
+            "decayRate": "0.25",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "0",
+                "linkCoeff": "1"
+              },
+              "pl_1": {
+                "postCellIndex": "4",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "8",
+                "linkCoeff": "1"
+              },
+              "pl_3": {
+                "postCellIndex": "9",
+                "linkCoeff": "1"
+              },
+              "pl_4": {
+                "postCellIndex": "10",
+                "linkCoeff": "1"
+              },
+              "pl_5": {
+                "postCellIndex": "11",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_4": {
+            "internalCoeff": "1.5104",
+            "broadcastCoeff": "0.379",
+            "decayRate": "0.21119",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "5",
+                "linkCoeff": "1.9187"
+              },
+              "pl_1": {
+                "postCellIndex": "7",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_5": {
+            "internalCoeff": "1.39",
+            "broadcastCoeff": "1.4326",
+            "decayRate": "0.19219",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "6",
+                "linkCoeff": "1.0969"
+              },
+              "pl_1": {
+                "postCellIndex": "8",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "9",
+                "linkCoeff": "1"
+              },
+              "pl_3": {
+                "postCellIndex": "15",
+                "linkCoeff": "0.8353"
+              }
+            }
+          },
+          "c_6": {
+            "internalCoeff": "1.0855",
+            "broadcastCoeff": "0.9785",
+            "decayRate": "0.39029",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "9",
+                "linkCoeff": "1.3213"
+              }
+            }
+          },
+          "c_7": {
+            "internalCoeff": "1.2054",
+            "broadcastCoeff": "1.9001",
+            "decayRate": "0.11453",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "1",
+                "linkCoeff": "0.5328"
+              },
+              "pl_1": {
+                "postCellIndex": "2",
+                "linkCoeff": "-0.252"
+              },
+              "pl_2": {
+                "postCellIndex": "6",
+                "linkCoeff": "1"
+              },
+              "pl_3": {
+                "postCellIndex": "16",
+                "linkCoeff": "1"
+              },
+              "pl_4": {
+                "postCellIndex": "17",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_8": {
+            "internalCoeff": "1.1077",
+            "broadcastCoeff": "1.2147",
+            "decayRate": "0.18089",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "14",
+                "linkCoeff": "1.4904"
+              }
+            }
+          },
+          "c_9": {
+            "internalCoeff": "0.5174",
+            "broadcastCoeff": "-0.2925",
+            "decayRate": "0.20682",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "17",
+                "linkCoeff": "0.9224"
+              }
+            }
+          },
+          "c_10": {
+            "internalCoeff": "1.5357",
+            "broadcastCoeff": "0.7461",
+            "decayRate": "0.30505",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "3",
+                "linkCoeff": "1.1748"
+              },
+              "pl_1": {
+                "postCellIndex": "4",
+                "linkCoeff": "1.2749"
+              },
+              "pl_2": {
+                "postCellIndex": "7",
+                "linkCoeff": "1"
+              },
+              "pl_3": {
+                "postCellIndex": "17",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_11": {
+            "internalCoeff": "0.8964",
+            "broadcastCoeff": "1.3194",
+            "decayRate": "0.25",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "15",
+                "linkCoeff": "1.2044"
+              },
+              "pl_1": {
+                "postCellIndex": "16",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_12": {
+            "internalCoeff": "1.1512",
+            "broadcastCoeff": "0.6035",
+            "decayRate": "0.21216",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "2",
+                "linkCoeff": "1.3403"
+              },
+              "pl_1": {
+                "postCellIndex": "11",
+                "linkCoeff": "0.7403"
+              }
+            }
+          },
+          "c_13": {
+            "internalCoeff": "1.3555",
+            "broadcastCoeff": "0.6824",
+            "decayRate": "0.23678",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "2",
+                "linkCoeff": "0.863"
+              },
+              "pl_1": {
+                "postCellIndex": "3",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_14": {
+            "internalCoeff": "1.3612",
+            "broadcastCoeff": "1.9803",
+            "decayRate": "0.2153",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "2",
+                "linkCoeff": "1"
+              },
+              "pl_1": {
+                "postCellIndex": "13",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "16",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_15": {
+            "internalCoeff": "0.6502",
+            "broadcastCoeff": "1.0839",
+            "decayRate": "0.18821",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "1",
+                "linkCoeff": "1"
+              },
+              "pl_1": {
+                "postCellIndex": "14",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "17",
+                "linkCoeff": "1.2329"
+              },
+              "pl_3": {
+                "postCellIndex": "18",
+                "linkCoeff": "1"
+              },
+              "pl_4": {
+                "postCellIndex": "19",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_16": {
+            "internalCoeff": "0.6782",
+            "broadcastCoeff": "1.7873",
+            "decayRate": "0.27487",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "1",
+                "linkCoeff": "0.7009"
+              }
+            }
+          },
+          "c_17": {
+            "internalCoeff": "1.2521",
+            "broadcastCoeff": "0.4235",
+            "decayRate": "0.10519",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "1",
+                "linkCoeff": "1.2836"
+              },
+              "pl_1": {
+                "postCellIndex": "2",
+                "linkCoeff": "1"
+              },
+              "pl_2": {
+                "postCellIndex": "3",
+                "linkCoeff": "1.1183"
+              },
+              "pl_3": {
+                "postCellIndex": "16",
+                "linkCoeff": "1"
+              }
+            }
+          },
+          "c_18": {
+            "internalCoeff": "1.4172",
+            "broadcastCoeff": "1.763",
+            "decayRate": "0.20383",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "16",
+                "linkCoeff": "1.1679"
+              }
+            }
+          },
+          "c_19": {
+            "internalCoeff": "1.2717",
+            "broadcastCoeff": "1.4652",
+            "decayRate": "0.12777",
+            "refractoryPeriod": "1",
+            "postLinks": {
+              "pl_0": {
+                "postCellIndex": "3",
+                "linkCoeff": "0.9194"
+              },
+              "pl_1": {
+                "postCellIndex": "15",
+                "linkCoeff": "1"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

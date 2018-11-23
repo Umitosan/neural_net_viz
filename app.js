@@ -10,6 +10,9 @@ var xmlData;
 var xmlDataString;
 var domParserData;
 
+var file1Loaded = false;
+var file2Loaded = false;
+
 var CANVAS,
     canH,
     canW,
@@ -319,10 +322,10 @@ $(document).ready(function() {
   $('body').on('contextmenu', '#canvas', function(e){ return false; }); // prevent right click context menu default action
   CANVAS.addEventListener('mousemove', function(evt) {
       let rect = CANVAS.getBoundingClientRect();
-      State.mouseX = evt.clientX - rect.left + -0.5;
+      State.mouseX = evt.clientX - rect.left + - 0.5;
       State.mouseY = evt.clientY - rect.top;
-      $("#coords-x").text(State.mouseX);
-      $("#coords-y").text(State.mouseY);
+      $("#coords-x").text(Math.round(State.mouseX));
+      $("#coords-y").text(Math.round(State.mouseY));
   }, false);
 
   //INPUT
@@ -338,11 +341,13 @@ $(document).ready(function() {
   State.myReq = requestAnimationFrame(gameLoop);
   State.loopRunning = true;
   State.gameStarted = false;
-  myGame.mode = 'draw';
+  myGame.mode = 'init';
 
   $('#start-btn').click(function() {
     console.log("start button clicked");
-    if (myGame.mode === 'draw') {
+    console.log("myGame.mode = ", myGame.mode);
+    console.log("file1Loaded = ", file1Loaded);
+    if ( ((myGame.mode === 'init') && (file1Loaded === true)) || (file1Loaded === true) ) {
       myGame.mode = 'sim';
       console.log('mode now sim');
       myGame.buildNets();
@@ -363,9 +368,9 @@ $(document).ready(function() {
     generalLoopReset();
     State.loopRunning = true;
     State.gameStarted = false;
-    myGame.mode = 'draw';
+    myGame.mode = 'init';
     $('#pause-btn')[0].innerText = 'PAUSE';
-    $('#mode-current-status')[0].innerText = 'draw';
+    $('#mode-current-status')[0].innerText = 'init';
   });
 
   $('#pause-btn').click(function() {
@@ -466,27 +471,40 @@ $(document).ready(function() {
     return finalStr;
   } // printJsonAsString
 
-
+  let linesRemainToProcess = 10;  // approximate lines to process
   function printJsonAsHTML(someObj, indentLvl=0) {
     let finalStrHTMLarr = "";
     let textSizeSwitch = true;
     let margin = indentLvl * 20;
     let textStartSize = 18;
     let textSize = textStartSize - indentLvl;
+    console.log('linesRemainToProcess=',linesRemainToProcess);
     for (let i in someObj) {
       if( someObj.hasOwnProperty(i) ) {
         if (typeof someObj[i] === 'object') {
           if (Array.isArray(someObj[i]) === true) { // beginning of array
             finalStrHTMLarr += "<p style='margin-left: "+margin+"px; font-size: "+textSize+"px;'>"+i+": " + "(arr length=" + someObj[i].length + ")" + "</p>";
-            finalStrHTMLarr += printJsonAsHTML(someObj[i], indentLvl+1);
+            linesRemainToProcess -= 1;
+            if (linesRemainToProcess < 1) {
+              // skip it
+            } else {
+              finalStrHTMLarr += printJsonAsHTML(someObj[i], indentLvl+1);
+            }
           } else { // non-array obj
             finalStrHTMLarr += "<p style='margin-left: "+margin+"px; font-size: "+textSize+"px;'>"+i+": " + "(obj length=" + Object.keys(someObj[i]).length + ")" + "</p>";
-            finalStrHTMLarr += printJsonAsHTML(someObj[i], indentLvl+1);
+            linesRemainToProcess -= 1;
+            if (linesRemainToProcess < 1) {
+              // skip it
+            } else {
+              finalStrHTMLarr += printJsonAsHTML(someObj[i], indentLvl+1);
+            }
           }
         } else if (typeof someObj[i] === 'string') {
           finalStrHTMLarr += "<p style='margin-left: "+margin+"px; font-size: "+textSize+"px;'>"+i+": '" + "<span class='greenString'>" + someObj[i] + "</span>" + "'" + "</p>";
+          linesRemainToProcess -= 1;
         } else if (typeof someObj[i] === 'number') {
           finalStrHTMLarr += "<p style='margin-left: "+margin+"px; font-size: "+textSize+"px;'>"+i+": " + "<span class='redNum'>" + someObj[i] + "</span>" + "</p>";
+          linesRemainToProcess -= 1;
         } else {
           console.log('undefined type');
         }
@@ -499,17 +517,20 @@ $(document).ready(function() {
 
 
   function getFileJSON1(evt) {
+    linesRemainToProcess = 100;
     let myFile = evt.target.files[0];
+    let curOutputLines = 0;
     let reader = new FileReader();
     let outputDivLeft = $('#htmlOutputLeft')[0];
     let errLeft = $("#err-msg-left")[0];
     errLeft.innerText = "";
-    reader.onload = function(){
+    reader.onload = function() {
       let text = reader.result;
-      console.log("file preview: ", reader.result.substring(0, 100));
+      // console.log("file preview: ", reader.result.substring(0, 100));
       myJson = JSON.parse(reader.result);
       if (myJson.Population !== undefined) {
-        console.log('myJson.Population.nets = ',myJson.Population.nets );
+        // console.log('myJson.Population.nets = ',myJson.Population.nets );
+        file1Loaded = true;
         myNets = myJson.Population.nets;
         let finalJsonStrHTML = printJsonAsHTML(myJson);
         errLeft.innerText = "File Good";
@@ -525,18 +546,21 @@ $(document).ready(function() {
   }
 
   function getFileJSON2(evt) {
+    linesRemainToProcess = 100;
     let myFile = evt.target.files[0];
+    let curOutputLines = 0;
     let reader = new FileReader();
     let outputDivRight = $("#htmlOutputRight")[0];
     let errRight = $("#err-msg-right")[0];
     errRight.innerText = "";
     reader.onload = function(){
       let text = reader.result;
-      console.log("file preview: ", reader.result.substring(0, 100));
+      // console.log("file preview: ", reader.result.substring(0, 100));
       myJson2 = JSON.parse(reader.result);
       if (typeof myJson2[0] !== "object") {
         if (myJson2.net_0 !== undefined) {
-          console.log('myJson2.net_0  = ', myJson2.net_0 );
+          // console.log('myJson2.net_0  = ', myJson2.net_0 );
+          file2Loaded = true;
           myStim = myJson2.net_0 ;
           let finalJsonStrHTML = printJsonAsHTML(myJson2);
           errRight.innerText = "File Good";

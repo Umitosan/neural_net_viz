@@ -50,8 +50,12 @@ function Game(updateDur) {
   };
 
   this.tryLeftClick = function(mouseX,mouseY) {
-    this.tryClickNet(mouseX,mouseY);
-    this.pop[0].currentDataFrameSlider.checkNodeClicked(mouseX,mouseY);
+    if ( (file1Loaded === true) && (this.mode === "sim") ) {
+      this.tryClickNet(mouseX,mouseY);
+      if (file2Loaded === true) {
+        this.pop[0].currentDataFrameSlider.checkNodeClicked(mouseX,mouseY);
+      }
+    }
   };
 
   this.tryClickNet = function(mouseX,mouseY) {
@@ -67,9 +71,11 @@ function Game(updateDur) {
   };
 
   this.revertNetClick = function() {
-    this.curDragCell = undefined;
-    for (let i = 0; i < this.pop[0].cells.length; i++) {
-      this.pop[0].cells[i].curColor = this.pop[0].cells[i].baseColor;
+    if ( (file1Loaded === true) && (this.mode === "sim") ) {
+      this.curDragCell = undefined;
+      for (let i = 0; i < this.pop[0].cells.length; i++) {
+        this.pop[0].cells[i].curColor = this.pop[0].cells[i].baseColor;
+      }
     }
   };
 
