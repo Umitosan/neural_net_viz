@@ -22,7 +22,7 @@ function Game(updateDur) {
   this.buildNets = function() {
     if (myNets !== undefined) {
       this.pop = [];
-      let cTotal = myJson.Population.totalCellCount;
+      let cTotal = myJson1.Population.totalCellCount;
       let netBoxWidth = canW - 100 ;
       let netBoxHeight = canH - 100;
       // for (let i in myNets) {

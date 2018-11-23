@@ -1,7 +1,7 @@
 /*jshint esversion: 6 */
 
 
-var myJson,
+var myJson1,
     myNets,
     myJson2,
     myStim;
@@ -409,76 +409,14 @@ $(document).ready(function() {
   });
 
 
-  // function getFileXML(evt) {
-  //   // console.log(evt);
-  //   let myFile = evt.target.files[0];
-  //   let reader = new FileReader();
-  //   reader.onload = function(){
-  //     var text = reader.result;
-  //     var outputDiv = $('#output')[0];
-  //     outputDiv.innerText = text;
-  //     console.log("file preview: ", reader.result.substring(0, 100));
-  //   };
-  //   reader.readAsText(myFile);
-  //   reader.onloadend = function(){
-  //       xmlData = $(reader.result); // obj
-  //       xmlDataString = reader.result; // str
-  //       domParserData = (new DOMParser()).parseFromString(reader.result, "text/xml");
-  //       let inputs = domParserData.getElementsByTagName("inputs");
-  //       let stim = domParserData.getElementsByTagName("stimulus");
-  //       newJSON = xmlToJson(domParserData);
-  //       console.log('inputs nodes = ', inputs);
-  //       console.dir(newJSON);
-  //   };
-  // }
-  // $('#file-in').on("change", getFileXML);
-
-  // function getFileXML(evt) {
-  //   console.log(evt);
-  // }
-
-
-
-  function printJsonAsString(someObj, indentLvl=0) {
-    let finalStr = "";
-    let finalStrHTML = "";
-    // let indentStr = "" + indentLvl;   // bebug indent lvl
-    let indentStr = indentLvl + "  ";
-    for (let j = 0; j < indentLvl; j++) {
-      indentStr += "  ";
-    }
-    for (let i in someObj) {
-      if( someObj.hasOwnProperty(i) ) {
-        if (typeof someObj[i] === 'object') {
-          if (Array.isArray(someObj[i]) === true) { // beginning of array
-            finalStr += indentStr + i + ": " + "(arr length=" + someObj[i].length + ")" + "\n";
-            finalStr += printJsonAsString(someObj[i], indentLvl+1);
-          } else { // non-array obj
-            finalStr += indentStr + i + ": " + "(obj length=" + Object.keys(someObj[i]).length + ")" + "\n";
-            finalStr += printJsonAsString(someObj[i], indentLvl+1);
-          }
-        } else if (typeof someObj[i] === 'string') {
-          finalStr += indentStr + i + ": '" + someObj[i] + "'" + "\n";
-        } else if (typeof someObj[i] === 'number') {
-          finalStr += indentStr + i + ": " + someObj[i] + "\n";
-        } else {
-          console.log('undefined type');
-        }
-      } else {
-        console.log("someObj.hasOwnProperty(i) = false");
-      }
-    } // for
-    return finalStr;
-  } // printJsonAsString
-
-  let linesRemainToProcess = 10;  // approximate lines to process
+  let linesRemainToProcess = 10;  // approximate recursive groups to process
   function printJsonAsHTML(someObj, indentLvl=0) {
+    // console.log('linesRemainToProcess=',linesRemainToProcess);
     let finalStrHTMLarr = "";
     let textSizeSwitch = true;
     let margin = indentLvl * 20;
     let textStartSize = 18;
     let textSize = textStartSize - indentLvl;
-    console.log('linesRemainToProcess=',linesRemainToProcess);
     for (let i in someObj) {
       if( someObj.hasOwnProperty(i) ) {
         if (typeof someObj[i] === 'object') {
@@ -527,12 +465,11 @@ $(document).ready(function() {
     reader.onload = function() {
       let text = reader.result;
       // console.log("file preview: ", reader.result.substring(0, 100));
-      myJson = JSON.parse(reader.result);
-      if (myJson.Population !== undefined) {
-        // console.log('myJson.Population.nets = ',myJson.Population.nets );
+      myJson1 = JSON.parse(reader.result);
+      if (myJson1.Population !== undefined) {
         file1Loaded = true;
-        myNets = myJson.Population.nets;
-        let finalJsonStrHTML = printJsonAsHTML(myJson);
+        myNets = myJson1.Population.nets;
+        let finalJsonStrHTML = printJsonAsHTML(myJson1);
         errLeft.innerText = "File Good";
         $("#err-msg-left").css('color', 'blue');
         outputDivLeft.innerHTML = finalJsonStrHTML;
@@ -559,7 +496,6 @@ $(document).ready(function() {
       myJson2 = JSON.parse(reader.result);
       if (typeof myJson2[0] !== "object") {
         if (myJson2.net_0 !== undefined) {
-          // console.log('myJson2.net_0  = ', myJson2.net_0 );
           file2Loaded = true;
           myStim = myJson2.net_0 ;
           let finalJsonStrHTML = printJsonAsHTML(myJson2);

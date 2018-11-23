@@ -82,3 +82,65 @@ function xmlToJson(xml) {
 	}
 	return obj;
 }
+
+// old xml parser
+// function getFileXML(evt) {
+//   // console.log(evt);
+//   let myFile = evt.target.files[0];
+//   let reader = new FileReader();
+//   reader.onload = function(){
+//     var text = reader.result;
+//     var outputDiv = $('#output')[0];
+//     outputDiv.innerText = text;
+//     console.log("file preview: ", reader.result.substring(0, 100));
+//   };
+//   reader.readAsText(myFile);
+//   reader.onloadend = function(){
+//       xmlData = $(reader.result); // obj
+//       xmlDataString = reader.result; // str
+//       domParserData = (new DOMParser()).parseFromString(reader.result, "text/xml");
+//       let inputs = domParserData.getElementsByTagName("inputs");
+//       let stim = domParserData.getElementsByTagName("stimulus");
+//       newJSON = xmlToJson(domParserData);
+//       console.log('inputs nodes = ', inputs);
+//       console.dir(newJSON);
+//   };
+// }
+// $('#file-in').on("change", getFileXML);
+
+// function getFileXML(evt) {
+//   console.log(evt);
+// }
+
+// old json to simple string
+function printJsonAsString(someObj, indentLvl=0) {
+  let finalStr = "";
+  let finalStrHTML = "";
+  // let indentStr = "" + indentLvl;   // bebug indent lvl
+  let indentStr = indentLvl + "  ";
+  for (let j = 0; j < indentLvl; j++) {
+    indentStr += "  ";
+  }
+  for (let i in someObj) {
+    if( someObj.hasOwnProperty(i) ) {
+      if (typeof someObj[i] === 'object') {
+        if (Array.isArray(someObj[i]) === true) { // beginning of array
+          finalStr += indentStr + i + ": " + "(arr length=" + someObj[i].length + ")" + "\n";
+          finalStr += printJsonAsString(someObj[i], indentLvl+1);
+        } else { // non-array obj
+          finalStr += indentStr + i + ": " + "(obj length=" + Object.keys(someObj[i]).length + ")" + "\n";
+          finalStr += printJsonAsString(someObj[i], indentLvl+1);
+        }
+      } else if (typeof someObj[i] === 'string') {
+        finalStr += indentStr + i + ": '" + someObj[i] + "'" + "\n";
+      } else if (typeof someObj[i] === 'number') {
+        finalStr += indentStr + i + ": " + someObj[i] + "\n";
+      } else {
+        console.log('undefined type');
+      }
+    } else {
+      console.log("someObj.hasOwnProperty(i) = false");
+    }
+  } // for
+  return finalStr;
+} // printJsonAsString

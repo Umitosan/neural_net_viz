@@ -15,22 +15,24 @@ function Net(x,y,width,height,cellTotal,color) {
   this.currentDataFrame = undefined;
   this.currentDataFrameSlider = undefined;
   this.stimRound = undefined;
-  this.stimRoundPostLinkList = undefined;
 
   this.init = function() {
     this.cells = [];
-    this.stimRoundPostLinkList = myNets[0].cells;
-    let diameter = (this.width / 10) * 0.8;
+    // "totalNetCount": "6",
+    // "inputCellCount": "4",
+    // "outputCellCount": "10",
+    // "totalCellCount": "20",
+    let diameter = (this.width / myJson1.Population.totalCellCount) * 0.8;
     let leftOffset = 4;
+    let topScreenOffset = 60;
     let xGap = 170;
-    let yGap = 34;
+    let yGap = diameter/2;
     let curIndex = 0;
-    for (let i = 0; i < 4; i++) {  // left column
+    // LEFT COLUMN - input cells column
+    for (let i = 0; i < myJson1.Population.inputCellCount; i++) {
       let off = leftOffset;
-      if (i === 1) { off = leftOffset*12*1; }
-      if (i === 2) { off = leftOffset*12*2; }
       let newCell = new Cell(   /*   x    */  this.x + diameter + off,
-                                /*   y    */  (this.y + diameter/2 + 40) + (diameter*1.4) + ((diameter*i) + (yGap*i)),
+                                /*   y    */  (this.y + diameter/2 + topScreenOffset) + (diameter*1.4) + ((diameter*i) + (yGap*i)),
                                 /* radius */  diameter/2,
                                 /* color  */  this.color,
                                 /* index  */  curIndex
@@ -38,14 +40,13 @@ function Net(x,y,width,height,cellTotal,color) {
       newCell.init();
       this.cells.push(newCell);
       curIndex += 1;
-    }
-    for (let i = 0; i < 5; i++) {  // middle column
+    } // for left col
+    // MIDDLE COLUMN - body cells column
+    let bodyCellCount = myJson1.Population.totalCellCount - myJson1.Population.inputCellCount - myJson1.Population.outputCellCount;
+    for (let i = 0; i < bodyCellCount; i++) {  // middle column
       let off = leftOffset;
-      if (i === 1) { off = leftOffset*12*1; }
-      if (i === 2) { off = leftOffset*12*2; }
-      if (i === 3) { off = leftOffset*12*1; }
       let newCell = new Cell(   /*   x    */  (this.width / 2) + (diameter/2) + off,
-                                /*   y    */  (this.y + diameter/2 + 40) + (diameter) + ((diameter*i) + (yGap*i)),
+                                /*   y    */  (this.y + diameter/2 + topScreenOffset) + (diameter*1.4) + ((diameter*i) + (yGap*i)),
                                 /* radius */  diameter/2,
                                 /* color  */  this.color,
                                 /* index  */  curIndex
@@ -53,10 +54,11 @@ function Net(x,y,width,height,cellTotal,color) {
       newCell.init();
       this.cells.push(newCell);
       curIndex += 1;
-    }
-    for (let i = 0; i < 1; i++) { // right
+    } // for mid col
+    // RIGHT COLUMN - output cells
+    for (let i = 0; i < myJson1.Population.outputCellCount; i++) {
       let newCell = new Cell(   /*   x    */  (this.x + this.width) - diameter - leftOffset,
-                                /*   y    */  (this.height / 2 + 40) + (diameter/2),
+                                /*   y    */  (this.y + diameter/2 + topScreenOffset) + (diameter*1.4) + ((diameter*i) + (yGap*i)),
                                 /* radius */  diameter/2,
                                 /* color  */  this.color,
                                 /* index  */  curIndex
@@ -64,8 +66,7 @@ function Net(x,y,width,height,cellTotal,color) {
       newCell.init();
       this.cells.push(newCell);
       curIndex += 1;
-    }
-    // console.dir(this.cells);
+    } // for right col
     let tmpFontSize = 30;
     this.txtTitle = new TxtBox( /*  x       */  (canH / 2)+(tmpFontSize),
                                 /*  y       */  tmpFontSize+5,
@@ -93,7 +94,8 @@ function Net(x,y,width,height,cellTotal,color) {
     );
     this.txtStatusLeft.init();
     this.txtStatusLeft.addLine("Need Stimulus");
-  };
+    this.buildPostLinks();
+  }; // INIT
 
   this.loadNetStim = function() {
     this.currentDataFrame = myStim.dataSetRow_0.dataFrame_0;
@@ -102,13 +104,13 @@ function Net(x,y,width,height,cellTotal,color) {
     this.txtStatusRight.addLine("DataFrame: 0");
     this.txtStatusRight.addLine("StimRound: 1");
     this.buildDataFrameInterface();
-    this.buildPostLinks();
   };
 
   this.buildPostLinks = function() {
-    for (let i = 0; i < this.stimRoundPostLinkList.length; i++) {
-      this.cells[i].loadPostLinks(this.stimRoundPostLinkList[i]);
-      // console.log("this.stimRoundPostLinkList[i] = ", this.stimRoundPostLinkList[i]);
+    let ind = 0;
+    for (let key in myNets.n_0.cells) {
+      this.cells[ind].loadPostLinks(myNets.n_0.cells[key]);
+      ind += 1;
     }
   };
 
@@ -122,15 +124,13 @@ function Net(x,y,width,height,cellTotal,color) {
                                 /* nodeTotal */  8,
                                 /* pColor    */  this.color
                               );
-    newSlider.init();                          
+    newSlider.init();
     this.currentDataFrameSlider = newSlider;
   };
 
   this.draw = function() {
-    if (this.stimRoundPostLinkList !== undefined) {
-      for (let i = 0; i < this.cells.length; i++) {
-        this.cells[i].drawLinks();
-      }
+    for (let i = 0; i < this.cells.length; i++) {
+      this.cells[i].drawLinks();
     }
     for (let i = 0; i < this.cells.length; i++) {
       this.cells[i].draw();
@@ -181,13 +181,11 @@ function Cell(x,y,rad,color,ind) {
     this.txt.y = this.y+3;
   };
 
-  this.loadPostLinks = function(cellsObj) {
+  this.loadPostLinks = function(cellObj) {
     this.curPostLinks = [];
-    let linksObj = cellsObj.postLinks;
-    for (var i = 0; i < linksObj.length; i++) {
-      this.curPostLinks.push(linksObj[i].postCellIndex);
+    for (let key in cellObj.postLinks) {
+      this.curPostLinks.push( parseInt(cellObj.postLinks[key].postCellIndex) );
     }
-    // console.log('this.curPostLinks = ', this.curPostLinks);
   };
 
   this.drawLinks = function() {
