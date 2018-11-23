@@ -18,21 +18,23 @@ function Net(x,y,width,height,cellTotal,color) {
 
   this.init = function() {
     this.cells = [];
-    // "totalNetCount": "6",
-    // "inputCellCount": "4",
-    // "outputCellCount": "10",
-    // "totalCellCount": "20",
-    let diameter = (this.width / myJson1.Population.totalCellCount) * 0.8;
+    //   "inputCellCount": "4",
+    //   "outputCellCount": "10",
+    //   "totalCellCount": "20",
+    let inputCellCount = myJson1.Population.inputCellCount;
+    let outputCellCount = myJson1.Population.outputCellCount;
+    let totalCellCount = myJson1.Population.totalCellCount;
+    let bodyCellCount = totalCellCount - inputCellCount - outputCellCount; // for middle column
+    let diameter = (this.width / totalCellCount) * 0.8;
     let leftOffset = 4;
-    let topScreenOffset = 60;
+    let topScreenOffset = 170;
     let xGap = 170;
-    let yGap = diameter/2;
     let curIndex = 0;
     // LEFT COLUMN - input cells column
-    for (let i = 0; i < myJson1.Population.inputCellCount; i++) {
-      let off = leftOffset;
-      let newCell = new Cell(   /*   x    */  this.x + diameter + off,
-                                /*   y    */  (this.y + diameter/2 + topScreenOffset) + (diameter*1.4) + ((diameter*i) + (yGap*i)),
+    for (let i = 0; i < inputCellCount; i++) {
+      let yGap =  (canH - topScreenOffset) / inputCellCount;
+      let newCell = new Cell(   /*   x    */  this.x,
+                                /*   y    */  topScreenOffset + (yGap*i),
                                 /* radius */  diameter/2,
                                 /* color  */  this.color,
                                 /* index  */  curIndex
@@ -42,11 +44,10 @@ function Net(x,y,width,height,cellTotal,color) {
       curIndex += 1;
     } // for left col
     // MIDDLE COLUMN - body cells column
-    let bodyCellCount = myJson1.Population.totalCellCount - myJson1.Population.inputCellCount - myJson1.Population.outputCellCount;
     for (let i = 0; i < bodyCellCount; i++) {  // middle column
-      let off = leftOffset;
-      let newCell = new Cell(   /*   x    */  (this.width / 2) + (diameter/2) + off,
-                                /*   y    */  (this.y + diameter/2 + topScreenOffset) + (diameter*1.4) + ((diameter*i) + (yGap*i)),
+      let yGap =  (canH - topScreenOffset) / bodyCellCount;
+      let newCell = new Cell(   /*   x    */  (this.width / 2) + (diameter/2) + leftOffset,
+                                /*   y    */  topScreenOffset + (yGap*i),
                                 /* radius */  diameter/2,
                                 /* color  */  this.color,
                                 /* index  */  curIndex
@@ -56,9 +57,10 @@ function Net(x,y,width,height,cellTotal,color) {
       curIndex += 1;
     } // for mid col
     // RIGHT COLUMN - output cells
-    for (let i = 0; i < myJson1.Population.outputCellCount; i++) {
-      let newCell = new Cell(   /*   x    */  (this.x + this.width) - diameter - leftOffset,
-                                /*   y    */  (this.y + diameter/2 + topScreenOffset) + (diameter*1.4) + ((diameter*i) + (yGap*i)),
+    for (let i = 0; i < outputCellCount; i++) {
+      let yGap =  (canH - topScreenOffset) / outputCellCount;
+      let newCell = new Cell(   /*   x    */  (this.x + this.width),
+                                /*   y    */  topScreenOffset + (yGap*i),
                                 /* radius */  diameter/2,
                                 /* color  */  this.color,
                                 /* index  */  curIndex
