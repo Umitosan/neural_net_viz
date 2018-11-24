@@ -99,15 +99,6 @@ function Net(x,y,width,height,cellTotal,color) {
     this.buildPostLinks();
   }; // INIT
 
-  this.loadNetStim = function() {
-    this.currentDataFrame = myStim.dataSetRow_0.dataFrame_0;
-    this.txtStatusRight.clear();
-    this.txtStatusRight.addLine("DataSetRow: 0");
-    this.txtStatusRight.addLine("DataFrame: 0");
-    this.txtStatusRight.addLine("StimRound: 1");
-    this.buildDataFrameInterface();
-  };
-
   this.buildPostLinks = function() {
     let ind = 0;
     for (let key in myNets.n_0.cells) {
@@ -116,14 +107,36 @@ function Net(x,y,width,height,cellTotal,color) {
     }
   };
 
+  this.loadNetStim = function() {
+    this.currentDataFrame = myStim.dataSetRow_0.dataFrame_0;
+    this.stimRound = this.currentDataFrame.stimulusRound_1;
+    // this.currentDataFrame.stimulusRound_1.cells.c_0
+    this.txtStatusRight.clear();
+    this.txtStatusRight.addLine("DataSetRow: 0");
+    this.txtStatusRight.addLine("DataFrame: 0");
+    this.txtStatusRight.addLine("StimRound: 1");
+    this.buildDataFrameInterface();
+  };
+
+  this.getStimRoundCount = function() {
+    let count = 0;
+    for (let key in this.currentDataFrame) {
+      if (key.slice(0,4) === 'stim') {
+        count++;
+      }
+    }
+    return count;
+  }
+
   this.buildDataFrameInterface = function() {
-    console.log('building data frame interface');
+    console.log('building dataFrame UI');
+    let stimRoundTotal = this.getStimRoundCount();
     // Slider(x,y,width,height,nodeTotal)
     let newSlider = new Slider( /* x         */  (canW-504)/2,
                                 /* y         */  40,
                                 /* width     */  504,
                                 /* height    */  60,
-                                /* nodeTotal */  8,
+                                /* nodeTotal */  stimRoundTotal,
                                 /* pColor    */  this.color
                               );
     newSlider.init();
@@ -163,6 +176,7 @@ function Cell(x,y,rad,color,ind) {
   this.txt = undefined;
   this.index = ind;
   this.hover = false;
+  this.status = undefined;
   this.curPostLinks = undefined;
 
   this.init = function() {
