@@ -14,18 +14,17 @@ function Slider(x,y,width,height,nodeTotal,pColor) {
     this.nodes = [];
     for (let i = 0; i < this.nodeTotal; i++) {
       let tmpNode = {};
-      let xOffset = i * (this.width/(this.nodeTotal-1));
-      let yOffset = this.height/2;
-      tmpNode.x = this.x+xOffset;
-      tmpNode.y = this.y+yOffset;
-      tmpNode.color = this.primaryColor;
-      tmpNode.rad = 8;
+      let xOffset = this.x + (i * (this.width/(this.nodeTotal-1)));
+      let yOffset = this.y + this.height/2;
+      let newColor = this.primaryColor;
+      tmpNode = {
+        x: xOffset,
+        y: yOffset,
+        color: newColor,
+        rad: 8
+      }
       this.nodes.push(tmpNode);
     }
-  };
-
-  this.setActiveNode = function(nodeIndex) {
-    this.activeNode = nodeIndex;
   };
 
   this.checkNodeClicked = function(mX,mY) {
@@ -36,9 +35,27 @@ function Slider(x,y,width,height,nodeTotal,pColor) {
         if ( (mX > (node.x-node.rad-extra)) && (mX < (node.x+node.rad+extra+extra)) &&
              (mY > (node.y-node.rad-extra)) && (mY < (node.y+node.rad+extra+extra)) ) {
           // console.log('slider #'+i+' node was clicked');
-          this.setActiveNode(i);
+          this.activeNode = i;
         }
       }
+    }
+  };
+
+  this.goForward = function() {
+    if ( (this.activeNode + 1) < this.nodes.length ) {
+      this.activeNode += 1;
+      // console.log('new active node = ', this.activeNode);
+    } else {
+      console.log('cant goForward on slider');
+    }
+  };
+
+  this.goBack = function() {
+    if ( (this.activeNode - 1) >= 0 ) {
+      this.activeNode -= 1;
+      // console.log('new active node = ', this.activeNode);
+    } else {
+      console.log('cant goBack on slider');
     }
   };
 

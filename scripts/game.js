@@ -79,6 +79,20 @@ function Game(updateDur) {
     }
   };
 
+  this.trySlide = function(someDir) {
+    if (file2Loaded === true) {
+      if (someDir === 'right') {
+        this.pop[0].currentDataFrameSlider.goForward();
+      } else if (someDir === 'left') {
+        this.pop[0].currentDataFrameSlider.goBack();
+      } else {
+        console.log('not valid slide direction');
+      }
+    } else {
+      console.log('need stimulus file');
+    }
+  };
+
   this.pauseIt = function() {
     myGame.paused = true;
     // this.pausedTxt.show = true;

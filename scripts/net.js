@@ -43,19 +43,6 @@ function Net(x,y,width,height,cellTotal,color) {
       this.cells.push(newCell);
       curIndex += 1;
     } // for left col
-    // MIDDLE COLUMN - body cells column
-    for (let i = 0; i < bodyCellCount; i++) {  // middle column
-      let yGap =  (canH - topScreenOffset) / bodyCellCount;
-      let newCell = new Cell(   /*   x    */  (this.width / 2) + (diameter/2) + leftOffset,
-                                /*   y    */  topScreenOffset + (yGap*i),
-                                /* radius */  diameter/2,
-                                /* color  */  this.color,
-                                /* index  */  curIndex
-                              );
-      newCell.init();
-      this.cells.push(newCell);
-      curIndex += 1;
-    } // for mid col
     // RIGHT COLUMN - output cells
     for (let i = 0; i < outputCellCount; i++) {
       let yGap =  (canH - topScreenOffset) / outputCellCount;
@@ -69,6 +56,19 @@ function Net(x,y,width,height,cellTotal,color) {
       this.cells.push(newCell);
       curIndex += 1;
     } // for right col
+    // MIDDLE COLUMN - body cells column
+    for (let i = 0; i < bodyCellCount; i++) {  // middle column
+      let yGap =  (canH - topScreenOffset) / bodyCellCount;
+      let newCell = new Cell(   /*   x    */  (this.width / 2) + (diameter/2) + leftOffset,
+                                /*   y    */  topScreenOffset + (yGap*i),
+                                /* radius */  diameter/2,
+                                /* color  */  this.color,
+                                /* index  */  curIndex
+                              );
+      newCell.init();
+      this.cells.push(newCell);
+      curIndex += 1;
+    } // for mid col
     let tmpFontSize = 30;
     this.txtTitle = new TxtBox( /*  x       */  (canH / 2)+(tmpFontSize),
                                 /*  y       */  tmpFontSize+5,

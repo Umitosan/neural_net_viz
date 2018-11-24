@@ -116,15 +116,15 @@ function keyDown(event) {
     State.keyPressed = true;
     let code = event.keyCode;
     let keyWhich = event.which;
-    // console.log('event = ', event);
-    // console.log('event.which = ', event.which);
     switch (keyWhich) {
         case 37: // Left arrow key
+          myGame.trySlide('left');
           State.keysDown.left = true;
           document.getElementById("key-left").style.backgroundColor = "pink";
           if (myGame.paused === false) { State.lastkey = 'left'; }
           break;
         case 39: //Right arrow key
+          myGame.trySlide('right');
           State.keysDown.right = true;
           document.getElementById("key-right").style.backgroundColor = "pink";
           if (myGame.paused === false) { State.lastkey = 'right'; }
@@ -353,6 +353,7 @@ $(document).ready(function() {
       myGame.buildNets();
       myGame.loadStimulus();
       State.gameStarted = true;
+      CANVAS.focus();  // set focus to canvas on start so keybindings work, if needed
       $('#mode-current-status')[0].innerText = 'simulate';
       let v = $('#speed-slider').val();
       $('#speed-input').prop("value", v);
