@@ -100,10 +100,8 @@ function Net(x,y,width,height,cellTotal,color) {
   }; // INIT
 
   this.buildPostLinks = function() {
-    let ind = 0;
-    for (let key in myNets.n_0.cells) {
-      this.cells[ind].loadPostLinks(myNets.n_0.cells[key]);
-      ind += 1;
+    for (let i = 0; i < myNets[0].cells.length; i++) {
+      this.cells[i].loadPostLinks(myNets[0].cells[i]);
     }
   };
 
@@ -199,8 +197,8 @@ function Cell(x,y,rad,color,ind) {
 
   this.loadPostLinks = function(cellObj) {
     this.curPostLinks = [];
-    for (let key in cellObj.postLinks) {
-      this.curPostLinks.push( parseInt(cellObj.postLinks[key].postCellIndex) );
+    for (let i = 0; i < cellObj.postLinks.length; i++) {
+      this.curPostLinks.push( cellObj.postLinks[i].postCellIndex );
     }
   };
 
