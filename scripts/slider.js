@@ -28,14 +28,14 @@ function Slider(x,y,width,height,nodeTotal,pColor) {
   };
 
   this.checkNodeClicked = function(mX,mY) {
-    if ( (mX > this.x) && (mX < (this.x+this.width)) && (mY > this.y) && (mY < (this.y+this.height)) ) { // check if within slider box first
+    if ( (mX > (this.x-this.nodes[0].rad)) && (mX < (this.x+this.width+this.nodes[0].rad)) && (mY > this.y) && (mY < (this.y+this.height)) ) { // check if within slider box first
       for (let i = 0; i < this.nodes.length; i++) { // check if clicked each slider node
         let node = this.nodes[i];
         let extra = 6; // this is extra pixels to check on hitbox size
         if ( (mX > (node.x-node.rad-extra)) && (mX < (node.x+node.rad+extra+extra)) &&
              (mY > (node.y-node.rad-extra)) && (mY < (node.y+node.rad+extra+extra)) ) {
-          // console.log('slider #'+i+' node was clicked');
           this.activeNode = i;
+          myGame.curNet.loadStimRoundInd(i);
         }
       }
     }

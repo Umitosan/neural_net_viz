@@ -14,7 +14,9 @@ function Net(x,y,width,height,cellTotal,color) {
   this.txtStatusLeft = undefined;
   this.currentDataFrame = undefined;
   this.currentDataFrameSlider = undefined;
-  this.stimRound = undefined;
+  this.allStimRounds = undefined;
+  this.curStimRound = undefined;
+  this.curStimRoundIndex = undefined;
 
   this.init = function() {
     this.cells = [];
@@ -107,13 +109,51 @@ function Net(x,y,width,height,cellTotal,color) {
 
   this.loadNetStim = function() {
     this.currentDataFrame = myStim.dataSetRow_0.dataFrame_0;
-    this.stimRound = this.currentDataFrame.stimulusRound_1;
-    // this.currentDataFrame.stimulusRound_1.cells.c_0
+    this.allStimRounds = this.getDataFrameStimRounds();
+    this.loadStimRoundInd(0);
     this.txtStatusRight.clear();
     this.txtStatusRight.addLine("DataSetRow: 0");
     this.txtStatusRight.addLine("DataFrame: 0");
     this.txtStatusRight.addLine("StimRound: 1");
     this.buildDataFrameInterface();
+  };
+
+  this.loadStimRoundInd = function(ind) {
+    this.curStimRoundIndex = ind;
+    this.curStimRound = this.allStimRounds[ind];
+    this.loadCellStatus();
+  };
+
+  this.nextStimRound = function() {
+    if ((this.curStimRoundIndex + 1) < this.allStimRounds.length) {
+      this.loadStimRoundInd(this.curStimRoundIndex + 1);
+      this.currentDataFrameSlider.goForward(); // update UI
+    } else {
+      console.log('no NEXT stim round on net');
+    }
+  };
+
+  this.prevStimRound = function() {
+    if ((this.curStimRoundIndex - 1) >= 0) {
+      this.loadStimRoundInd(this.curStimRoundIndex - 1);
+      this.currentDataFrameSlider.goBack(); // update UI
+    } else {
+      console.log('no PREV stim round on net');
+    }
+  };
+
+  this.loadCellStatus = function() {
+    let ind = 0;
+    for (let key in this.curStimRound.cells) {
+      let newSt = this.curStimRound.cells[key].status;
+      this.cells[ind].status = newSt;
+      if (newSt === 'excited') {
+        this.cells[ind].curColor = 'red';
+      } else {
+        this.cells[ind].curColor = this.cells[ind].baseColor;
+      }
+      ind++;
+    }
   };
 
   this.getStimRoundCount = function() {
@@ -125,6 +165,17 @@ function Net(x,y,width,height,cellTotal,color) {
     }
     return count;
   }
+
+
+  this.getDataFrameStimRounds = function() {
+    let stimRounds = [];
+    for (let key in this.currentDataFrame) {
+      if (key.slice(0,4) === 'stim') {
+        stimRounds.push(this.currentDataFrame[key]);
+      }
+    }
+    return stimRounds;
+  };
 
   this.buildDataFrameInterface = function() {
     console.log('building dataFrame UI');

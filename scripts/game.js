@@ -12,6 +12,7 @@ function Game(updateDur) {
   this.pausedTxt = undefined;
   this.mode = 'init';
   this.pop = undefined;
+  this.curNet = undefined;
   this.curDragCell = undefined;
 
   this.init = function() {
@@ -25,19 +26,16 @@ function Game(updateDur) {
       let cTotal = myJson1.Population.totalCellCount;
       let netBoxWidth = canW - 100 ;
       let netBoxHeight = canH - 100;
-      // for (let i in myNets) {
-        // let netXYoffset = 4; // pixels between net boxes
-        // let newNet = new Net( /*   x     */  20 + (i*netBoxWidth)+(i*netXYoffset),
-        let newNet = new Net( /*   x     */  40,
-                              /*   y     */  40,
-                              /* width   */  netBoxWidth,
-                              /* height  */  netBoxHeight,
-                              /*cellTotal*/  cTotal,
-                              /* color   */  randColor('rgba',120,255) // randColor(type,lowBound,highBound,alphaSwitch = null)
-                            );
-        newNet.init();
-        this.pop.push(newNet);
-      // }
+      let newNet = new Net( /*   x     */  40,
+                            /*   y     */  40,
+                            /* width   */  netBoxWidth,
+                            /* height  */  netBoxHeight,
+                            /*cellTotal*/  cTotal,
+                            /* color   */  randColor('rgba',120,255) // randColor(type,lowBound,highBound,alphaSwitch = null)
+                          );
+      newNet.init();
+      this.pop.push(newNet);
+      this.curNet = this.pop[0];
     } else {
       console.log('nothing in myNets');
     }
@@ -45,7 +43,7 @@ function Game(updateDur) {
 
   this.loadStimulus = function() {
     if ( (this.pop !== undefined) && (myStim !== undefined) ) {
-      this.pop[0].loadNetStim();
+      this.curNet.loadNetStim();
     }
   };
 
@@ -53,19 +51,17 @@ function Game(updateDur) {
     if ( (file1Loaded === true) && (this.mode === "sim") ) {
       this.tryClickNet(mouseX,mouseY);
       if (file2Loaded === true) {
-        this.pop[0].currentDataFrameSlider.checkNodeClicked(mouseX,mouseY);
+        this.curNet.currentDataFrameSlider.checkNodeClicked(mouseX,mouseY);
       }
     }
   };
 
   this.tryClickNet = function(mouseX,mouseY) {
-    for (let i = 0; i < this.pop[0].cells.length; i++) {
-      let cell = this.pop[0].cells[i];
+    for (let i = 0; i < this.curNet.cells.length; i++) {
+      let cell = this.curNet.cells[i];
       if ( (mouseX > (cell.x-cell.rad)) && (mouseX < (cell.x+cell.rad)) &&
            (mouseY > (cell.y-cell.rad)) && (mouseY < (cell.y+cell.rad)) ) {
-        // console.log("cell hit, change color");
-        this.curDragCell = this.pop[0].cells[i];
-        cell.curColor = "pink";
+        this.curDragCell = this.curNet.cells[i];
       }
     }
   };
@@ -73,18 +69,15 @@ function Game(updateDur) {
   this.revertNetClick = function() {
     if ( (file1Loaded === true) && (this.mode === "sim") ) {
       this.curDragCell = undefined;
-      for (let i = 0; i < this.pop[0].cells.length; i++) {
-        this.pop[0].cells[i].curColor = this.pop[0].cells[i].baseColor;
-      }
     }
   };
 
   this.trySlide = function(someDir) {
     if (file2Loaded === true) {
       if (someDir === 'right') {
-        this.pop[0].currentDataFrameSlider.goForward();
+        this.curNet.nextStimRound();
       } else if (someDir === 'left') {
-        this.pop[0].currentDataFrameSlider.goBack();
+        this.curNet.prevStimRound();
       } else {
         console.log('not valid slide direction');
       }
