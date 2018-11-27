@@ -12,8 +12,10 @@ function Net(x,y,width,height,cellTotal,color) {
   this.txtTitle = undefined;
   this.txtStatusRight = undefined;
   this.txtStatusLeft = undefined;
+  this.allDataFramesStims = undefined;
   this.currentDataFrame = undefined;
   this.currentDataFrameSlider = undefined;
+  this.currentDataFrameSlider2 = undefined;
   this.allStimRounds = undefined;
   this.curStimRound = undefined;
   this.curStimRoundIndex = undefined;
@@ -110,6 +112,8 @@ function Net(x,y,width,height,cellTotal,color) {
   this.loadNetStim = function() {
     this.currentDataFrame = myStim.dataSetRow_0.dataFrame_0;
     this.allStimRounds = this.getDataFrameStimRounds();
+    this.allDataFramesStims = this.getDataFramesStimAll();
+    console.log('this.allDataFramesStims = ', this.allDataFramesStims);
     this.loadStimRoundInd(0);
     this.txtStatusRight.clear();
     this.txtStatusRight.addLine("DataSetRow: 0");
@@ -166,6 +170,27 @@ function Net(x,y,width,height,cellTotal,color) {
     return count;
   }
 
+  this.getDataFramesStimAll = function() {
+    let dataFrames = [];
+    for (let key in myJson2.net_0.dataSetRow_0) {
+      if (key.slice(0,4) === 'data') {
+        let curDF = myJson2.net_0.dataSetRow_0[key];
+        let stimRounds = [];
+        for (let key2 in curDF) {
+          if (key2.slice(0,4) === 'stim') {
+            let curSR = curDF.cells;
+            let cells = [];
+            for (let key3 in curSR) {
+              cells.push(curSR[key3]);
+            } // for
+            stimRounds.push(cells);
+          }
+        } // for
+        dataFrames.push(stimRounds);
+      }
+    }
+    return dataFrames;
+  };
 
   this.getDataFrameStimRounds = function() {
     let stimRounds = [];
@@ -190,6 +215,16 @@ function Net(x,y,width,height,cellTotal,color) {
                               );
     newSlider.init();
     this.currentDataFrameSlider = newSlider;
+    // Slider(x,y,width,height,nodeTotal)
+    // let newSlider2 = new SliderType2( /* x         */  (canW-504)/2,
+    //                                   /* y         */  70,
+    //                                   /* width     */  504,
+    //                                   /* height    */  60,
+    //                                   /* nodeTotal */  stimRoundTotal,
+    //                                   /* pColor    */  this.color
+    //                           );
+    // newSlider2.init();
+    // this.currentDataFrameSlider2 = newSlider2;
   };
 
   this.draw = function() {
@@ -203,6 +238,7 @@ function Net(x,y,width,height,cellTotal,color) {
     this.txtStatusLeft.draw();
     this.txtStatusRight.draw();
     if (this.currentDataFrameSlider !== undefined) { this.currentDataFrameSlider.draw(); }
+    if (this.currentDataFrameSlider2 !== undefined) { this.currentDataFrameSlider2.draw(); }
   };
 
   this.update = function() {
@@ -279,7 +315,7 @@ function Cell(x,y,rad,color,ind) {
     ctx.beginPath();
     ctx.fillStyle = this.curColor;
     ctx.strokeStyle = this.strokeColor;
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 1;
     ctx.arc(this.x,this.y,this.rad,0,2*Math.PI);
     ctx.fill();
     ctx.stroke();
