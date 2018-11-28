@@ -51,7 +51,8 @@ function Game(updateDur) {
     if ( (file1Loaded === true) && (this.mode === "sim") ) {
       this.tryClickNet(mouseX,mouseY);
       if (file2Loaded === true) {
-        this.curNet.currentDataFrameSlider.checkNodeClicked(mouseX,mouseY);
+        // this.curNet.currentDataFrameSlider.checkNodeClicked(mouseX,mouseY);
+        this.curNet.currentDataFrameSlider2.checkNodeClicked(mouseX,mouseY);
       }
     }
   };

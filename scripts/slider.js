@@ -22,56 +22,56 @@ function Slider(x,y,width,height,nodeTotal,pColor) {
         y: yOffset,
         color: newColor,
         rad: 8
-      }
+      };
       this.nodes.push(tmpNode);
     }
   };
 
   this.checkNodeClicked = function(mX,mY) {
-    if ( (mX > (this.x-this.nodes[0].rad)) && (mX < (this.x+this.width+this.nodes[0].rad)) && (mY > this.y) && (mY < (this.y+this.height)) ) { // check if within slider box first
-      for (let i = 0; i < this.nodes.length; i++) { // check if clicked each slider node
-        let node = this.nodes[i];
-        let extra = 6; // this is extra pixels to check on hitbox size
-        if ( (mX > (node.x-node.rad-extra)) && (mX < (node.x+node.rad+extra+extra)) &&
-             (mY > (node.y-node.rad-extra)) && (mY < (node.y+node.rad+extra+extra)) ) {
-          this.activeNode = i;
-          myGame.curNet.loadStimRoundInd(i);
-        }
-      }
-    }
+    // if ( (mX > (this.x-this.nodes[0].rad)) && (mX < (this.x+this.width+this.nodes[0].rad)) && (mY > this.y) && (mY < (this.y+this.height)) ) { // check if within slider box first
+    //   for (let i = 0; i < this.nodes.length; i++) { // check if clicked each slider node
+    //     let node = this.nodes[i];
+    //     let extra = 6; // this is extra pixels to check on hitbox size
+    //     if ( (mX > (node.x-node.rad-extra)) && (mX < (node.x+node.rad+extra+extra)) &&
+    //          (mY > (node.y-node.rad-extra)) && (mY < (node.y+node.rad+extra+extra)) ) {
+    //       this.activeNode = i;
+    //       myGame.curNet.loadStimRoundInd(i);
+    //     }
+    //   }
+    // }
   };
 
   this.goForward = function() {
-    if ( (this.activeNode + 1) < this.nodes.length ) {
-      this.activeNode += 1;
-      // console.log('new active node = ', this.activeNode);
-    } else {
-      console.log('cant goForward on slider');
-    }
+    this.activeNode += 1;
+    // if ( (this.activeNode + 1) < this.nodes.length ) {
+    //   this.activeNode += 1;
+    // } else {
+    //   console.log('cant goForward on slider');
+    // }
   };
 
   this.goBack = function() {
-    if ( (this.activeNode - 1) >= 0 ) {
-      this.activeNode -= 1;
-      // console.log('new active node = ', this.activeNode);
-    } else {
-      console.log('cant goBack on slider');
-    }
+    this.activeNode -= 1;
+    // if ( (this.activeNode - 1) >= 0 ) {
+    //   this.activeNode -= 1;
+    // } else {
+    //   console.log('cant goBack on slider');
+    // }
   };
 
   this.draw = function() {
+    ctx.save();
+    ctx.lineWidth = 1;
     // mid line
     ctx.beginPath();
-    ctx.lineWidth = 1;
     ctx.strokeStyle = this.primaryColor;
     ctx.moveTo( this.x,this.y+(this.height/2) );
     ctx.lineTo( this.x+this.width,this.y+(this.height/2) );
     ctx.stroke();
-    // node cirlces
+    // node ticks
     for (let i = 0; i < this.nodeTotal; i++) {
       let rad;
       ctx.beginPath();
-      ctx.lineWidth = 2;
       ctx.strokeStyle = 'black';
       if (this.activeNode === i) {
         ctx.fillStyle = 'gold';
@@ -88,18 +88,8 @@ function Slider(x,y,width,height,nodeTotal,pColor) {
                 ); // x, y, radius, sAngle, eAngle
       ctx.fill();
       ctx.stroke();
-      // HITBOXES
-      // let extra = 6;
-      // ctx.beginPath();
-      // ctx.lineWidth = 1;
-      // ctx.strokeStyle = 'black';
-      // ctx.rect( this.nodes[i].x - this.nodes[i].rad - extra,
-      //           this.nodes[i].y - this.nodes[i].rad - extra,
-      //           this.nodes[i].rad * 2 + (extra*2),
-      //           this.nodes[i].rad * 2 + (extra*2)
-      //         );
-      // ctx.stroke();
     } // for
+    ctx.restore();
   };
 
   this.update = function() {
@@ -107,11 +97,9 @@ function Slider(x,y,width,height,nodeTotal,pColor) {
 } // slider
 
 
-/*jshint esversion: 6 */
-
 function SliderType2(x,y,width,height,nodeTotal,pColor) {
-  this.x = x;
-  this.y = y;
+  this.x = x + 0.5;
+  this.y = y + 0.5;
   this.width = width;
   this.height = height;
   this.nodeTotal = nodeTotal;
@@ -124,27 +112,29 @@ function SliderType2(x,y,width,height,nodeTotal,pColor) {
     this.nodes = [];
     for (let i = 0; i < this.nodeTotal; i++) {
       let tmpNode = {};
-      let xOffset = this.x + (i * (this.width/(this.nodeTotal-1)));
-      let yOffset = this.y + this.height/2;
+      let xOffset = this.x + (i*2); // space lines by 2
+      let yOffset = this.y;
       let newColor = this.primaryColor;
       tmpNode = {
         x: xOffset,
         y: yOffset,
-        color: newColor,
-        rad: 8
-      }
+        color: newColor
+      };
       this.nodes.push(tmpNode);
     }
+    console.log('slider = ', this);
   };
 
   this.checkNodeClicked = function(mX,mY) {
-    if ( (mX > (this.x-this.nodes[0].rad)) && (mX < (this.x+this.width+this.nodes[0].rad)) && (mY > this.y) && (mY < (this.y+this.height)) ) { // check if within slider box first
+    let extraGap = 4; // this is extra pixels to check on hitbox size
+    if (  ((mX >= (this.x-extraGap)) && (mX <= (this.x+this.width+(extraGap*2)))) &&
+          ((mY >= this.y-extraGap) && (mY <= (this.y+this.height+(extraGap*2))))  ) { // check if within slider box first
       for (let i = 0; i < this.nodes.length; i++) { // check if clicked each slider node
-        let node = this.nodes[i];
-        let extra = 6; // this is extra pixels to check on hitbox size
-        if ( (mX > (node.x-node.rad-extra)) && (mX < (node.x+node.rad+extra+extra)) &&
-             (mY > (node.y-node.rad-extra)) && (mY < (node.y+node.rad+extra+extra)) ) {
+        if ( (mX === this.nodes[i].x) || (mX === this.nodes[i].x-1)) {
+          // console.log('mX, mY = '+mX+','+mY);
           this.activeNode = i;
+          console.log('this.nodes[i] = ', this.nodes[i]);
+          console.log('active Node now = ', i);
           myGame.curNet.loadStimRoundInd(i);
         }
       }
@@ -154,7 +144,6 @@ function SliderType2(x,y,width,height,nodeTotal,pColor) {
   this.goForward = function() {
     if ( (this.activeNode + 1) < this.nodes.length ) {
       this.activeNode += 1;
-      // console.log('new active node = ', this.activeNode);
     } else {
       console.log('cant goForward on slider');
     }
@@ -163,7 +152,6 @@ function SliderType2(x,y,width,height,nodeTotal,pColor) {
   this.goBack = function() {
     if ( (this.activeNode - 1) >= 0 ) {
       this.activeNode -= 1;
-      // console.log('new active node = ', this.activeNode);
     } else {
       console.log('cant goBack on slider');
     }
@@ -172,45 +160,53 @@ function SliderType2(x,y,width,height,nodeTotal,pColor) {
   this.draw = function() {
     // mid line
     ctx.beginPath();
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = this.primaryColor;
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'grey';
     ctx.moveTo( this.x,this.y+(this.height/2) );
     ctx.lineTo( this.x+this.width,this.y+(this.height/2) );
     ctx.stroke();
-    // node cirlces
-    for (let i = 0; i < this.nodeTotal; i++) {
-      let rad;
+    // hitbox
+    // let gap = 4;
+    // ctx.beginPath();
+    // ctx.lineWidth = 1;
+    // ctx.strokeStyle = 'green';
+    // ctx.rect(this.x-gap,this.y-gap,this.width+(gap*2),this.height+(gap*2));
+    // ctx.stroke();
+    // node lines
+    for (let i = 0; i < this.nodes.length; i++) {
+      let curNode = this.nodes[i];
+      // top/bot filigree
       ctx.beginPath();
       ctx.lineWidth = 1;
-      ctx.strokeStyle = 'black';
       if (this.activeNode === i) {
-        ctx.fillStyle = 'gold';
-        rad = 12;
+        ctx.strokeStyle = 'black';
+        let tSize = 6;
+        ctx.beginPath();
+        ctx.lineWidth = 1;
+        ctx.moveTo(curNode.x, curNode.y);
+        ctx.lineTo(curNode.x-tSize, curNode.y-tSize);
+        ctx.lineTo(curNode.x+tSize, curNode.y-tSize);
+        ctx.lineTo(curNode.x, curNode.y);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.lineWidth = 1;
+        ctx.moveTo(curNode.x, curNode.y+this.height);
+        ctx.lineTo(curNode.x-tSize, curNode.y+tSize+this.height);
+        ctx.lineTo(curNode.x+tSize, curNode.y+tSize+this.height);
+        ctx.lineTo(curNode.x, curNode.y+this.height);
+        ctx.stroke();
       } else {
-        ctx.fillStyle = this.nodes[i].color;
-        rad = this.nodes[i].rad;
+        ctx.strokeStyle = 'grey';
       }
-      ctx.arc(  this.nodes[i].x,
-                this.nodes[i].y,
-                rad,
-                0,
-                2*Math.PI
-                ); // x, y, radius, sAngle, eAngle
-      ctx.fill();
+      // vert line
+      ctx.moveTo(curNode.x, curNode.y);
+      ctx.lineTo(curNode.x, curNode.y+this.height);
       ctx.stroke();
-      // HITBOXES
-      // let extra = 6;
-      // ctx.beginPath();
-      // ctx.lineWidth = 1;
-      // ctx.strokeStyle = 'black';
-      // ctx.rect( this.nodes[i].x - this.nodes[i].rad - extra,
-      //           this.nodes[i].y - this.nodes[i].rad - extra,
-      //           this.nodes[i].rad * 2 + (extra*2),
-      //           this.nodes[i].rad * 2 + (extra*2)
-      //         );
-      // ctx.stroke();
+      ctx.beginPath();
+      ctx.stroke();
     } // for
-  };
+
+  }; // draw
 
   this.update = function() {
   };

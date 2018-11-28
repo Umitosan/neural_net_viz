@@ -14,9 +14,9 @@ function Net(x,y,width,height,cellTotal,color) {
   this.txtStatusLeft = undefined;
   this.allDataFramesStims = undefined;
   this.currentDataFrame = undefined;
-  this.currentDataFrameSlider = undefined;
+  // this.currentDataFrameSlider = undefined;
   this.currentDataFrameSlider2 = undefined;
-  this.allStimRounds = undefined;
+  this.curDataFrameStimRounds = undefined;
   this.curStimRound = undefined;
   this.curStimRoundIndex = undefined;
 
@@ -31,7 +31,7 @@ function Net(x,y,width,height,cellTotal,color) {
     let bodyCellCount = totalCellCount - inputCellCount - outputCellCount; // for middle column
     let diameter = (this.width / totalCellCount) * 0.8;
     let leftOffset = 4;
-    let topScreenOffset = 170;
+    let topScreenOffset = 190;
     let xGap = 170;
     let curIndex = 0;
     // LEFT COLUMN - input cells column
@@ -85,7 +85,7 @@ function Net(x,y,width,height,cellTotal,color) {
     this.txtStatusRight = new TxtGroup( /* x      */  canW - 202,
                                         /* y      */  2,
                                         /* width  */  200,
-                                        /* height */  140,
+                                        /* height */  120,
                                         /* font   */  "16px Ariel",
                                         /* color  */  "blue"
     );
@@ -94,7 +94,7 @@ function Net(x,y,width,height,cellTotal,color) {
     this.txtStatusLeft = new TxtGroup( /* x       */  2,
                                         /* y      */  2,
                                         /* width  */  200,
-                                        /* height */  140,
+                                        /* height */  120,
                                         /* font   */  "16px Ariel",
                                         /* color  */  "blue"
     );
@@ -111,8 +111,9 @@ function Net(x,y,width,height,cellTotal,color) {
 
   this.loadNetStim = function() {
     this.currentDataFrame = myStim.dataSetRow_0.dataFrame_0;
-    this.allStimRounds = this.getDataFrameStimRounds();
+    this.curDataFrameStimRounds = this.getDataFrameStimRounds();
     this.allDataFramesStims = this.getDataFramesStimAll();
+    console.log('this.curDataFrameStimRounds = ', this.curDataFrameStimRounds);
     console.log('this.allDataFramesStims = ', this.allDataFramesStims);
     this.loadStimRoundInd(0);
     this.txtStatusRight.clear();
@@ -122,36 +123,40 @@ function Net(x,y,width,height,cellTotal,color) {
     this.buildDataFrameInterface();
   };
 
-  this.loadStimRoundInd = function(ind) {
-    this.curStimRoundIndex = ind;
-    this.curStimRound = this.allStimRounds[ind];
+  this.loadStimRoundInd = function(loadIndex) {
+    this.curStimRoundIndex = loadIndex;
+    let count = 0;
+    for (let i = 0; i < this.allDataFramesStims.length; i++) {
+      for (let j = 0; j < this.allDataFramesStims[i].length; j++) {
+        if (count === loadIndex) {
+          this.curStimRound = this.allDataFramesStims[i][j];
+          console.log('this.allDataFramesStims[i][j] = ',this.allDataFramesStims[i][j]);
+          console.log('dataframe,stimround = '+i+','+j);
+        }
+        count++;
+      }
+    }
+    // this.curStimRound = this.curDataFrameStimRounds[ind]; // old lookup
     this.loadCellStatus();
   };
 
   this.nextStimRound = function() {
-    if ((this.curStimRoundIndex + 1) < this.allStimRounds.length) {
-      this.loadStimRoundInd(this.curStimRoundIndex + 1);
-      this.currentDataFrameSlider.goForward(); // update UI
-    } else {
-      console.log('no NEXT stim round on net');
-    }
+    this.loadStimRoundInd(this.curStimRoundIndex + 1);
+    this.currentDataFrameSlider2.goForward(); // update UI
   };
 
   this.prevStimRound = function() {
-    if ((this.curStimRoundIndex - 1) >= 0) {
-      this.loadStimRoundInd(this.curStimRoundIndex - 1);
-      this.currentDataFrameSlider.goBack(); // update UI
-    } else {
-      console.log('no PREV stim round on net');
-    }
+    this.loadStimRoundInd(this.curStimRoundIndex - 1);
+    this.currentDataFrameSlider2.goBack(); // update UI
   };
 
   this.loadCellStatus = function() {
     let ind = 0;
-    for (let key in this.curStimRound.cells) {
-      let newSt = this.curStimRound.cells[key].status;
-      this.cells[ind].status = newSt;
-      if (newSt === 'excited') {
+    // for (let key in this.curStimRound.cells) {
+    for (let i = 0; i < this.curStimRound.length; i++) {
+      let newStatus = this.curStimRound[i].status;
+      this.cells[ind].status = newStatus;
+      if (newStatus === 'excited') {
         this.cells[ind].curColor = 'red';
       } else {
         this.cells[ind].curColor = this.cells[ind].baseColor;
@@ -160,15 +165,25 @@ function Net(x,y,width,height,cellTotal,color) {
     }
   };
 
-  this.getStimRoundCount = function() {
+  // this.getStimRoundCount = function() {
+  //   let count = 0;
+  //   for (let key in this.currentDataFrame) {
+  //     if (key.slice(0,4) === 'stim') {
+  //       count++;
+  //     }
+  //   }
+  //   return count;
+  // };
+
+  this.getStimRoundCountAll = function() {
     let count = 0;
-    for (let key in this.currentDataFrame) {
-      if (key.slice(0,4) === 'stim') {
+    for (let i = 0; i < this.allDataFramesStims.length; i++) {
+      for (let j = 0; j < this.allDataFramesStims[i].length; j++) {
         count++;
       }
     }
     return count;
-  }
+  };
 
   this.getDataFramesStimAll = function() {
     let dataFrames = [];
@@ -178,7 +193,7 @@ function Net(x,y,width,height,cellTotal,color) {
         let stimRounds = [];
         for (let key2 in curDF) {
           if (key2.slice(0,4) === 'stim') {
-            let curSR = curDF.cells;
+            let curSR = curDF[key2].cells;
             let cells = [];
             for (let key3 in curSR) {
               cells.push(curSR[key3]);
@@ -203,29 +218,30 @@ function Net(x,y,width,height,cellTotal,color) {
   };
 
   this.buildDataFrameInterface = function() {
-    console.log('building dataFrame UI');
-    let stimRoundTotal = this.getStimRoundCount();
+    // let stimRoundTotal = this.getStimRoundCount();
     // Slider(x,y,width,height,nodeTotal)
-    let newSlider = new Slider( /* x         */  (canW-504)/2,
-                                /* y         */  40,
-                                /* width     */  504,
-                                /* height    */  60,
-                                /* nodeTotal */  stimRoundTotal,
-                                /* pColor    */  this.color
-                              );
-    newSlider.init();
-    this.currentDataFrameSlider = newSlider;
-    // Slider(x,y,width,height,nodeTotal)
-    // let newSlider2 = new SliderType2( /* x         */  (canW-504)/2,
-    //                                   /* y         */  70,
-    //                                   /* width     */  504,
-    //                                   /* height    */  60,
-    //                                   /* nodeTotal */  stimRoundTotal,
-    //                                   /* pColor    */  this.color
+    // let newSlider = new Slider( /* x         */  (canW-504)/2,
+    //                             /* y         */  40,
+    //                             /* width     */  504,
+    //                             /* height    */  60,
+    //                             /* nodeTotal */  stimRoundTotal,
+    //                             /* pColor    */  this.color
     //                           );
-    // newSlider2.init();
-    // this.currentDataFrameSlider2 = newSlider2;
-  };
+    // newSlider.init();
+    // this.currentDataFrameSlider = newSlider;
+
+    let stimRoundTotal2 = this.getStimRoundCountAll();
+    // Slider(x,y,width,height,nodeTotal)
+    let newSlider2 = new SliderType2( /* x         */  (canW-(stimRoundTotal2*2))/2,
+                                      /* y         */  130,
+                                      /* width     */  (stimRoundTotal2*2)-2, // each node needs 2 pixels
+                                      /* height    */  20,
+                                      /* nodeTotal */  stimRoundTotal2,
+                                      /* pColor    */  this.color
+                              );
+    newSlider2.init();
+    this.currentDataFrameSlider2 = newSlider2;
+  }; // buildDataFrameInterface
 
   this.draw = function() {
     for (let i = 0; i < this.cells.length; i++) {
@@ -237,7 +253,7 @@ function Net(x,y,width,height,cellTotal,color) {
     this.txtTitle.draw();
     this.txtStatusLeft.draw();
     this.txtStatusRight.draw();
-    if (this.currentDataFrameSlider !== undefined) { this.currentDataFrameSlider.draw(); }
+    // if (this.currentDataFrameSlider !== undefined) { this.currentDataFrameSlider.draw(); }
     if (this.currentDataFrameSlider2 !== undefined) { this.currentDataFrameSlider2.draw(); }
   };
 
