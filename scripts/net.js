@@ -13,7 +13,7 @@ function Net(x,y,width,height,cellTotal,color) {
   this.txtStatusRight = undefined;
   this.txtStatusLeft = undefined;
   this.allDataFramesStims = undefined;
-  this.currentDataFrame = undefined;
+  // this.currentDataFrame = undefined;
   // this.currentDataFrameSlider = undefined;
   this.currentDataFrameSlider2 = undefined;
   this.curDataFrameStimRounds = undefined;
@@ -110,8 +110,8 @@ function Net(x,y,width,height,cellTotal,color) {
   };
 
   this.loadNetStim = function() {
-    this.currentDataFrame = myStim.dataSetRow_0.dataFrame_0;
-    this.curDataFrameStimRounds = this.getDataFrameStimRounds();
+    // this.currentDataFrame = myStim.dataSetRow_0.dataFrame_0;
+    // this.curDataFrameStimRounds = this.getDataFrameStimRounds();
     this.allDataFramesStims = this.getDataFramesStimAll();
     console.log('this.curDataFrameStimRounds = ', this.curDataFrameStimRounds);
     console.log('this.allDataFramesStims = ', this.allDataFramesStims);
@@ -130,8 +130,8 @@ function Net(x,y,width,height,cellTotal,color) {
       for (let j = 0; j < this.allDataFramesStims[i].length; j++) {
         if (count === loadIndex) {
           this.curStimRound = this.allDataFramesStims[i][j];
-          console.log('this.allDataFramesStims[i][j] = ',this.allDataFramesStims[i][j]);
-          console.log('dataframe,stimround = '+i+','+j);
+          // console.log('this.allDataFramesStims[i][j] = ',this.allDataFramesStims[i][j]);
+          // console.log('dataframe,stimround = '+i+','+j);
         }
         count++;
       }
@@ -207,15 +207,15 @@ function Net(x,y,width,height,cellTotal,color) {
     return dataFrames;
   };
 
-  this.getDataFrameStimRounds = function() {
-    let stimRounds = [];
-    for (let key in this.currentDataFrame) {
-      if (key.slice(0,4) === 'stim') {
-        stimRounds.push(this.currentDataFrame[key]);
-      }
-    }
-    return stimRounds;
-  };
+  // this.getDataFrameStimRounds = function() {
+  //   let stimRounds = [];
+  //   for (let key in this.currentDataFrame) {
+  //     if (key.slice(0,4) === 'stim') {
+  //       stimRounds.push(this.currentDataFrame[key]);
+  //     }
+  //   }
+  //   return stimRounds;
+  // };
 
   this.buildDataFrameInterface = function() {
     // let stimRoundTotal = this.getStimRoundCount();

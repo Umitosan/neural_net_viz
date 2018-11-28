@@ -133,8 +133,8 @@ function SliderType2(x,y,width,height,nodeTotal,pColor) {
         if ( (mX === this.nodes[i].x) || (mX === this.nodes[i].x-1)) {
           // console.log('mX, mY = '+mX+','+mY);
           this.activeNode = i;
-          console.log('this.nodes[i] = ', this.nodes[i]);
-          console.log('active Node now = ', i);
+          // console.log('this.nodes[i] = ', this.nodes[i]);
+          // console.log('active Node now = ', i);
           myGame.curNet.loadStimRoundInd(i);
         }
       }
