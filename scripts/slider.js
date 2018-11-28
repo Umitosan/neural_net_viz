@@ -175,36 +175,42 @@ function SliderType2(x,y,width,height,nodeTotal,pColor) {
     // node lines
     for (let i = 0; i < this.nodes.length; i++) {
       let curNode = this.nodes[i];
-      // top/bot filigree
       ctx.beginPath();
-      ctx.lineWidth = 1;
-      if (this.activeNode === i) {
-        ctx.strokeStyle = 'black';
-        let tSize = 6;
-        ctx.beginPath();
-        ctx.lineWidth = 1;
-        ctx.moveTo(curNode.x, curNode.y);
-        ctx.lineTo(curNode.x-tSize, curNode.y-tSize);
-        ctx.lineTo(curNode.x+tSize, curNode.y-tSize);
-        ctx.lineTo(curNode.x, curNode.y);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.lineWidth = 1;
-        ctx.moveTo(curNode.x, curNode.y+this.height);
-        ctx.lineTo(curNode.x-tSize, curNode.y+tSize+this.height);
-        ctx.lineTo(curNode.x+tSize, curNode.y+tSize+this.height);
-        ctx.lineTo(curNode.x, curNode.y+this.height);
-        ctx.stroke();
-      } else {
-        ctx.strokeStyle = 'grey';
-      }
-      // vert line
+      ctx.strokeStyle = 'grey';
       ctx.moveTo(curNode.x, curNode.y);
       ctx.lineTo(curNode.x, curNode.y+this.height);
       ctx.stroke();
-      ctx.beginPath();
-      ctx.stroke();
     } // for
+    // top/bot filigree
+    let curNode = this.nodes[this.activeNode];
+    let tSize = 8;
+    ctx.beginPath();
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'black';
+    ctx.fillStyle = 'lightgreen';
+    ctx.lineWidth = 1;
+    let yoff = 2;
+    ctx.moveTo(curNode.x, curNode.y-yoff);
+    ctx.lineTo(curNode.x-tSize, curNode.y-yoff-tSize);
+    ctx.lineTo(curNode.x+tSize, curNode.y-yoff-tSize);
+    ctx.lineTo(curNode.x, curNode.y-yoff);
+    ctx.fill();
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.lineWidth = 1;
+    ctx.moveTo(curNode.x, curNode.y+this.height+yoff);
+    ctx.lineTo(curNode.x-tSize, curNode.y+yoff+tSize+this.height);
+    ctx.lineTo(curNode.x+tSize, curNode.y+yoff+tSize+this.height);
+    ctx.lineTo(curNode.x, curNode.y+this.height+yoff);
+    ctx.fill();
+    ctx.stroke();
+    // box
+    ctx.beginPath();
+    ctx.fillStyle = 'lightgreen';
+    ctx.strokeStyle = 'black';
+    ctx.rect(curNode.x-2, curNode.y-1,4,this.height+2);
+    ctx.fill();
+    ctx.stroke();
 
   }; // draw
 
