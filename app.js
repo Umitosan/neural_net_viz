@@ -4,7 +4,8 @@
 var myJson1,
     myNets,
     myJson2,
-    myStim;
+    myStim,
+    myStim2;
 
 var xmlData;
 var xmlDataString;
@@ -483,6 +484,23 @@ $(document).ready(function() {
     reader.readAsText(myFile);
   }
 
+  // new load format
+  // {dataSetRows: Array(3)}
+  //   dataSetRows: Array(3)
+  //     0:
+  //       dataFrames: Array(244)
+  //         0:
+  //           stimulusRounds: Array(8)
+  //             0:
+  //               cells: Array(50)
+  //                 0:
+  //                   activationCount: 1
+  //                   lastRoundStimulusChanged: 1
+  //                   roundRefractionComplete: 2
+  //                   status: "excited"
+  //                   stimulus: 0
+  // myStim2[0]["dataFrames"][0]['stimulusRounds'][0]["cells"][0]
+
   function getFileJSON2(evt) {
     linesRemainToProcess = 100;
     let myFile = evt.target.files[0];
@@ -493,17 +511,23 @@ $(document).ready(function() {
     errRight.innerText = "";
     reader.onload = function(){
       let text = reader.result;
-      // console.log("file preview: ", reader.result.substring(0, 100));
+      console.log("file preview: ", reader.result.substring(0, 100));
       myJson2 = JSON.parse(reader.result);
-      if (typeof myJson2[0] !== "object") {
+      if (typeof myJson2[0] === "undefined") { // must be object
         if (myJson2.net_0 !== undefined) {
           file2Loaded = true;
-          myStim = myJson2.net_0 ;
+          myStim = myJson2.net_0;
+          myStim = myJson2.net_0;
           let finalJsonStrHTML = printJsonAsHTML(myJson2);
-          errRight.innerText = "File Good";
+          errRight.innerText = "Good: net_0 found";
           $("#err-msg-right").css('color', 'blue');
           outputDivRight.innerHTML = finalJsonStrHTML;
           myGame.loadStimulus(); // add simulus box info
+        } else if (myJson2.dataSetRows !== undefined) {
+          myStim2 = myJson2.dataSetRows;
+          $("#err-msg-right").css('color', 'blue');
+          console.log('yay ready to load dataSetRows Array');
+          errRight.innerText = "Good: dataSetRows found";
         } else {
           errRight.innerText = "Bad File: no Net_0 found!";
           outputDivRight.innerHTML = "No stimulus / bad format";
@@ -511,7 +535,6 @@ $(document).ready(function() {
       } else {
         errRight.innerText = "Bad File: no Net Stimulus!";
         outputDivRight.innerHTML = "No Nets and or Population found in JSON";
-        console.log('no stimulus found');
       }
     };
     reader.readAsText(myFile);
