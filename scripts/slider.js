@@ -35,7 +35,7 @@ function Slider(x,y,width,height,nodeTotal,pColor) {
     //     if ( (mX > (node.x-node.rad-extra)) && (mX < (node.x+node.rad+extra+extra)) &&
     //          (mY > (node.y-node.rad-extra)) && (mY < (node.y+node.rad+extra+extra)) ) {
     //       this.activeNode = i;
-    //       myGame.curNet.loadStimRoundInd(i);
+    //       myGame.curNet.loadStimRound(i);
     //     }
     //   }
     // }
@@ -135,7 +135,7 @@ function SliderType2(x,y,width,height,nodeTotal,pColor) {
           this.activeNode = i;
           // console.log('this.nodes[i] = ', this.nodes[i]);
           // console.log('active Node now = ', i);
-          myGame.curNet.loadStimRoundInd(i);
+          myGame.curNet.loadStimRound(i);
         }
       }
     }

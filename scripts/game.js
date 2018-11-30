@@ -12,8 +12,9 @@ function Game(updateDur) {
   this.pausedTxt = undefined;
   this.mode = 'init';
   this.pop = undefined;
-  this.curNet = undefined;
+  this.curNet = undefined; // myJson1.Population.nets
   this.curDragCell = undefined;
+  this.curSelectedCell = undefined;
 
   this.init = function() {
     this.bg.src = 'bg1.png';
@@ -42,7 +43,7 @@ function Game(updateDur) {
   };
 
   this.loadStimulus = function() {
-    if ( (this.pop !== undefined) && (myStim !== undefined) ) {
+    if ( (this.curNet !== undefined) && (myDataSetRows !== undefined) ) {
       this.curNet.loadNetStim();
     }
   };
@@ -63,6 +64,7 @@ function Game(updateDur) {
       if ( (mouseX > (cell.x-cell.rad)) && (mouseX < (cell.x+cell.rad)) &&
            (mouseY > (cell.y-cell.rad)) && (mouseY < (cell.y+cell.rad)) ) {
         this.curDragCell = this.curNet.cells[i];
+        this.curSelectedCell = this.curNet.cells[i];
       }
     }
   };
@@ -70,11 +72,12 @@ function Game(updateDur) {
   this.revertNetClick = function() {
     if ( (file1Loaded === true) && (this.mode === "sim") ) {
       this.curDragCell = undefined;
+      this.curSelectedCell = undefined;
     }
   };
 
   this.trySlide = function(someDir) {
-    if (file2Loaded === true) {
+    if (this.mode === 'sim') {
       if (someDir === 'right') {
         this.curNet.nextStimRound();
       } else if (someDir === 'left') {
@@ -83,7 +86,7 @@ function Game(updateDur) {
         console.log('not valid slide direction');
       }
     } else {
-      console.log('need stimulus file');
+      console.log('game not ready in sim mode');
     }
   };
 

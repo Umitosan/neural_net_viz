@@ -4,8 +4,7 @@
 var myJson1,
     myNets,
     myJson2,
-    myStim,
-    myStim2;
+    myDataSetRows;
 
 var xmlData;
 var xmlDataString;
@@ -348,7 +347,8 @@ $(document).ready(function() {
     console.log("start button clicked");
     console.log("myGame.mode = ", myGame.mode);
     console.log("file1Loaded = ", file1Loaded);
-    if ( ((myGame.mode === 'init') && (file1Loaded === true)) || (file1Loaded === true) ) {
+    console.log("file2Loaded = ", file2Loaded);
+    if ( ((myGame.mode === 'init') && (file1Loaded === true)) && (file2Loaded === true) ) {
       myGame.mode = 'sim';
       console.log('mode now sim');
       myGame.buildNets();
@@ -361,6 +361,9 @@ $(document).ready(function() {
       myGame.updateDuration = (1000/v);
       myGame.lastUpdate = performance.now();
     } else {
+      if ((file1Loaded !== true) || (file1Loaded !== true)) {
+        console.log('must load both files before starting');
+      }
       console.log('must reset before starting again');
     }
   });
@@ -468,21 +471,59 @@ $(document).ready(function() {
       let text = reader.result;
       // console.log("file preview: ", reader.result.substring(0, 100));
       myJson1 = JSON.parse(reader.result);
-      if (myJson1.Population !== undefined) {
+      if (myJson1.Population.nets[0] !== undefined) {
         file1Loaded = true;
         myNets = myJson1.Population.nets;
         let finalJsonStrHTML = printJsonAsHTML(myJson1);
-        errLeft.innerText = "File Good";
         $("#err-msg-left").css('color', 'blue');
+        errLeft.innerText = "File GOOD: found NETS";
         outputDivLeft.innerHTML = finalJsonStrHTML;
       } else {
-        errLeft.innerText = "Bad File: no NETS!";
+        errLeft.innerText = "file BAD: no NETS!";
         outputDivLeft.innerHTML = "No Nets and or Population found in JSON";
-        console.log('no nets found');
       }
     };
     reader.readAsText(myFile);
   }
+
+  // function getFileJSON2(evt) {
+  //   linesRemainToProcess = 100;
+  //   let myFile = evt.target.files[0];
+  //   let curOutputLines = 0;
+  //   let reader = new FileReader();
+  //   let outputDivRight = $("#htmlOutputRight")[0];
+  //   let errRight = $("#err-msg-right")[0];
+  //   errRight.innerText = "";
+  //   reader.onload = function() {
+  //     let text = reader.result;
+  //     console.log("file preview: ", reader.result.substring(0, 100));
+  //     myJson2 = JSON.parse(reader.result);
+  //     if (typeof myJson2[0] === "undefined") { // must be object
+  //       if (myJson2.net_0 !== undefined) {
+  //         file2Loaded = true;
+  //         myDataSetRows = myJson2.net_0;
+  //         myDataSetRows = myJson2.net_0;
+  //         let finalJsonStrHTML = printJsonAsHTML(myJson2);
+  //         errRight.innerText = "Good: net_0 found";
+  //         $("#err-msg-right").css('color', 'blue');
+  //         outputDivRight.innerHTML = finalJsonStrHTML;
+  //         myGame.loadStimulus(); // add simulus box info
+  //       } else if (myJson2.dataSetRows !== undefined) {
+  //         myDataSetRows2 = myJson2.dataSetRows;
+  //         $("#err-msg-right").css('color', 'blue');
+  //         console.log('yay ready to load dataSetRows Array');
+  //         errRight.innerText = "Good: dataSetRows found";
+  //       } else {
+  //         errRight.innerText = "Bad File: no Net_0 found!";
+  //         outputDivRight.innerHTML = "No stimulus / bad format";
+  //       }
+  //     } else {
+  //       errRight.innerText = "Bad File: no Net Stimulus!";
+  //       outputDivRight.innerHTML = "No Nets and or Population found in JSON";
+  //     }
+  //   };
+  //   reader.readAsText(myFile);
+  // }
 
   // new load format
   // {dataSetRows: Array(3)}
@@ -499,7 +540,8 @@ $(document).ready(function() {
   //                   roundRefractionComplete: 2
   //                   status: "excited"
   //                   stimulus: 0
-  // myStim2[0]["dataFrames"][0]['stimulusRounds'][0]["cells"][0]
+
+  // myDataSetRows2[0]["dataFrames"][0]['stimulusRounds'][0]["cells"][0]
 
   function getFileJSON2(evt) {
     linesRemainToProcess = 100;
@@ -509,32 +551,26 @@ $(document).ready(function() {
     let outputDivRight = $("#htmlOutputRight")[0];
     let errRight = $("#err-msg-right")[0];
     errRight.innerText = "";
-    reader.onload = function(){
+    reader.onload = function() {
       let text = reader.result;
       console.log("file preview: ", reader.result.substring(0, 100));
       myJson2 = JSON.parse(reader.result);
       if (typeof myJson2[0] === "undefined") { // must be object
-        if (myJson2.net_0 !== undefined) {
+        if (myJson2.dataSetRows[0].dataFrames[0].stimulusRounds[0] !== undefined) {
           file2Loaded = true;
-          myStim = myJson2.net_0;
-          myStim = myJson2.net_0;
+          myDataSetRows = myJson2.dataSetRows;
           let finalJsonStrHTML = printJsonAsHTML(myJson2);
-          errRight.innerText = "Good: net_0 found";
           $("#err-msg-right").css('color', 'blue');
+          errRight.innerText = "File GOOD: dataSetRows found";
           outputDivRight.innerHTML = finalJsonStrHTML;
-          myGame.loadStimulus(); // add simulus box info
-        } else if (myJson2.dataSetRows !== undefined) {
-          myStim2 = myJson2.dataSetRows;
-          $("#err-msg-right").css('color', 'blue');
-          console.log('yay ready to load dataSetRows Array');
-          errRight.innerText = "Good: dataSetRows found";
+          myGame.loadStimulus();
         } else {
-          errRight.innerText = "Bad File: no Net_0 found!";
-          outputDivRight.innerHTML = "No stimulus / bad format";
+          errRight.innerText = "File BAD: no Net_0 found!";
+          outputDivRight.innerHTML = "JSON format: BAD";
         }
       } else {
-        errRight.innerText = "Bad File: no Net Stimulus!";
-        outputDivRight.innerHTML = "No Nets and or Population found in JSON";
+        errRight.innerText = "Bad File: expected JSON object!";
+        outputDivRight.innerHTML = "JSON format: BAD";
       }
     };
     reader.readAsText(myFile);
