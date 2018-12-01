@@ -13,6 +13,8 @@ function Net(x,y,width,height,cellTotal,color) {
   this.txtStatusRight = undefined;
   this.txtStatusLeft = undefined;
   this.currentDataFrameSlider2 = undefined;
+  this.curDataFrame = undefined;
+  this.curDataFrameIndex = undefined;
   this.curDataFrameStimRounds = undefined;
   this.curStimRound = undefined;
   this.curStimRoundIndex = undefined;
@@ -107,24 +109,33 @@ function Net(x,y,width,height,cellTotal,color) {
   };
 
   // myDataSetRows2[0]["dataFrames"][0]['stimulusRounds'][0]["cells"][0]
-
-  this.loadNetStim = function() {
-    this.curDataFrameStimRounds = myDataSetRows[0].dataFrames[0].stimulusRounds;  // load just one dataFrame
-    this.loadStimRound(0);
+  this.loadDataFrameByInd = function(ind) {
+    this.curDataFrame = myDataSetRows[0].dataFrames[ind];
+    this.curDataFrameIndex = ind;
+    this.curDataFrameStimRounds = this.curDataFrame.stimulusRounds;  // load just one dataFrame
+    this.loadStimRoundByInd(0); // load stim round 0 by default when changing dataFrames
     this.txtStatusRight.clear();
     this.txtStatusRight.addLine("DataSetRow: 0");
-    this.txtStatusRight.addLine("DataFrame: 0");
-    this.txtStatusRight.addLine("StimRound: 1");
+    this.txtStatusRight.addLine("DataFrame: "+(this.curDataFrameIndex));
+    this.txtStatusRight.addLine("StimRound: "+(this.curStimRoundIndex+1)); // stim rounds count from 1 instead of 0
     this.buildDataFrameInterface();
+    this.refreshTxtStatusRight();
   };
 
-  this.loadStimRound = function(loadIndex) {
-    this.curStimRoundIndex = loadIndex;
-    this.curStimRound = this.curDataFrameStimRounds[loadIndex].cells;
+  this.loadStimRoundByInd = function(ind) {
+    this.curStimRoundIndex = ind;
+    this.curStimRound = this.curDataFrameStimRounds[ind].cells;
     // console.log('this.curStimRound = ', this.curStimRound);
     this.loadCellStatus();
+    this.refreshTxtStatusRight();
   };
 
+  this.refreshTxtStatusRight = function() {  // clear and update the nubmers in the UI in the box
+    this.txtStatusRight.clear();
+    this.txtStatusRight.addLine("DataSetRow: 0");
+    this.txtStatusRight.addLine("DataFrame: "+(this.curDataFrameIndex));
+    this.txtStatusRight.addLine("StimRound: "+(this.curStimRoundIndex+1)); // stim rounds count from 1 instead of 0
+  };
 
   // myGame.curNet.curDataFrameStimRounds[0].cells.length
   this.loadCellStatus = function() {
@@ -145,7 +156,7 @@ function Net(x,y,width,height,cellTotal,color) {
     if ((this.curStimRoundIndex + 1) >= this.curDataFrameStimRounds.length) {
       console.log('at edge right');
     } else {
-      this.loadStimRound(this.curStimRoundIndex + 1);
+      this.loadStimRoundByInd(this.curStimRoundIndex + 1);
       this.currentDataFrameSlider2.goForward(); // update UI
     }
   };
@@ -154,19 +165,9 @@ function Net(x,y,width,height,cellTotal,color) {
     if ((this.curStimRoundIndex - 1) < 0) {
       console.log('at edge left');
     } else {
-    this.loadStimRound(this.curStimRoundIndex - 1);
+    this.loadStimRoundByInd(this.curStimRoundIndex - 1);
     this.currentDataFrameSlider2.goBack(); // update UI
     }
-  };
-
-  this.getStimRoundCountAll = function() {
-    let count = 0;
-    for (let i = 0; i < this.curDataFrameStimRounds.length; i++) {
-      for (let j = 0; j < this.curDataFrameStimRounds[i].length; j++) {
-        count++;
-      }
-    }
-    return count;
   };
 
   this.buildDataFrameInterface = function() {

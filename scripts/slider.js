@@ -135,7 +135,7 @@ function SliderType2(x,y,width,height,nodeTotal,pColor) {
           this.activeNode = i;
           // console.log('this.nodes[i] = ', this.nodes[i]);
           // console.log('active Node now = ', i);
-          myGame.curNet.loadStimRound(i);
+          myGame.curNet.loadStimRoundByInd(i);
         }
       }
     }

@@ -44,7 +44,7 @@ function Game(updateDur) {
 
   this.loadStimulus = function() {
     if ( (this.curNet !== undefined) && (myDataSetRows !== undefined) ) {
-      this.curNet.loadNetStim();
+      this.curNet.loadDataFrameByInd(0);
     }
   };
 
