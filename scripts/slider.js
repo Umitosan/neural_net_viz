@@ -129,18 +129,23 @@ function SliderType2(x,y,width,height,nodeTotal,pColor) {
 
   this.checkNodeClicked = function(mX,mY) {
     let extraGap = 4; // this is extra pixels to check on hitbox size
+    let bestXdistance = 100000; // currently found nearest X of node
+    let nearestNodeIndex = 0;
     if (  ((mX >= (this.x-extraGap)) && (mX <= (this.x+this.width+(extraGap*2)))) &&
           ((mY >= this.y-extraGap) && (mY <= (this.y+this.height+(extraGap*2))))  ) { // check if within slider box first
       for (let i = 0; i < this.nodes.length; i++) { // check if clicked each slider node
-        if ( (mX === this.nodes[i].x) || (mX === this.nodes[i].x-1)) {
-          // console.log('mX, mY = '+mX+','+mY);
-          this.activeNode = i;
-          // console.log('this.nodes[i] = ', this.nodes[i]);
-          // console.log('active Node now = ', i);
-          myGame.curNet.loadStimRoundByInd(i);
+        // get NEAREST node to click
+        let measurement = Math.abs(mX - this.nodes[i].x); // distance from click to node.x
+        if ( measurement < bestXdistance) {
+          bestXdistance = measurement;
+          nearestNodeIndex = i;
         }
-      }
-    }
+      } // for
+      this.activeNode = nearestNodeIndex;
+      // console.log('this.nodes[i] = ', this.nodes[nearestNodeIndex]);
+      // console.log('active Node now = ', nearestNodeIndex);
+      myGame.curNet.loadStimRoundByInd(nearestNodeIndex);
+    } // if
   };
 
 
