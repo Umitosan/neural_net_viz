@@ -65,6 +65,7 @@ function Game(updateDur) {
            (mouseY > (cell.y-cell.rad)) && (mouseY < (cell.y+cell.rad)) ) {
         this.curDragCell = this.curNet.cells[i];
         this.curSelectedCell = this.curNet.cells[i];
+        this.updateCellDetails();
       }
     }
   };
@@ -74,6 +75,22 @@ function Game(updateDur) {
       this.curDragCell = undefined;
       this.curSelectedCell = undefined;
     }
+  };
+
+  // broadcastCoeff: 1
+  // decayRate: 0.25
+  // internalCoeff:6.939
+  // postLinks: (4) [{…}, {…}, {…}, {…}]
+  // refractoryPeriod: 1
+
+  this.updateCellDetails = function() {
+    this.curNet.txtStatusLeft.clear();
+    this.curNet.txtStatusLeft.addLine("Cell# "+this.curSelectedCell.index);
+    this.curNet.txtStatusLeft.addLine("broadcastCoeff: "+this.curSelectedCell.broadcastCoeff);
+    this.curNet.txtStatusLeft.addLine("decayRate: "+this.curSelectedCell.decayRate);
+    this.curNet.txtStatusLeft.addLine("internalCoeff: "+this.curSelectedCell.internalCoeff);
+    this.curNet.txtStatusLeft.addLine("postLinks: ("+this.curSelectedCell.curPostLinks.length+")");
+    this.curNet.txtStatusLeft.addLine("refractoryPeriod: "+this.curSelectedCell.refractoryPeriod);
   };
 
   this.trySlide = function(someDir) {

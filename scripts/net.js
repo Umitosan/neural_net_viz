@@ -84,7 +84,7 @@ function Net(x,y,width,height,cellTotal,color) {
     this.txtStatusRight = new TxtGroup( /* x      */  canW - 202,
                                         /* y      */  2,
                                         /* width  */  200,
-                                        /* height */  120,
+                                        /* height */  135,
                                         /* font   */  "16px Ariel",
                                         /* color  */  "blue"
     );
@@ -93,18 +93,32 @@ function Net(x,y,width,height,cellTotal,color) {
     this.txtStatusLeft = new TxtGroup( /* x       */  2,
                                         /* y      */  2,
                                         /* width  */  200,
-                                        /* height */  120,
+                                        /* height */  135,
                                         /* font   */  "16px Ariel",
                                         /* color  */  "blue"
     );
     this.txtStatusLeft.init();
     this.txtStatusLeft.addLine("Need Stimulus");
-    this.buildPostLinks();
+    this.buildCellData();
   }; // INIT
 
-  this.buildPostLinks = function() {
+  // broadcastCoeff: 1
+  // decayRate: 0.25
+  // internalCoeff:6.939
+  // postLinks: (4) [{…}, {…}, {…}, {…}]
+  // refractoryPeriod: 1
+
+  this.buildCellData = function() {
     for (let i = 0; i < myNets[0].cells.length; i++) {
-      this.cells[i].loadPostLinks(myNets[0].cells[i]);
+      cellObj = myNets[0].cells[i];
+      this.cells[i].broadcastCoeff = cellObj.broadcastCoeff;
+      this.cells[i].decayRate = cellObj.decayRate;
+      this.cells[i].internalCoeff = cellObj.internalCoeff;
+      this.cells[i].refractoryPeriod = cellObj.refractoryPeriod;
+      this.cells[i].curPostLinks = [];
+      for (let j = 0; j < cellObj.postLinks.length; j++) {
+        this.cells[i].curPostLinks.push( cellObj.postLinks[j].postCellIndex );
+      }
     }
   };
 
@@ -218,7 +232,11 @@ function Cell(x,y,rad,color,ind) {
   this.index = ind;
   this.hover = false;
   this.status = undefined;
+  this.broadcastCoeff = undefined;
+  this.decayRate = undefined;
+  this.internalCoeff = undefined;
   this.curPostLinks = undefined;
+  this.refractoryPeriod = undefined;
   this.xOffset = undefined;
 
   this.init = function() {
@@ -242,13 +260,6 @@ function Cell(x,y,rad,color,ind) {
     this.y = newY;
     this.txt.x = this.x+this.xOffset;
     this.txt.y = this.y+3;
-  };
-
-  this.loadPostLinks = function(cellObj) {
-    this.curPostLinks = [];
-    for (let i = 0; i < cellObj.postLinks.length; i++) {
-      this.curPostLinks.push( cellObj.postLinks[i].postCellIndex );
-    }
   };
 
   this.drawLinks = function() {
