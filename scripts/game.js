@@ -65,6 +65,8 @@ function Game(updateDur) {
            (mouseY > (cell.y-cell.rad)) && (mouseY < (cell.y+cell.rad)) ) {
         this.curDragCell = this.curNet.cells[i];
         this.curSelectedCell = this.curNet.cells[i];
+        this.curNet.unselectCells();
+        this.curSelectedCell.clickSelected = true;
         this.updateCellDetails();
       }
     }

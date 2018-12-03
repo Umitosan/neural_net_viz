@@ -167,6 +167,12 @@ function Net(x,y,width,height,cellTotal,color) {
     }
   };
 
+  this.unselectCells = function() {
+    for (var i = 0; i < this.cells.length; i++) {
+      this.cells[i].clickSelected = false;
+    }
+  };
+
   this.nextStimRound = function() {
     if ((this.curStimRoundIndex + 1) >= this.curDataFrameStimRounds.length) {
       console.log('at edge right');
@@ -230,7 +236,7 @@ function Cell(x,y,rad,color,ind) {
   this.strokeColor = "black";
   this.txt = undefined;
   this.index = ind;
-  this.hover = false;
+  this.clickSelected = false;
   this.status = undefined;
   this.broadcastCoeff = undefined;
   this.decayRate = undefined;
@@ -286,9 +292,15 @@ function Cell(x,y,rad,color,ind) {
     // sAngle = start angle, eAngle = end angle....   uses radiens
     // counterclockwise	Optional
     ctx.beginPath();
-    ctx.fillStyle = this.curColor;
-    ctx.strokeStyle = this.strokeColor;
-    ctx.lineWidth = 1;
+    if (this.clickSelected === true) { // if selected make thick outline
+      ctx.fillStyle = this.curColor;
+      ctx.strokeStyle = 'lightgreen';
+      ctx.lineWidth = 4;
+    } else {
+      ctx.fillStyle = this.curColor;
+      ctx.strokeStyle = this.strokeColor;
+      ctx.lineWidth = 1;
+    }
     ctx.arc(this.x,this.y,this.rad,0,2*Math.PI);
     ctx.fill();
     ctx.stroke();
