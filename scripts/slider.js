@@ -107,12 +107,15 @@ function SliderType2(x,y,width,height,nodeTotal,pColor) {
   this.activeNode = 0;
   this.nodes = undefined;
   this.dragging = false;
+  this.txtIndexLabel = undefined;
 
   this.init = function() {
+    console.log('new slider');
     this.nodes = [];
+    let gap = (this.width / (this.nodeTotal - 1)); // gap between nodes on slider
     for (let i = 0; i < this.nodeTotal; i++) {
       let tmpNode = {};
-      let xOffset = this.x + (i*2); // space lines by 2
+      let xOffset = this.x + (i*gap);
       let yOffset = this.y;
       let newColor = this.primaryColor;
       tmpNode = {
@@ -122,7 +125,6 @@ function SliderType2(x,y,width,height,nodeTotal,pColor) {
       };
       this.nodes.push(tmpNode);
     }
-    console.log('slider = ', this);
   };
 
   this.checkNodeClicked = function(mX,mY) {
@@ -141,9 +143,11 @@ function SliderType2(x,y,width,height,nodeTotal,pColor) {
     }
   };
 
+
   this.goForward = function() {
     if ( (this.activeNode + 1) < this.nodes.length ) {
       this.activeNode += 1;
+
     } else {
       console.log('cant goForward on slider');
     }
@@ -211,7 +215,10 @@ function SliderType2(x,y,width,height,nodeTotal,pColor) {
     ctx.rect(curNode.x-2, curNode.y-1,4,this.height+2);
     ctx.fill();
     ctx.stroke();
-
+    // node label
+    ctx.font = "20px bold courier";
+    ctx.fillStyle = 'green';
+    ctx.fillText(this.activeNode,curNode.x-4,curNode.y-20);
   }; // draw
 
   this.update = function() {

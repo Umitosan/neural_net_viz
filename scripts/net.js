@@ -110,7 +110,9 @@ function Net(x,y,width,height,cellTotal,color) {
 
   // myDataSetRows2[0]["dataFrames"][0]['stimulusRounds'][0]["cells"][0]
   this.loadDataFrameByInd = function(ind) {
+    // if (this.curDataFrame !== undefined) { console.log('this.curDataFrame before: ', this.curDataFrame); }
     this.curDataFrame = myDataSetRows[0].dataFrames[ind];
+    // console.log('this.curDataFrame after: ', this.curDataFrame);
     this.curDataFrameIndex = ind;
     this.curDataFrameStimRounds = this.curDataFrame.stimulusRounds;  // load just one dataFrame
     this.loadStimRoundByInd(0); // load stim round 0 by default when changing dataFrames
@@ -125,7 +127,6 @@ function Net(x,y,width,height,cellTotal,color) {
   this.loadStimRoundByInd = function(ind) {
     this.curStimRoundIndex = ind;
     this.curStimRound = this.curDataFrameStimRounds[ind].cells;
-    // console.log('this.curStimRound = ', this.curStimRound);
     this.loadCellStatus();
     this.refreshTxtStatusRight();
   };
@@ -172,9 +173,9 @@ function Net(x,y,width,height,cellTotal,color) {
 
   this.buildDataFrameInterface = function() {
     let stimRoundTotal = this.curDataFrameStimRounds.length;
-    let newSlider2 = new SliderType2( /* x         */  (canW-(stimRoundTotal*2))/2,
+    let newSlider2 = new SliderType2( /* x         */  (canW/4),
                                       /* y         */  130,
-                                      /* width     */  (stimRoundTotal*2)-2, // each node needs 2 pixels
+                                      /* width     */  (canW/2),
                                       /* height    */  20,
                                       /* nodeTotal */  stimRoundTotal,
                                       /* pColor    */  this.color
@@ -218,10 +219,16 @@ function Cell(x,y,rad,color,ind) {
   this.hover = false;
   this.status = undefined;
   this.curPostLinks = undefined;
+  this.xOffset = undefined;
 
   this.init = function() {
     let tmpFontSize = 16;
-    this.txt = new TxtBox(  /*  x       */  this.x-3,
+    if (this.rad < 14) {
+      this.xOffset = 10;
+    } else {
+      this.xOffset = -3;
+    }
+    this.txt = new TxtBox(  /*  x       */  this.x+this.xOffset,
                             /*  y       */  this.y+3,
                             /* fontSize */  tmpFontSize,
                             /* font     */  (""+tmpFontSize.toString()+"px bold courier"),  // [font style][font weight][font size][font face]
@@ -233,7 +240,7 @@ function Cell(x,y,rad,color,ind) {
   this.changePos = function(newX,newY) {
     this.x = newX;
     this.y = newY;
-    this.txt.x = this.x-3;
+    this.txt.x = this.x+this.xOffset;
     this.txt.y = this.y+3;
   };
 
