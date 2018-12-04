@@ -144,3 +144,43 @@ function printJsonAsString(someObj, indentLvl=0) {
   } // for
   return finalStr;
 } // printJsonAsString
+
+// old txt printout version
+// function getFileJSON2(evt) {
+//   linesRemainToProcess = 100;
+//   let myFile = evt.target.files[0];
+//   let curOutputLines = 0;
+//   let reader = new FileReader();
+//   let outputDivRight = $("#htmlOutputRight")[0];
+//   let errRight = $("#err-msg-right")[0];
+//   errRight.innerText = "";
+//   reader.onload = function() {
+//     let text = reader.result;
+//     console.log("file preview: ", reader.result.substring(0, 100));
+//     myJson2 = JSON.parse(reader.result);
+//     if (typeof myJson2[0] === "undefined") { // must be object
+//       if (myJson2.net_0 !== undefined) {
+//         file2Loaded = true;
+//         myDataSetRows = myJson2.net_0;
+//         myDataSetRows = myJson2.net_0;
+//         let finalJsonStrHTML = printJsonAsHTML(myJson2);
+//         errRight.innerText = "Good: net_0 found";
+//         $("#err-msg-right").css('color', 'blue');
+//         outputDivRight.innerHTML = finalJsonStrHTML;
+//         myGame.loadStimulus(); // add simulus box info
+//       } else if (myJson2.dataSetRows !== undefined) {
+//         myDataSetRows2 = myJson2.dataSetRows;
+//         $("#err-msg-right").css('color', 'blue');
+//         console.log('yay ready to load dataSetRows Array');
+//         errRight.innerText = "Good: dataSetRows found";
+//       } else {
+//         errRight.innerText = "Bad File: no Net_0 found!";
+//         outputDivRight.innerHTML = "No stimulus / bad format";
+//       }
+//     } else {
+//       errRight.innerText = "Bad File: no Net Stimulus!";
+//       outputDivRight.innerHTML = "No Nets and or Population found in JSON";
+//     }
+//   };
+//   reader.readAsText(myFile);
+// }

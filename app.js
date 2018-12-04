@@ -20,7 +20,7 @@ var CANVAS,
     myGame;
 var myColors = new Colors();
 
-var defaultSimSpeed = 100;
+var defaultSimSpeed = 14; // milliseconds between updates
 
 function Colors() {
   this.black = 'rgba(0, 0, 0, 1)';
@@ -344,10 +344,10 @@ $(document).ready(function() {
   myGame.mode = 'init';
 
   $('#start-btn').click(function() {
-    console.log("start button clicked");
-    console.log("myGame.mode = ", myGame.mode);
-    console.log("file1Loaded = ", file1Loaded);
-    console.log("file2Loaded = ", file2Loaded);
+    // console.log("start button clicked");
+    // console.log("myGame.mode = ", myGame.mode);
+    // console.log("file1Loaded = ", file1Loaded);
+    // console.log("file2Loaded = ", file2Loaded);
     if ( ((myGame.mode === 'init') && (file1Loaded === true)) && (file2Loaded === true) ) {
       myGame.mode = 'sim';
       console.log('mode now sim');
@@ -356,9 +356,7 @@ $(document).ready(function() {
       State.gameStarted = true;
       CANVAS.focus();  // set focus to canvas on start so keybindings work, if needed
       $('#mode-current-status')[0].innerText = 'simulate';
-      let v = $('#speed-slider').val();
-      $('#speed-input').prop("value", v);
-      myGame.updateDuration = (1000/v);
+      myGame.updateDuration = (State.simSpeed);
       myGame.lastUpdate = performance.now();
     } else {
       if ((file1Loaded !== true) || (file1Loaded !== true)) {
@@ -388,31 +386,6 @@ $(document).ready(function() {
       $('#pause-btn')[0].innerText = 'PAUSE';
     }
   });
-
-  //INPUT
-  $('#speed-slider').mousedown(function(e1) {
-    leftMouseDown = true;
-  }).mouseup(function(e2) {
-    leftMouseDown = false;
-  });
-  $('#speed-input').on('change', function(e) {
-    let v = this.value;
-    $('#speed-slider').prop("value", v);
-    if (myGame.mode === 'sim') {
-      myGame.updateDuration = (1000/v);
-    }
-  });
-
-  $('#speed-slider').mousemove(function(e) {
-    if (leftMouseDown === true) {
-      let v = this.value;
-      $('#speed-input').prop("value", v);
-      if (myGame.mode === 'sim') {
-        myGame.updateDuration = (1000/v);
-      }
-    }
-  });
-
 
   let linesRemainToProcess = 10;  // approximate recursive groups to process
   function printJsonAsHTML(someObj, indentLvl=0) {
@@ -485,63 +458,6 @@ $(document).ready(function() {
     };
     reader.readAsText(myFile);
   }
-
-  // function getFileJSON2(evt) {
-  //   linesRemainToProcess = 100;
-  //   let myFile = evt.target.files[0];
-  //   let curOutputLines = 0;
-  //   let reader = new FileReader();
-  //   let outputDivRight = $("#htmlOutputRight")[0];
-  //   let errRight = $("#err-msg-right")[0];
-  //   errRight.innerText = "";
-  //   reader.onload = function() {
-  //     let text = reader.result;
-  //     console.log("file preview: ", reader.result.substring(0, 100));
-  //     myJson2 = JSON.parse(reader.result);
-  //     if (typeof myJson2[0] === "undefined") { // must be object
-  //       if (myJson2.net_0 !== undefined) {
-  //         file2Loaded = true;
-  //         myDataSetRows = myJson2.net_0;
-  //         myDataSetRows = myJson2.net_0;
-  //         let finalJsonStrHTML = printJsonAsHTML(myJson2);
-  //         errRight.innerText = "Good: net_0 found";
-  //         $("#err-msg-right").css('color', 'blue');
-  //         outputDivRight.innerHTML = finalJsonStrHTML;
-  //         myGame.loadStimulus(); // add simulus box info
-  //       } else if (myJson2.dataSetRows !== undefined) {
-  //         myDataSetRows2 = myJson2.dataSetRows;
-  //         $("#err-msg-right").css('color', 'blue');
-  //         console.log('yay ready to load dataSetRows Array');
-  //         errRight.innerText = "Good: dataSetRows found";
-  //       } else {
-  //         errRight.innerText = "Bad File: no Net_0 found!";
-  //         outputDivRight.innerHTML = "No stimulus / bad format";
-  //       }
-  //     } else {
-  //       errRight.innerText = "Bad File: no Net Stimulus!";
-  //       outputDivRight.innerHTML = "No Nets and or Population found in JSON";
-  //     }
-  //   };
-  //   reader.readAsText(myFile);
-  // }
-
-  // new load format
-  // {dataSetRows: Array(3)}
-  //   dataSetRows: Array(3)
-  //     0:
-  //       dataFrames: Array(244)
-  //         0:
-  //           stimulusRounds: Array(8)
-  //             0:
-  //               cells: Array(50)
-  //                 0:
-  //                   activationCount: 1
-  //                   lastRoundStimulusChanged: 1
-  //                   roundRefractionComplete: 2
-  //                   status: "excited"
-  //                   stimulus: 0
-
-  // myDataSetRows2[0]["dataFrames"][0]['stimulusRounds'][0]["cells"][0]
 
   function getFileJSON2(evt) {
     linesRemainToProcess = 100;
