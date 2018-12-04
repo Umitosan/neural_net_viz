@@ -195,8 +195,8 @@ function SliderType2(x,y,width,height,nodeTotal,pColor) {
     let tSize = 8;
     ctx.beginPath();
     ctx.lineWidth = 1;
+    ctx.fillStyle = this.primaryColor;
     ctx.strokeStyle = 'black';
-    ctx.fillStyle = 'lightgreen';
     ctx.lineWidth = 1;
     let yoff = 2;
     ctx.moveTo(curNode.x, curNode.y-yoff);
@@ -215,7 +215,7 @@ function SliderType2(x,y,width,height,nodeTotal,pColor) {
     ctx.stroke();
     // box
     ctx.beginPath();
-    ctx.fillStyle = 'lightgreen';
+    ctx.fillStyle = this.primaryColor;
     ctx.strokeStyle = 'black';
     ctx.rect(curNode.x-2, curNode.y-1,4,this.height+2);
     ctx.fill();

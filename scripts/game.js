@@ -15,13 +15,16 @@ function Game(updateDur) {
   this.curNet = undefined; // myJson1.Population.nets
   this.curDragCell = undefined;
   this.curSelectedCell = undefined;
+  this.testButton1 = undefined;
 
   this.init = function() {
-    this.bg.src = 'bg1.png';
+    // this.bg.src = 'bg1.png';
+    this.bg.src = 'neurons_splash1.jpg';
     this.lastUpdate = performance.now();
   };
 
   this.buildNets = function() {
+    let randNetColor = randColor('rgba',120,255); // randColor(type,lowBound,highBound,alphaSwitch = null)
     if (myNets !== undefined) {
       this.pop = [];
       let cTotal = myJson1.Population.totalCellCount;
@@ -32,7 +35,7 @@ function Game(updateDur) {
                             /* width   */  netBoxWidth,
                             /* height  */  netBoxHeight,
                             /*cellTotal*/  cTotal,
-                            /* color   */  randColor('rgba',120,255) // randColor(type,lowBound,highBound,alphaSwitch = null)
+                            /* color   */  randNetColor
                           );
       newNet.init();
       this.pop.push(newNet);
@@ -40,6 +43,9 @@ function Game(updateDur) {
     } else {
       console.log('nothing in myNets');
     }
+    // Button(x,y,width,height,color,font,text)
+    this.testButton1 = new Button(canW-50,80,40,20,randNetColor,"12px tahoma",'button');
+    this.testButton2 = new Button(canW-100,80,40,20,randNetColor,"12px tahoma",'button');
   };
 
   this.loadStimulus = function() {
@@ -54,6 +60,8 @@ function Game(updateDur) {
       if (file2Loaded === true) {
         // this.curNet.currentDataFrameSlider.checkNodeClicked(mouseX,mouseY);
         this.curNet.currentDataFrameSlider2.checkNodeClicked(mouseX,mouseY);
+        this.testButton1.checkClicked(mouseX,mouseY);
+        this.testButton2.checkClicked(mouseX,mouseY);
       }
     }
   };
@@ -123,7 +131,9 @@ function Game(updateDur) {
 
   this.drawBG = function() { // display background over canvas
     ctx.imageSmoothingEnabled = false;  // turns off AntiAliasing
-    ctx.drawImage(this.bg,0,0,CANVAS.width,CANVAS.height);
+    // ctx.drawImage(this.bg,0,0,CANVAS.width,CANVAS.height);
+    let scaler = 0.7; // 0.7 is good at full rez
+    ctx.drawImage( this.bg,-340,0,(2048*scaler),(1151*scaler) ); // orig size 2048 x 1151
   };
 
   this.draw = function() {  // draw everything!
@@ -132,6 +142,8 @@ function Game(updateDur) {
         this.pop[i].draw();
       }
     }
+    if (this.testButton1 !== undefined) { this.testButton1.draw(); }
+    if (this.testButton2 !== undefined) { this.testButton2.draw(); }
   }; // end draw
 
   this.update = function() {
