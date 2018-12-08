@@ -21,7 +21,8 @@ function TxtGroup(x,y,width,height,font,color="black") {
 
   this.addLine = function(newTxt) {
     let len = this.lines.length;
-    this.lines.push(new TxtBox( /* x        */  this.x + 4,
+    let xOffset = (this.width * 0.2);
+    this.lines.push(new TxtBox( /* x        */  this.x + xOffset,
                                 /* y        */  this.y + 4 + ((len+1) * this.fontSize * 1.4),
                                 /* fonSize  */  this.fontSize,
                                 /* font     */  this.font,

@@ -56,7 +56,6 @@ function roundRect(x, y, w, h, r) {
   ctx.stroke();
 }
 
-
 // Changes XML to JSON
 function xmlToJson(xml) {
 

@@ -186,44 +186,65 @@ function SliderType2(x,y,width,height,nodeTotal,pColor) {
       let curNode = this.nodes[i];
       ctx.beginPath();
       ctx.strokeStyle = 'grey';
-      ctx.moveTo(curNode.x, curNode.y);
-      ctx.lineTo(curNode.x, curNode.y+this.height);
+      ctx.moveTo(Math.round(curNode.x), curNode.y);
+      ctx.lineTo(Math.round(curNode.x), curNode.y+this.height);
       ctx.stroke();
     } // for
     // top/bot filigree
     let curNode = this.nodes[this.activeNode];
-    let tSize = 8;
+    let tSize = 10;
+    let boxSize = 10;
     ctx.beginPath();
     ctx.lineWidth = 1;
     ctx.fillStyle = this.primaryColor;
     ctx.strokeStyle = 'black';
     ctx.lineWidth = 1;
+
     let yoff = 2;
-    ctx.moveTo(curNode.x, curNode.y-yoff);
-    ctx.lineTo(curNode.x-tSize, curNode.y-yoff-tSize);
-    ctx.lineTo(curNode.x+tSize, curNode.y-yoff-tSize);
-    ctx.lineTo(curNode.x, curNode.y-yoff);
+    // top
+    // ctx.moveTo(curNode.x-tSize, curNode.y-yoff);
+    // ctx.lineTo(curNode.x, curNode.y-yoff-tSize);
+    // ctx.lineTo(curNode.x+tSize, curNode.y-yoff);
+    // ctx.lineTo(curNode.x-tSize, curNode.y-yoff);
+    // ctx.fill();
+    // bot
+    // ctx.beginPath();
+    // ctx.moveTo(curNode.x-tSize, curNode.y+this.height+yoff);
+    // ctx.lineTo(curNode.x, curNode.y+yoff+this.height+tSize);
+    // ctx.lineTo(curNode.x+tSize, curNode.y+yoff+this.height);
+    // ctx.lineTo(curNode.x-tSize, curNode.y+this.height+yoff);
+    // ctx.fill();
+
+    // left
+    ctx.moveTo(curNode.x-boxSize, curNode.y+this.height);
+    ctx.lineTo(curNode.x-boxSize-tSize, curNode.y+(this.height/2));
+    ctx.lineTo(curNode.x-boxSize, curNode.y);
+    ctx.lineTo(curNode.x-boxSize, curNode.y+this.height);
     ctx.fill();
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.lineWidth = 1;
-    ctx.moveTo(curNode.x, curNode.y+this.height+yoff);
-    ctx.lineTo(curNode.x-tSize, curNode.y+yoff+tSize+this.height);
-    ctx.lineTo(curNode.x+tSize, curNode.y+yoff+tSize+this.height);
-    ctx.lineTo(curNode.x, curNode.y+this.height+yoff);
+    // right
+    ctx.moveTo(curNode.x+boxSize, curNode.y+this.height);
+    ctx.lineTo(curNode.x+boxSize+tSize, curNode.y+(this.height/2));
+    ctx.lineTo(curNode.x+boxSize, curNode.y);
+    ctx.lineTo(curNode.x+boxSize, curNode.y+this.height);
     ctx.fill();
-    ctx.stroke();
     // box
     ctx.beginPath();
     ctx.fillStyle = this.primaryColor;
     ctx.strokeStyle = 'black';
-    ctx.rect(curNode.x-2, curNode.y-1,4,this.height+2);
+    ctx.rect(curNode.x-boxSize, curNode.y-1,boxSize*2,this.height+2);
+    // ctx.rect(curNode.x-1, curNode.y-1,2,this.height+2);
     ctx.fill();
     ctx.stroke();
     // node label
-    ctx.font = "20px bold courier";
-    ctx.fillStyle = 'green';
-    ctx.fillText(this.activeNode,curNode.x-4,curNode.y-20);
+    ctx.save();
+    ctx.font = "14pt Helvetica";
+    ctx.shadowOffsetX = 2;
+    ctx.shadowOffsetY = 2;
+    ctx.shadowColor = "rgba(0,0,0,0.3)";
+    ctx.shadowBlur = 4;
+    ctx.fillStyle = 'black';
+    ctx.fillText(this.activeNode,curNode.x-5,curNode.y+16);
+    ctx.restore();
   }; // draw
 
   this.update = function() {

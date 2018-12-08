@@ -10,14 +10,14 @@ function Button(x,y,width,height,color,font,text) {
   this.font = font;
   this.text = text;
   this.pressedColor = undefined;
-  this.pressedDown = false;
+  this.clicked = false;
 
   this.init = function() {
   };
 
   this.checkClicked = function(mX,mY) {
     if ( (mX > this.x) && (mX < (this.x+this.width)) && (mY > this.y) && (mY < (this.y+this.height)) ) {
-      console.log('button was clicked');
+      this.clicked = true;
     }
   };
 

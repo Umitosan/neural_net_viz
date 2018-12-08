@@ -15,7 +15,8 @@ function Game(updateDur) {
   this.curNet = undefined; // myJson1.Population.nets
   this.curDragCell = undefined;
   this.curSelectedCell = undefined;
-  this.testButton1 = undefined;
+  // this.btnRandCellPos = undefined;
+  // this.testButton2 = undefined;
 
   this.init = function() {
     // this.bg.src = 'bg1.png';
@@ -44,8 +45,53 @@ function Game(updateDur) {
       console.log('nothing in myNets');
     }
     // Button(x,y,width,height,color,font,text)
-    this.testButton1 = new Button(canW-50,80,40,20,randNetColor,"12px tahoma",'button');
-    this.testButton2 = new Button(canW-100,80,40,20,randNetColor,"12px tahoma",'button');
+    // this.btnRandCellPos = new Button(canW-60,114,48,18,randNetColor,"12px tahoma",'RANDO!',this.randomizeCellPos);
+    // this.testButton2 = new Button(canW-100,80,40,20,randNetColor,"12px tahoma",'button');
+  };
+
+  this.randomizeCellPos = function() { // rem: 'this' = button (not this 'game') cuz func passed are arg duh
+    console.log('randomizeCellPos works cuz button was clicked');
+    let cTotal = myJson1.Population.totalCellCount;
+    // let cols = Math.ceil(Math.sqrt(cTotal))+2;
+    // let rows = Math.floor(Math.sqrt(cTotal))+1;
+    let cols = 11;
+    let rows = 5;
+    let matrix = [];
+    for (let i = 0; i < rows; i++) {
+      let newCol = [];
+      for (let j = 0; j < cols; j++) {
+        newCol.push(0);
+      }
+      matrix.push(newCol);
+    }
+    console.log('cols,rows = ', cols, rows);
+    for (let i = 0; i < myGame.curNet.cells.length; i++) { // look for new unused location on matrix and mark it 1 when filled
+      let newX,newY;
+      let tryR = 0;
+      let tryC = 0;
+      let checkVal = 0;
+      while (checkVal < 1) {
+        tryR = getRandomIntInclusive(0,rows-1);
+        tryC = getRandomIntInclusive(0,cols-1);
+        checkVal = matrix[tryR][tryC];
+        // console.log('matrix[tryR][tryC] = ',matrix[tryR][tryC]);
+        if (matrix[tryR][tryC] === 0) {
+          matrix[tryR][tryC] += 1; // show matrix location is filled
+          break;
+        } else {
+          // try again
+        }
+      }
+      console.log('item filled at ',tryR,tryC);
+      console.assert(matrix[tryR][tryC] > 0);
+      newY = (tryR * ((canH - 180) / rows)) + 180;
+      newX = tryC * (canW / cols) + 40;
+      // newY = tryR * (canH / rows);
+      // newX = tryC * (canW / cols);
+      console.log('cell ['+i+'] '+'filled at R,C '+tryR+','+tryC);
+      myGame.curNet.cells[i].changePos(newX,newY);
+    }
+    console.log('matrix after = ', matrix);
   };
 
   this.loadStimulus = function() {
@@ -60,8 +106,9 @@ function Game(updateDur) {
       if (file2Loaded === true) {
         // this.curNet.currentDataFrameSlider.checkNodeClicked(mouseX,mouseY);
         this.curNet.currentDataFrameSlider2.checkNodeClicked(mouseX,mouseY);
-        this.testButton1.checkClicked(mouseX,mouseY);
-        this.testButton2.checkClicked(mouseX,mouseY);
+        this.curNet.tryClickButtons(mouseX,mouseY);
+        // this.btnRandCellPos.checkClicked(mouseX,mouseY);
+        // this.testButton2.checkClicked(mouseX,mouseY);
       }
     }
   };
@@ -84,6 +131,8 @@ function Game(updateDur) {
     if ( (file1Loaded === true) && (this.mode === "sim") ) {
       this.curDragCell = undefined;
       this.curSelectedCell = undefined;
+      this.curNet.dataFrameButtonL.clicked = false;
+      // this.curNet.dataFrameButtonR.clicked = false;
     }
   };
 
@@ -137,13 +186,14 @@ function Game(updateDur) {
   };
 
   this.draw = function() {  // draw everything!
-    if (this.pop !== undefined) {
-      for (var i = 0; i < 1; i++) { // all nets or just 1
-        this.pop[i].draw();
-      }
-    }
-    if (this.testButton1 !== undefined) { this.testButton1.draw(); }
-    if (this.testButton2 !== undefined) { this.testButton2.draw(); }
+    if (this.curNet !== undefined) { this.curNet.draw(); }
+    // if (this.pop !== undefined) {
+    //   for (var i = 0; i < 1; i++) { // all nets or just 1
+    //     this.pop[i].draw();
+    //   }
+    // }
+    // if (this.btnRandCellPos !== undefined) { this.btnRandCellPos.draw(); }
+    // if (this.testButton2 !== undefined) { this.testButton2.draw(); }
   }; // end draw
 
   this.update = function() {
@@ -165,6 +215,7 @@ function Game(updateDur) {
                     this.curDragCell.changePos(State.mouseX,State.mouseY);
                   }
                 }
+                this.curNet.update();
               }
               this.lastUpdate = performance.now();
             } // end if

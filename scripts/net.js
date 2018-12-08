@@ -15,11 +15,16 @@ function Net(x,y,width,height,cellTotal,color) {
   this.currentDataFrameSlider2 = undefined;
   this.curDataFrame = undefined;
   this.curDataFrameIndex = undefined;
+  this.curDataFrameLength = undefined;
   this.curDataFrameStimRounds = undefined;
   this.curStimRound = undefined;
   this.curStimRoundIndex = undefined;
+  this.dataFrameButtonL = undefined;
+  this.dataFrameButtonR = undefined;
 
   this.init = function() {
+    this.curDataFrameLength = myDataSetRows[0].dataFrames.length;
+    console.log('this.curDataFrameLength = ', this.curDataFrameLength);
     this.cells = [];
     //   "inputCellCount": "4",
     //   "outputCellCount": "10",
@@ -36,7 +41,13 @@ function Net(x,y,width,height,cellTotal,color) {
     // LEFT COLUMN - input cells column
     for (let i = 0; i < inputCellCount; i++) {
       let yGap =  (canH - topScreenOffset) / inputCellCount;
-      let newCell = new Cell(   /*   x    */  this.x,
+      let xOff;
+      if (i % 2 === 0) {
+        xOff = -8;
+      } else {
+        xOff = 8;
+      }
+      let newCell = new Cell(   /*   x    */  this.x+xOff,
                                 /*   y    */  topScreenOffset + (yGap*i),
                                 /* radius */  diameter/2,
                                 /* color  */  this.color,
@@ -49,7 +60,13 @@ function Net(x,y,width,height,cellTotal,color) {
     // RIGHT COLUMN - output cells
     for (let i = 0; i < outputCellCount; i++) {
       let yGap =  (canH - topScreenOffset) / outputCellCount;
-      let newCell = new Cell(   /*   x    */  (this.x + this.width),
+      let xOff;
+      if (i % 2 === 0) {
+        xOff = -8;
+      } else {
+        xOff = 8;
+      }
+      let newCell = new Cell(   /*   x    */  (this.x + this.width)+xOff,
                                 /*   y    */  topScreenOffset + (yGap*i),
                                 /* radius */  diameter/2,
                                 /* color  */  this.color,
@@ -62,7 +79,13 @@ function Net(x,y,width,height,cellTotal,color) {
     // MIDDLE COLUMN - body cells column
     for (let i = 0; i < bodyCellCount; i++) {  // middle column
       let yGap =  (canH - topScreenOffset) / bodyCellCount;
-      let newCell = new Cell(   /*   x    */  (this.width / 2) + (diameter/2) + leftOffset,
+      let xOff;
+      if (i % 2 === 0) {
+        xOff = -8;
+      } else {
+        xOff = 8;
+      }
+      let newCell = new Cell(   /*   x    */  (this.width / 2) + (diameter/2) + leftOffset+xOff,
                                 /*   y    */  topScreenOffset + (yGap*i),
                                 /* radius */  diameter/2,
                                 /* color  */  this.color,
@@ -76,7 +99,7 @@ function Net(x,y,width,height,cellTotal,color) {
     this.txtTitle = new TxtBox( /*  x       */  (canH / 2)+(tmpFontSize),
                                 /*  y       */  tmpFontSize+5,
                                 /* fontSize */  tmpFontSize,
-                                /* font     */  (""+tmpFontSize.toString()+"px bold courier"),  // [font style][font weight][font size][font face]
+                                /* font     */  (""+tmpFontSize.toString()+"px Helvetica"),  // [font style][font weight][font size][font face]
                                 /* color    */  "black",
                                 /* text     */  "Net Index: 0"
                                 );
@@ -85,22 +108,38 @@ function Net(x,y,width,height,cellTotal,color) {
                                         /* y      */  2,
                                         /* width  */  200,
                                         /* height */  135,
-                                        /* font   */  "16px Ariel",
+                                        /* font   */  "14px tahoma",
                                         /* color  */  "blue"
     );
     this.txtStatusRight.init();
-    this.txtStatusRight.addLine("Need Stimulus");
+    this.txtStatusRight.addLine("[Need Stimulus file]");
     this.txtStatusLeft = new TxtGroup( /* x       */  2,
                                         /* y      */  2,
                                         /* width  */  200,
                                         /* height */  135,
-                                        /* font   */  "16px Ariel",
+                                        /* font   */  "14px tahoma",
                                         /* color  */  "blue"
     );
     this.txtStatusLeft.init();
-    this.txtStatusLeft.addLine("Need Stimulus");
+    this.txtStatusLeft.addLine("[Select a Cell]");
     this.buildCellData();
+    // (x,y,width,height,color,font,text)
+    this.dataFrameButtonL = new Button( /* x      */ this.txtStatusRight.x+12,
+                                        /* y      */ this.txtStatusRight.y+30,
+                                        /* width  */ 16,
+                                        /* height */ 16,
+                                        /* color  */ 'lightgreen',
+                                        /* font   */ '14px Helvetica',
+                                        /* text   */ '<');
+    this.dataFrameButtonR = new Button( /* x      */ canW-64,
+                                        /* y      */ this.txtStatusRight.y+30,
+                                        /* width  */ 16,
+                                        /* height */ 16,
+                                        /* color  */ 'lightgreen',
+                                        /* font   */ '14px Helvetica',
+                                        /* text   */ '>');
   }; // INIT
+
 
   // broadcastCoeff: 1
   // decayRate: 0.25
@@ -204,6 +243,12 @@ function Net(x,y,width,height,cellTotal,color) {
     this.currentDataFrameSlider2 = newSlider2;
   }; // buildDataFrameInterface
 
+  this.tryClickButtons = function(mouseX,mouseY) {
+    console.log('net tryClickButtons');
+    this.dataFrameButtonL.checkClicked(mouseX,mouseY);
+    this.dataFrameButtonR.checkClicked(mouseX,mouseY);
+  };
+
   this.draw = function() {
     for (let i = 0; i < this.cells.length; i++) {
       this.cells[i].drawLinks();
@@ -215,9 +260,35 @@ function Net(x,y,width,height,cellTotal,color) {
     this.txtStatusLeft.draw();
     this.txtStatusRight.draw();
     if (this.currentDataFrameSlider2 !== undefined) { this.currentDataFrameSlider2.draw(); }
+    if (this.dataFrameButtonR !== undefined) { this.dataFrameButtonR.draw(); }
+    if (this.dataFrameButtonL !== undefined) { this.dataFrameButtonL.draw(); }
   };
 
   this.update = function() {
+    if (this.dataFrameButtonL !== undefined) {
+      if (this.dataFrameButtonL.clicked === true) {
+        console.log('try go back DataFrame');
+        if (this.curDataFrameIndex === 0) {
+          console.log('cant load previous DataFrame');
+        } else {
+          this.loadDataFrameByInd(this.curDataFrameIndex-1);
+        }
+        console.log('this.curDataFrameIndex = ', this.curDataFrameIndex);
+        this.dataFrameButtonL.clicked = false;
+      }
+    }
+    if (this.dataFrameButtonR !== undefined) {
+      if (this.dataFrameButtonR.clicked === true) {
+        console.log('try go forward DataFrame');
+        if ((this.curDataFrameIndex + 1) === this.curDataFrameLength) {
+          console.log('cant load next DataFrame: at end of DataSetRow');
+        } else {
+          this.loadDataFrameByInd(this.curDataFrameIndex+1);
+        }
+        console.log('this.curDataFrameIndex = ', this.curDataFrameIndex);
+        this.dataFrameButtonR.clicked = false;
+      }
+    }
   };
 
 } // Net
@@ -228,6 +299,8 @@ function Net(x,y,width,height,cellTotal,color) {
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 function Cell(x,y,rad,color,ind) {
+  this.origX = x;
+  this.origY = y;
   this.x = x;
   this.y = y;
   this.rad = rad;
@@ -255,7 +328,7 @@ function Cell(x,y,rad,color,ind) {
     this.txt = new TxtBox(  /*  x       */  this.x+this.xOffset,
                             /*  y       */  this.y+3,
                             /* fontSize */  tmpFontSize,
-                            /* font     */  (""+tmpFontSize.toString()+"px bold courier"),  // [font style][font weight][font size][font face]
+                            /* font     */  (""+tmpFontSize.toString()+"px bold tahoma"),  // [font style][font weight][font size][font face]
                             /* color    */  "black",
                             /* text     */  this.index.toString()
                           );
