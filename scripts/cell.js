@@ -7,6 +7,7 @@ function Cell(x,y,size,shape,color,ind) {
   this.x = x;
   this.y = y;
   this.size = size;
+  this.baseSize = size;
   this.shape = shape; // tri, arc, quad
   this.baseColor = color;
   this.curColor = color;
@@ -82,8 +83,10 @@ function Cell(x,y,size,shape,color,ind) {
     }
     if (this.clickSelected === true) { // if selected make thick outline
       ctx.fillStyle = this.curColor;
-      ctx.strokeStyle = myColors.lightgreen;
-      ctx.lineWidth = 4;
+      ctx.strokeStyle = myColors.black;
+      ctx.lineWidth = 2;
+      ctx.globalAlpha = 1;
+      this.size = this.baseSize * 1.5;
     } else {
       ctx.fillStyle = this.curColor;
       ctx.strokeStyle = this.strokeColor;

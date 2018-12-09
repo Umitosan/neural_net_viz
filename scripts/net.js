@@ -212,7 +212,7 @@ function Net(x,y,width,height,cellTotal,color) {
       let newStatus = this.curStimRound[i].status;
       this.cells[ind].status = newStatus;
       if (newStatus === 'excited') {
-        this.cells[ind].curColor = 'red';
+        this.cells[ind].curColor = myColors.lightgreen;
       } else {
         this.cells[ind].curColor = this.cells[ind].baseColor;
       }
@@ -223,6 +223,7 @@ function Net(x,y,width,height,cellTotal,color) {
   this.unselectCells = function() {
     for (var i = 0; i < this.cells.length; i++) {
       this.cells[i].clickSelected = false;
+      this.cells[i].size = this.cells[i].baseSize;
     }
   };
 
