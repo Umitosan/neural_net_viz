@@ -116,8 +116,8 @@ function Game(updateDur) {
   this.tryClickNet = function(mouseX,mouseY) {
     for (let i = 0; i < this.curNet.cells.length; i++) {
       let cell = this.curNet.cells[i];
-      if ( (mouseX > (cell.x-cell.rad)) && (mouseX < (cell.x+cell.rad)) &&
-           (mouseY > (cell.y-cell.rad)) && (mouseY < (cell.y+cell.rad)) ) {
+      if ( (mouseX > (cell.x-(cell.size/2))) && (mouseX < (cell.x+(cell.size/2))) &&
+           (mouseY > (cell.y-(cell.size/2))) && (mouseY < (cell.y+(cell.size/2))) ) {
         this.curDragCell = this.curNet.cells[i];
         this.curSelectedCell = this.curNet.cells[i];
         this.curNet.unselectCells();

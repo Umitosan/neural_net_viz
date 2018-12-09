@@ -52,7 +52,8 @@ function Net(x,y,width,height,cellTotal,color) {
       }
       let newCell = new Cell(   /*   x    */  this.x+xOff,
                                 /*   y    */  topScreenOffset + (yGap*i),
-                                /* radius */  diameter/2,
+                                /* size   */  diameter,
+                                /* shape  */  'tri',
                                 /* color  */  this.color,
                                 /* index  */  curIndex
                               );
@@ -71,7 +72,8 @@ function Net(x,y,width,height,cellTotal,color) {
       }
       let newCell = new Cell(   /*   x    */  (this.x + this.width)+xOff,
                                 /*   y    */  topScreenOffset + (yGap*i),
-                                /* radius */  diameter/2,
+                                /* size   */  diameter,
+                                /* shape  */  'quad',
                                 /* color  */  this.color,
                                 /* index  */  curIndex
                               );
@@ -90,7 +92,8 @@ function Net(x,y,width,height,cellTotal,color) {
       }
       let newCell = new Cell(   /*   x    */  (this.width / 2) + (diameter/2) + leftOffset+xOff,
                                 /*   y    */  topScreenOffset + (yGap*i),
-                                /* radius */  diameter/2,
+                                /* size   */  diameter,
+                                /* shape  */  'arc',
                                 /* color  */  this.color,
                                 /* index  */  curIndex
                               );
@@ -324,117 +327,3 @@ function Net(x,y,width,height,cellTotal,color) {
   };
 
 } // Net
-
-
-
-//////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
-function Cell(x,y,rad,color,ind) {
-  this.origX = x;
-  this.origY = y;
-  this.x = x;
-  this.y = y;
-  this.rad = rad;
-  this.baseColor = color;
-  this.curColor = color;
-  this.strokeColor = myColors.black;
-  this.txt = undefined;
-  this.index = ind;
-  this.clickSelected = false;
-  this.status = undefined;
-  this.broadcastCoeff = undefined;
-  this.decayRate = undefined;
-  this.internalCoeff = undefined;
-  this.curPostLinks = undefined;
-  this.refractoryPeriod = undefined;
-  this.xOffset = undefined;
-  this.dim = false;
-
-  this.init = function() {
-    let tmpFontSize = 16;
-    if (this.rad < 14) {
-      this.xOffset = 10;
-    } else {
-      this.xOffset = -3;
-    }
-    this.txt = new TxtBox(  /*  x       */  this.x+this.xOffset,
-                            /*  y       */  this.y+3,
-                            /* fontSize */  tmpFontSize,
-                            /* font     */  (""+tmpFontSize.toString()+"px bold tahoma"),  // [font style][font weight][font size][font face]
-                            /* color    */  myColors.black,
-                            /* text     */  this.index.toString()
-                          );
-  };
-
-  this.changePos = function(newX,newY) {
-    this.x = newX;
-    this.y = newY;
-    this.txt.x = this.x+this.xOffset;
-    this.txt.y = this.y+3;
-  };
-
-  this.drawLinks = function() {
-    // DRAW POST LINKS
-    if (this.curPostLinks !== undefined) { // draw each post link
-      for (var i = 0; i < this.curPostLinks.length; i++) {
-        let postIndex = this.curPostLinks[i];
-        let cell1x = this.x;
-        let cell1y = this.y;
-        let cell2x = myGame.pop[0].cells[postIndex].x;
-        let cell2y = myGame.pop[0].cells[postIndex].y;
-        ctx.beginPath();
-        if (this.dim === true) {
-          ctx.globalAlpha = 0.2;
-        } else {
-          ctx.globalAlpha = 1;
-        }
-        ctx.lineWidth = 1;
-        ctx.strokeStyle = myColors.black;
-        ctx.moveTo(cell1x,cell1y);
-        ctx.lineTo(cell2x,cell2y);
-        ctx.stroke();
-      }
-    }
-  };
-
-  this.draw = function() {
-    // context.arc(x,y,r,sAngle,eAngle,counterclockwise);
-    // sAngle = start angle, eAngle = end angle....   uses radiens
-    // counterclockwise	Optional
-    ctx.beginPath();
-    if (this.dim === true) {
-      ctx.globalAlpha = 0.2;
-    } else {
-      ctx.globalAlpha = 1;
-    }
-    if (this.clickSelected === true) { // if selected make thick outline
-      ctx.fillStyle = this.curColor;
-      ctx.strokeStyle = myColors.lightgreen;
-      ctx.lineWidth = 4;
-    } else {
-      ctx.fillStyle = this.curColor;
-      ctx.strokeStyle = this.strokeColor;
-      ctx.lineWidth = 1;
-    }
-    ctx.arc(this.x,this.y,this.rad,0,2*Math.PI);
-    ctx.fill();
-    ctx.stroke();
-    // index at center of cell
-    this.txt.draw();
-    // HITBOXES
-    // ctx.save();
-    // ctx.translate(this.x,this.y);
-    // ctx.beginPath();
-    // ctx.strokeStyle = "green";
-    // ctx.lineWidth = 1;
-    // ctx.rect(-this.rad,-this.rad,this.rad*2,this.rad*2);
-    // ctx.stroke();
-    // ctx.restore();
-  }; // draw
-
-  this.update = function() {
-
-  };
-
-}
