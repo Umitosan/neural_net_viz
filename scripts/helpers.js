@@ -43,6 +43,17 @@ function randColor(type,lowBound,highBound,alphaSwitch = null) { // default alph
   }
 }
 
+function setAlpha(grbaString,newAlpha) { // work in progress
+  let newColor = "";
+  console.log('grbaString.slice(0,4)= ',grbaString.slice(0,5));
+  if (grbaString.slice(0,5) === "rgba") {
+    console.log('yes valid');
+  } else {
+    console.log("not valid GRBA color string");
+  }
+  return newColor;
+}
+
 function roundRect(x, y, w, h, r) {
   if (w < 2 * r) r = w / 2;
   if (h < 2 * r) r = h / 2;

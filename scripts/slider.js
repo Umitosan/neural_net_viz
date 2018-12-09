@@ -72,7 +72,7 @@ function Slider(x,y,width,height,nodeTotal,pColor) {
     for (let i = 0; i < this.nodeTotal; i++) {
       let rad;
       ctx.beginPath();
-      ctx.strokeStyle = 'black';
+      ctx.strokeStyle = myColors.black;
       if (this.activeNode === i) {
         ctx.fillStyle = 'gold';
         rad = 12;
@@ -197,7 +197,7 @@ function SliderType2(x,y,width,height,nodeTotal,pColor) {
     ctx.beginPath();
     ctx.lineWidth = 1;
     ctx.fillStyle = this.primaryColor;
-    ctx.strokeStyle = 'black';
+    ctx.strokeStyle = myColors.black;
     ctx.lineWidth = 1;
 
     let yoff = 2;
@@ -230,7 +230,7 @@ function SliderType2(x,y,width,height,nodeTotal,pColor) {
     // box
     ctx.beginPath();
     ctx.fillStyle = this.primaryColor;
-    ctx.strokeStyle = 'black';
+    ctx.strokeStyle = myColors.black;
     ctx.rect(curNode.x-boxSize, curNode.y-1,boxSize*2,this.height+2);
     // ctx.rect(curNode.x-1, curNode.y-1,2,this.height+2);
     ctx.fill();
@@ -242,7 +242,7 @@ function SliderType2(x,y,width,height,nodeTotal,pColor) {
     ctx.shadowOffsetY = 2;
     ctx.shadowColor = "rgba(0,0,0,0.3)";
     ctx.shadowBlur = 4;
-    ctx.fillStyle = 'black';
+    ctx.fillStyle = myColors.black;
     ctx.fillText(this.activeNode,curNode.x-5,curNode.y+16);
     ctx.restore();
   }; // draw

@@ -1,7 +1,7 @@
 /*jshint esversion: 6 */
 
 
-function TxtGroup(x,y,width,height,font,color="black") {
+function TxtGroup(x,y,width,height,font,color=myColors.black) {
   this.x = x;
   this.y = y;
   this.width = width;
@@ -34,7 +34,7 @@ function TxtGroup(x,y,width,height,font,color="black") {
   this.draw = function() {
     // bound box
     ctx.beginPath();
-    ctx.strokeStyle = 'black';
+    ctx.strokeStyle = myColors.black;
     ctx.lineWidth = '2';
     ctx.rect(this.x,this.y,this.width,this.height);
     ctx.stroke();

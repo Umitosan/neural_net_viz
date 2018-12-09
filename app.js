@@ -35,6 +35,7 @@ function Colors() {
   this.green = 'rgba(0, 230, 0, 1)';
   this.blue = 'rgba(0, 0, 230, 1)';
   this.electricBlue = 'rgba(20, 30, 230, 1)';
+  this.lightgreen = 'rgba(144, 238, 144,1)';
 }
 
 var State = {

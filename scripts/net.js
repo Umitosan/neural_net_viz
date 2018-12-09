@@ -19,8 +19,11 @@ function Net(x,y,width,height,cellTotal,color) {
   this.curDataFrameStimRounds = undefined;
   this.curStimRound = undefined;
   this.curStimRoundIndex = undefined;
+
+  // buttons
   this.dataFrameButtonL = undefined;
   this.dataFrameButtonR = undefined;
+  this.dimCellsButton = undefined;
 
   this.init = function() {
     this.curDataFrameLength = myDataSetRows[0].dataFrames.length;
@@ -100,10 +103,10 @@ function Net(x,y,width,height,cellTotal,color) {
                                 /*  y       */  tmpFontSize+5,
                                 /* fontSize */  tmpFontSize,
                                 /* font     */  (""+tmpFontSize.toString()+"px Helvetica"),  // [font style][font weight][font size][font face]
-                                /* color    */  "black",
+                                /* color    */  myColors.black,
                                 /* text     */  "Net Index: 0"
                                 );
-    // TxtGroup(x,y,height,width,font,color="black")
+    // TxtGroup(x,y,height,width,font,color=myColors.black)
     this.txtStatusRight = new TxtGroup( /* x      */  canW - 202,
                                         /* y      */  2,
                                         /* width  */  200,
@@ -128,16 +131,23 @@ function Net(x,y,width,height,cellTotal,color) {
                                         /* y      */ this.txtStatusRight.y+30,
                                         /* width  */ 16,
                                         /* height */ 16,
-                                        /* color  */ 'lightgreen',
+                                        /* color  */ myColors.lightgreen,
                                         /* font   */ '14px Helvetica',
                                         /* text   */ '<');
     this.dataFrameButtonR = new Button( /* x      */ canW-64,
                                         /* y      */ this.txtStatusRight.y+30,
                                         /* width  */ 16,
                                         /* height */ 16,
-                                        /* color  */ 'lightgreen',
+                                        /* color  */ myColors.lightgreen,
                                         /* font   */ '14px Helvetica',
                                         /* text   */ '>');
+    this.dimCellsButton = new Button(   /* x      */ canW-80,
+                                        /* y      */ this.txtStatusRight.y+100,
+                                        /* width  */ 40,
+                                        /* height */ 16,
+                                        /* color  */ myColors.lightgreen,
+                                        /* font   */ '14px Helvetica',
+                                        /* text   */ 'dim it');
   }; // INIT
 
 
@@ -182,6 +192,7 @@ function Net(x,y,width,height,cellTotal,color) {
     this.curStimRound = this.curDataFrameStimRounds[ind].cells;
     this.loadCellStatus();
     this.refreshTxtStatusRight();
+    this.dimInactiveCells();
   };
 
   this.refreshTxtStatusRight = function() {  // clear and update the nubmers in the UI in the box
@@ -247,6 +258,18 @@ function Net(x,y,width,height,cellTotal,color) {
     console.log('net tryClickButtons');
     this.dataFrameButtonL.checkClicked(mouseX,mouseY);
     this.dataFrameButtonR.checkClicked(mouseX,mouseY);
+    this.dimCellsButton.checkClicked(mouseX,mouseY);
+  };
+
+  this.dimInactiveCells = function() {
+    console.log('dimming cells now');
+    for (var i = 0; i < this.cells.length; i++) {
+      if (this.cells[i].status === 'labile') {
+        this.cells[i].dim = true;
+      } else {
+        this.cells[i].dim = false;
+      }
+    }
   };
 
   this.draw = function() {
@@ -256,12 +279,14 @@ function Net(x,y,width,height,cellTotal,color) {
     for (let i = 0; i < this.cells.length; i++) {
       this.cells[i].draw();
     }
+    ctx.globalAlpha = 1;
     this.txtTitle.draw();
     this.txtStatusLeft.draw();
     this.txtStatusRight.draw();
     if (this.currentDataFrameSlider2 !== undefined) { this.currentDataFrameSlider2.draw(); }
     if (this.dataFrameButtonR !== undefined) { this.dataFrameButtonR.draw(); }
     if (this.dataFrameButtonL !== undefined) { this.dataFrameButtonL.draw(); }
+    if (this.dimCellsButton !== undefined) { this.dimCellsButton.draw(); }
   };
 
   this.update = function() {
@@ -289,6 +314,13 @@ function Net(x,y,width,height,cellTotal,color) {
         this.dataFrameButtonR.clicked = false;
       }
     }
+    if (this.dimCellsButton !== undefined) {
+      if (this.dimCellsButton.clicked === true) {
+      console.log('dimCellsButton clicked');
+      this.dimInactiveCells();
+      this.dimCellsButton.clicked = false;
+      }
+    }
   };
 
 } // Net
@@ -306,7 +338,7 @@ function Cell(x,y,rad,color,ind) {
   this.rad = rad;
   this.baseColor = color;
   this.curColor = color;
-  this.strokeColor = "black";
+  this.strokeColor = myColors.black;
   this.txt = undefined;
   this.index = ind;
   this.clickSelected = false;
@@ -317,6 +349,7 @@ function Cell(x,y,rad,color,ind) {
   this.curPostLinks = undefined;
   this.refractoryPeriod = undefined;
   this.xOffset = undefined;
+  this.dim = false;
 
   this.init = function() {
     let tmpFontSize = 16;
@@ -329,7 +362,7 @@ function Cell(x,y,rad,color,ind) {
                             /*  y       */  this.y+3,
                             /* fontSize */  tmpFontSize,
                             /* font     */  (""+tmpFontSize.toString()+"px bold tahoma"),  // [font style][font weight][font size][font face]
-                            /* color    */  "black",
+                            /* color    */  myColors.black,
                             /* text     */  this.index.toString()
                           );
   };
@@ -351,8 +384,13 @@ function Cell(x,y,rad,color,ind) {
         let cell2x = myGame.pop[0].cells[postIndex].x;
         let cell2y = myGame.pop[0].cells[postIndex].y;
         ctx.beginPath();
+        if (this.dim === true) {
+          ctx.globalAlpha = 0.2;
+        } else {
+          ctx.globalAlpha = 1;
+        }
         ctx.lineWidth = 1;
-        ctx.strokeStyle = 'black';
+        ctx.strokeStyle = myColors.black;
         ctx.moveTo(cell1x,cell1y);
         ctx.lineTo(cell2x,cell2y);
         ctx.stroke();
@@ -365,9 +403,14 @@ function Cell(x,y,rad,color,ind) {
     // sAngle = start angle, eAngle = end angle....   uses radiens
     // counterclockwise	Optional
     ctx.beginPath();
+    if (this.dim === true) {
+      ctx.globalAlpha = 0.2;
+    } else {
+      ctx.globalAlpha = 1;
+    }
     if (this.clickSelected === true) { // if selected make thick outline
       ctx.fillStyle = this.curColor;
-      ctx.strokeStyle = 'lightgreen';
+      ctx.strokeStyle = myColors.lightgreen;
       ctx.lineWidth = 4;
     } else {
       ctx.fillStyle = this.curColor;

@@ -24,11 +24,11 @@ function Button(x,y,width,height,color,font,text) {
   this.draw = function() {
     // BUTTON
     ctx.fillStyle = this.color;
-    ctx.strokeStyle = 'black';
+    ctx.strokeStyle = myColors.black;
     ctx.lineWidth = 2;
     roundRect(this.x, this.y, this.width, this.height, 4);
     ctx.fill();
-    ctx.fillStyle = 'black';
+    ctx.fillStyle = myColors.black;
     ctx.font = this.font;
     ctx.fillText(this.text,this.x+2,this.y+12);
   };
