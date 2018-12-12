@@ -325,6 +325,9 @@ function Net(x,y,width,height,cellTotal,color) {
       this.dimCellsButton.clicked = false;
       }
     }
+    for (var i = 0; i < this.cells.length; i++) {
+      this.cells[i].update();
+    }
   };
 
 } // Net

@@ -23,8 +23,20 @@ function Cell(x,y,size,shape,color,ind) {
   this.refractoryPeriod = undefined;
   this.xOffset = undefined;
   this.dim = false;
+  this.pLinkLines = undefined;
+  this.pLinkDur = 50; // ms
 
   this.init = function() {
+    this.pLinkLines = [];
+    if (this.index === 0) {
+      for (let i = 0; i < 20; i++) {
+        let x1 = (i*20);
+        let x2 = (i*20)+18;
+        let newObj = {'x1':x1,'y1':120,'x2':x2,'y2':120};
+        this.pLinkLines.push(newObj);
+      }
+      console.log('this.pLinkLinkes = ', this.pLinkLines);
+    }
     let tmpFontSize = 16;
     if ((this.size/2) < 14) {
       this.xOffset = 10;
@@ -84,7 +96,7 @@ function Cell(x,y,size,shape,color,ind) {
     if (this.clickSelected === true) { // if selected make thick outline
       ctx.fillStyle = this.curColor;
       ctx.strokeStyle = myColors.black;
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 4;
       ctx.globalAlpha = 1;
       this.size = this.baseSize * 1.5;
     } else {
@@ -120,9 +132,35 @@ function Cell(x,y,size,shape,color,ind) {
     // ctx.rect(-this.size/2,-this.size/2,this.size,this.size);
     // ctx.stroke();
     // ctx.restore();
+
+    // pLinkLines
+    if (this.index === 0) {
+      for (let i = 0; i < this.pLinkLines.length; i++) {
+        ctx.beginPath();
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = 'red';
+        ctx.globalAlpha = 1;
+        ctx.moveTo(this.pLinkLines[i].x1,this.pLinkLines[i].y1);
+        ctx.lineTo(this.pLinkLines[i].x2,this.pLinkLines[i].y2);
+        ctx.stroke();
+      }
+    }
   }; // draw
 
   this.update = function() {
+    let vel = 1;
+    if (this.index === 0) {
+      if ( (performance.now() % this.pLinkDur) < 18 ) {
+        if (this.pLinkLines[0].x1 > 18) {
+          this.pLinkLines.pop();
+          this.pLinkLines.unshift({'x1':0,'y1':120,'x2':18,'y2':120});
+        }
+        for (let i = 0; i < this.pLinkLines.length; i++) {
+          this.pLinkLines[i].x1 += vel;
+          this.pLinkLines[i].x2 += vel;
+        }
+      }
+    }
   };
 
 }
