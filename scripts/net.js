@@ -23,7 +23,7 @@ function Net(x,y,width,height,cellTotal,color) {
   // buttons
   this.dataFrameButtonL = undefined;
   this.dataFrameButtonR = undefined;
-  this.dimCellsButton = undefined;
+  this.testButton = undefined;
 
   this.init = function() {
     this.curDataFrameLength = myDataSetRows[0].dataFrames.length;
@@ -144,13 +144,13 @@ function Net(x,y,width,height,cellTotal,color) {
                                         /* color  */ myColors.lightgreen,
                                         /* font   */ '14px Helvetica',
                                         /* text   */ '>');
-    this.dimCellsButton = new Button(   /* x      */ canW-80,
+    this.testButton = new Button(   /* x      */ canW-80,
                                         /* y      */ this.txtStatusRight.y+100,
                                         /* width  */ 40,
                                         /* height */ 16,
                                         /* color  */ myColors.lightgreen,
                                         /* font   */ '14px Helvetica',
-                                        /* text   */ 'dim it');
+                                        /* text   */ 'test');
   }; // INIT
 
 
@@ -262,7 +262,7 @@ function Net(x,y,width,height,cellTotal,color) {
     console.log('net tryClickButtons');
     this.dataFrameButtonL.checkClicked(mouseX,mouseY);
     this.dataFrameButtonR.checkClicked(mouseX,mouseY);
-    this.dimCellsButton.checkClicked(mouseX,mouseY);
+    this.testButton.checkClicked(mouseX,mouseY);
   };
 
   this.dimInactiveCells = function() {
@@ -290,7 +290,7 @@ function Net(x,y,width,height,cellTotal,color) {
     if (this.currentDataFrameSlider2 !== undefined) { this.currentDataFrameSlider2.draw(); }
     if (this.dataFrameButtonR !== undefined) { this.dataFrameButtonR.draw(); }
     if (this.dataFrameButtonL !== undefined) { this.dataFrameButtonL.draw(); }
-    if (this.dimCellsButton !== undefined) { this.dimCellsButton.draw(); }
+    if (this.testButton !== undefined) { this.testButton.draw(); }
   };
 
   this.update = function() {
@@ -318,11 +318,11 @@ function Net(x,y,width,height,cellTotal,color) {
         this.dataFrameButtonR.clicked = false;
       }
     }
-    if (this.dimCellsButton !== undefined) {
-      if (this.dimCellsButton.clicked === true) {
-      console.log('dimCellsButton clicked');
-      this.dimInactiveCells();
-      this.dimCellsButton.clicked = false;
+    if (this.testButton !== undefined) {
+      if (this.testButton.clicked === true) {
+      console.log('testButton clicked');
+      // do stuff here
+      this.testButton.clicked = false;
       }
     }
     for (var i = 0; i < this.cells.length; i++) {

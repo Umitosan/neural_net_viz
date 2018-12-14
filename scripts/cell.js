@@ -51,29 +51,33 @@ function Cell(x,y,size,shape,color,ind) {
   };
 
   this.drawLinks = function() {
-    if (this.clickSelected === true) {
+    if ( (this.clickSelected === true) & (this.dim !== true) ) {
         this.drawpLinkLines();
     } else {
-        if (this.curPostLinks !== undefined) { // draw each post link
-          for (var i = 0; i < this.curPostLinks.length; i++) {
-            let postIndex = this.curPostLinks[i];
-            let cell1x = this.x;
-            let cell1y = this.y;
-            let cell2x = myGame.curNet.cells[postIndex].x;
-            let cell2y = myGame.curNet.cells[postIndex].y;
-            ctx.beginPath();
-            if (this.dim === true) {
-              ctx.globalAlpha = 0.2;
-            } else {
-              ctx.globalAlpha = 1;
-            }
-            ctx.lineWidth = 1;
-            ctx.strokeStyle = myColors.black;
-            ctx.moveTo(cell1x,cell1y);
-            ctx.lineTo(cell2x,cell2y);
-            ctx.stroke();
-          }
+      this.drawNormalLinkLines();
+    }
+  };
+
+  this.drawNormalLinkLines = function() {
+    if (this.curPostLinks !== undefined) { // draw each post link
+      for (var i = 0; i < this.curPostLinks.length; i++) {
+        let postIndex = this.curPostLinks[i];
+        let cell1x = this.x;
+        let cell1y = this.y;
+        let cell2x = myGame.curNet.cells[postIndex].x;
+        let cell2y = myGame.curNet.cells[postIndex].y;
+        ctx.beginPath();
+        if (this.dim === true) {
+          ctx.globalAlpha = 0.2;
+        } else {
+          ctx.globalAlpha = 1;
         }
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = myColors.black;
+        ctx.moveTo(cell1x,cell1y);
+        ctx.lineTo(cell2x,cell2y);
+        ctx.stroke();
+      }
     }
   };
 
@@ -98,7 +102,7 @@ function Cell(x,y,size,shape,color,ind) {
           } else {
             ctx.strokeStyle = myColors.green;
           }
-          ctx.lineWidth = 1;
+          ctx.lineWidth = 1.5;
           // handle first and last lines so they don't draw beyond target cells
           let baseXlen = ((cell2x - cell1x) / this.totalAnimLines);
           let baseYlen = ((cell2y - cell1y) / this.totalAnimLines);
