@@ -137,7 +137,7 @@ function Net(x,y,width,height,cellTotal,color) {
                                         /* color  */ myColors.lightgreen,
                                         /* font   */ '14px Helvetica',
                                         /* text   */ '<');
-    this.dataFrameButtonR = new Button( /* x      */ canW-64,
+    this.dataFrameButtonR = new Button( /* x      */ canW-30,
                                         /* y      */ this.txtStatusRight.y+30,
                                         /* width  */ 16,
                                         /* height */ 16,
@@ -290,7 +290,7 @@ function Net(x,y,width,height,cellTotal,color) {
     if (this.currentDataFrameSlider2 !== undefined) { this.currentDataFrameSlider2.draw(); }
     if (this.dataFrameButtonR !== undefined) { this.dataFrameButtonR.draw(); }
     if (this.dataFrameButtonL !== undefined) { this.dataFrameButtonL.draw(); }
-    if (this.testButton !== undefined) { this.testButton.draw(); }
+    // if (this.testButton !== undefined) { this.testButton.draw(); }
   };
 
   this.update = function() {

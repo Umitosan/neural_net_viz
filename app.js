@@ -357,6 +357,7 @@ $(document).ready(function() {
       State.gameStarted = true;
       CANVAS.focus();  // set focus to canvas on start so keybindings work, if needed
       $('#mode-current-status')[0].innerText = 'simulate';
+      // $(".float-input").css('display', 'block'); // show number input
       myGame.updateDuration = (State.simSpeed);
       myGame.lastUpdate = performance.now();
     } else {

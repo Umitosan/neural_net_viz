@@ -145,9 +145,19 @@ body {
 }
 
 .canvas-container {
+  position: relative;
   margin: 20px auto 20px auto;
   width: 1002px;
   height: 802px;
+}
+.float-input {
+  position: absolute;
+  display: none;
+  top: 30px;
+  right: 45px;
+}
+.float-input input {
+  width: 40px;
 }
 #canvas {
   cursor: pointer;

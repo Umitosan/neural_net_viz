@@ -44,9 +44,6 @@ function Game(updateDur) {
     } else {
       console.log('nothing in myNets');
     }
-    // Button(x,y,width,height,color,font,text)
-    // this.btnRandCellPos = new Button(canW-60,114,48,18,randNetColor,"12px tahoma",'RANDO!',this.randomizeCellPos);
-    // this.testButton2 = new Button(canW-100,80,40,20,randNetColor,"12px tahoma",'button');
   };
 
   this.randomizeCellPos = function() { // rem: 'this' = button (not this 'game') cuz func passed are arg duh
