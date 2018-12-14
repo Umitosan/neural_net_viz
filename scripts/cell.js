@@ -23,20 +23,11 @@ function Cell(x,y,size,shape,color,ind) {
   this.refractoryPeriod = undefined;
   this.xOffset = undefined;
   this.dim = false;
-  this.pLinkLines = undefined;
-  this.pLinkDur = 50; // ms
+  this.linkAnimDur = 20; // ms
+  this.curLinkAnimOffset = 0;
+  this.totalAnimLines = 20;
 
   this.init = function() {
-    this.pLinkLines = [];
-    if (this.index === 0) {
-      for (let i = 0; i < 20; i++) {
-        let x1 = (i*20);
-        let x2 = (i*20)+18;
-        let newObj = {'x1':x1,'y1':120,'x2':x2,'y2':120};
-        this.pLinkLines.push(newObj);
-      }
-      console.log('this.pLinkLinkes = ', this.pLinkLines);
-    }
     let tmpFontSize = 16;
     if ((this.size/2) < 14) {
       this.xOffset = 10;
@@ -60,26 +51,83 @@ function Cell(x,y,size,shape,color,ind) {
   };
 
   this.drawLinks = function() {
-    // DRAW POST LINKS
-    if (this.curPostLinks !== undefined) { // draw each post link
-      for (var i = 0; i < this.curPostLinks.length; i++) {
-        let postIndex = this.curPostLinks[i];
+    if (this.clickSelected === true) {
+        this.drawpLinkLines();
+    } else {
+        if (this.curPostLinks !== undefined) { // draw each post link
+          for (var i = 0; i < this.curPostLinks.length; i++) {
+            let postIndex = this.curPostLinks[i];
+            let cell1x = this.x;
+            let cell1y = this.y;
+            let cell2x = myGame.curNet.cells[postIndex].x;
+            let cell2y = myGame.curNet.cells[postIndex].y;
+            ctx.beginPath();
+            if (this.dim === true) {
+              ctx.globalAlpha = 0.2;
+            } else {
+              ctx.globalAlpha = 1;
+            }
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = myColors.black;
+            ctx.moveTo(cell1x,cell1y);
+            ctx.lineTo(cell2x,cell2y);
+            ctx.stroke();
+          }
+        }
+    }
+  };
+
+  this.drawpLinkLines = function() {
+    if (this.curPostLinks !== undefined) {
+      for (let ind = 0; ind < this.curPostLinks.length; ind++) {
+        let postIndex = this.curPostLinks[ind];
         let cell1x = this.x;
         let cell1y = this.y;
-        let cell2x = myGame.pop[0].cells[postIndex].x;
-        let cell2y = myGame.pop[0].cells[postIndex].y;
-        ctx.beginPath();
-        if (this.dim === true) {
-          ctx.globalAlpha = 0.2;
-        } else {
-          ctx.globalAlpha = 1;
-        }
-        ctx.lineWidth = 1;
-        ctx.strokeStyle = myColors.black;
-        ctx.moveTo(cell1x,cell1y);
-        ctx.lineTo(cell2x,cell2y);
-        ctx.stroke();
-      }
+        let cell2x = myGame.curNet.cells[postIndex].x;
+        let cell2y = myGame.curNet.cells[postIndex].y;
+        let pxoff = this.curLinkAnimOffset;
+        for (let j = 0; j < this.totalAnimLines; j++) {
+          ctx.beginPath();
+          if (this.dim === true) {
+            ctx.globalAlpha = 0.2;
+          } else {
+            ctx.globalAlpha = 1;
+          }
+          if ((j % 2) === 0) {
+            ctx.strokeStyle = myColors.black;
+          } else {
+            ctx.strokeStyle = myColors.green;
+          }
+          ctx.lineWidth = 1;
+          // handle first and last lines so they don't draw beyond target cells
+          let baseXlen = ((cell2x - cell1x) / this.totalAnimLines);
+          let baseYlen = ((cell2y - cell1y) / this.totalAnimLines);
+          let xoff = baseXlen * ((pxoff / 20)); // amount to move by animation
+          let yoff = baseYlen * ((pxoff / 20)); // amount to move by animation
+          if (j === 0) {
+            ctx.moveTo( cell1x , cell1y );
+            ctx.lineTo( cell1x + (baseXlen * (j+1)) + xoff, cell1y + (baseYlen * (j+1)) + yoff);
+            // ctx.lineTo( cell1x + (baseXlen * (i+1)) + xoff, cell1y + (baseYlen * (i+1)) - 2 + yoff);
+            // ctx.lineTo( cell1x + (baseXlen * (i+1)) + xoff, cell1y + (baseYlen * (i+1)) + 2 + yoff);
+          } else if ( (j === (this.totalAnimLines - 1)) || (j === (this.totalAnimLines - 2)) ) {
+            let sX = cell1x + (baseXlen * j) + xoff;
+            let sY = cell1y + (baseYlen * j) + yoff;
+            if ( ((cell1x > cell2x) && (sX < cell2x)) || ((cell1x < cell2x) && (sX > cell2x)) ||
+                 ((cell1y > cell2y) && (sY < cell2y)) || ((cell1y < cell2y) && (sY > cell2y)) ){
+              // don't draw line
+            } else {
+              ctx.moveTo(sX, sY);
+              ctx.lineTo(cell2x, cell2y);
+            }
+          } else { // values are ok
+            ctx.moveTo( cell1x + (baseXlen * j) + xoff, cell1y + (baseYlen * j) + yoff);
+            ctx.lineTo( cell1x + (baseXlen * (j+1)) + xoff, cell1y + (baseYlen * (j+1)) + yoff);
+            // ctx.lineTo( cell1x + (baseXlen * (i+1)) + xoff, cell1y + (baseYlen * (i+1)) - 2 + yoff);
+            // ctx.lineTo( cell1x + (baseXlen * (i+1)) + xoff, cell1y + (baseYlen * (i+1)) + 2 + yoff);
+          }
+          ctx.stroke();
+        } // for
+      } // for curPostLinks
     }
   };
 
@@ -132,33 +180,14 @@ function Cell(x,y,size,shape,color,ind) {
     // ctx.rect(-this.size/2,-this.size/2,this.size,this.size);
     // ctx.stroke();
     // ctx.restore();
-
-    // pLinkLines
-    if (this.index === 0) {
-      for (let i = 0; i < this.pLinkLines.length; i++) {
-        ctx.beginPath();
-        ctx.lineWidth = 3;
-        ctx.strokeStyle = 'red';
-        ctx.globalAlpha = 1;
-        ctx.moveTo(this.pLinkLines[i].x1,this.pLinkLines[i].y1);
-        ctx.lineTo(this.pLinkLines[i].x2,this.pLinkLines[i].y2);
-        ctx.stroke();
-      }
-    }
   }; // draw
 
   this.update = function() {
-    let vel = 1;
-    if (this.index === 0) {
-      if ( (performance.now() % this.pLinkDur) < 18 ) {
-        if (this.pLinkLines[0].x1 > 18) {
-          this.pLinkLines.pop();
-          this.pLinkLines.unshift({'x1':0,'y1':120,'x2':18,'y2':120});
-        }
-        for (let i = 0; i < this.pLinkLines.length; i++) {
-          this.pLinkLines[i].x1 += vel;
-          this.pLinkLines[i].x2 += vel;
-        }
+    if ( (performance.now() % this.linkAnimDur) < 17 ) {
+      if (this.curLinkAnimOffset > ((this.totalAnimLines*2) - 2)) {
+        this.curLinkAnimOffset = 0;
+      } else {
+        this.curLinkAnimOffset += 1;
       }
     }
   };
