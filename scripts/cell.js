@@ -30,7 +30,7 @@ function Cell(x,y,size,shape,color,ind) {
   this.init = function() {
     let tmpFontSize = 16;
     if ((this.size/2) < 14) {
-      this.xOffset = 10;
+      this.xOffset = 13;
     } else {
       this.xOffset = -3;
     }
@@ -125,7 +125,9 @@ function Cell(x,y,size,shape,color,ind) {
           }
           ctx.stroke();
         } // for
-        this.drawpLinkLineCoeff(ind,cell2x,cell2y);
+        if (this.clickSelected === true) {
+          this.drawpLinkLineCoeff(ind,cell2x,cell2y);
+        }
       } // for curPostLinks
     }
   };
@@ -149,7 +151,7 @@ function Cell(x,y,size,shape,color,ind) {
   };
 
   this.drawLinks = function() {
-    if ( (this.clickSelected === true) & (this.dim !== true) ) {
+    if (this.dim === false) {
       this.drawpLinkLines();
     } else {
       this.drawNormalLinkLines();

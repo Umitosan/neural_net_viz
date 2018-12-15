@@ -13,6 +13,7 @@ function Net(x,y,width,height,cellTotal,color) {
   this.txtStatusRight = undefined;
   this.txtStatusLeft = undefined;
   this.currentDataFrameSlider2 = undefined;
+  this.currentDataFrameSlider3 = undefined;
   this.curDataFrame = undefined;
   this.curDataFrameIndex = undefined;
   this.curDataFrameLength = undefined;
@@ -29,9 +30,6 @@ function Net(x,y,width,height,cellTotal,color) {
     this.curDataFrameLength = myDataSetRows[0].dataFrames.length;
     console.log('this.curDataFrameLength = ', this.curDataFrameLength);
     this.cells = [];
-    //   "inputCellCount": "4",
-    //   "outputCellCount": "10",
-    //   "totalCellCount": "20",
     let inputCellCount = myJson1.Population.inputCellCount;
     let outputCellCount = myJson1.Population.outputCellCount;
     let totalCellCount = myJson1.Population.totalCellCount;
@@ -109,7 +107,6 @@ function Net(x,y,width,height,cellTotal,color) {
                                 /* color    */  myColors.black,
                                 /* text     */  "Net Index: 0"
                                 );
-    // TxtGroup(x,y,height,width,font,color=myColors.black)
     this.txtStatusRight = new TxtGroup( /* x      */  canW - 202,
                                         /* y      */  2,
                                         /* width  */  200,
@@ -159,7 +156,6 @@ function Net(x,y,width,height,cellTotal,color) {
   // internalCoeff:6.939
   // postLinks: (4) [{…}, {…}, {…}, {…}]
   // refractoryPeriod: 1
-
   this.buildCellData = function() {
     for (let i = 0; i < myNets[0].cells.length; i++) {
       cellObj = myNets[0].cells[i];
@@ -168,10 +164,6 @@ function Net(x,y,width,height,cellTotal,color) {
       this.cells[i].internalCoeff = cellObj.internalCoeff;
       this.cells[i].refractoryPeriod = cellObj.refractoryPeriod;
       this.cells[i].curPostLinks = cellObj.postLinks;
-      // this.cells[i].curPostLinks = [];
-      // for (let j = 0; j < cellObj.postLinks.length; j++) {
-      //   this.cells[i].curPostLinks.push( cellObj.postLinks[j].postCellIndex );
-      // }
     }
   };
 
