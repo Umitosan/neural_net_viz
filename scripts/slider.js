@@ -190,6 +190,7 @@ function SliderType2(x,y,width,height,nodeTotal,pColor) {
       ctx.lineTo(Math.round(curNode.x), curNode.y+this.height);
       ctx.stroke();
     } // for
+    
     // top/bot filigree
     let curNode = this.nodes[this.activeNode];
     let tSize = 10;
@@ -201,19 +202,6 @@ function SliderType2(x,y,width,height,nodeTotal,pColor) {
     ctx.lineWidth = 1;
 
     let yoff = 2;
-    // top
-    // ctx.moveTo(curNode.x-tSize, curNode.y-yoff);
-    // ctx.lineTo(curNode.x, curNode.y-yoff-tSize);
-    // ctx.lineTo(curNode.x+tSize, curNode.y-yoff);
-    // ctx.lineTo(curNode.x-tSize, curNode.y-yoff);
-    // ctx.fill();
-    // bot
-    // ctx.beginPath();
-    // ctx.moveTo(curNode.x-tSize, curNode.y+this.height+yoff);
-    // ctx.lineTo(curNode.x, curNode.y+yoff+this.height+tSize);
-    // ctx.lineTo(curNode.x+tSize, curNode.y+yoff+this.height);
-    // ctx.lineTo(curNode.x-tSize, curNode.y+this.height+yoff);
-    // ctx.fill();
 
     // left
     ctx.moveTo(curNode.x-boxSize, curNode.y+this.height);

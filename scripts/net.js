@@ -167,10 +167,11 @@ function Net(x,y,width,height,cellTotal,color) {
       this.cells[i].decayRate = cellObj.decayRate;
       this.cells[i].internalCoeff = cellObj.internalCoeff;
       this.cells[i].refractoryPeriod = cellObj.refractoryPeriod;
-      this.cells[i].curPostLinks = [];
-      for (let j = 0; j < cellObj.postLinks.length; j++) {
-        this.cells[i].curPostLinks.push( cellObj.postLinks[j].postCellIndex );
-      }
+      this.cells[i].curPostLinks = cellObj.postLinks;
+      // this.cells[i].curPostLinks = [];
+      // for (let j = 0; j < cellObj.postLinks.length; j++) {
+      //   this.cells[i].curPostLinks.push( cellObj.postLinks[j].postCellIndex );
+      // }
     }
   };
 
@@ -259,14 +260,13 @@ function Net(x,y,width,height,cellTotal,color) {
   }; // buildDataFrameInterface
 
   this.tryClickButtons = function(mouseX,mouseY) {
-    console.log('net tryClickButtons');
+    // console.log('net tryClickButtons');
     this.dataFrameButtonL.checkClicked(mouseX,mouseY);
     this.dataFrameButtonR.checkClicked(mouseX,mouseY);
     this.testButton.checkClicked(mouseX,mouseY);
   };
 
   this.dimInactiveCells = function() {
-    console.log('dimming cells now');
     for (var i = 0; i < this.cells.length; i++) {
       if (this.cells[i].status === 'labile') {
         this.cells[i].dim = true;

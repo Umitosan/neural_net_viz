@@ -50,18 +50,10 @@ function Cell(x,y,size,shape,color,ind) {
     this.txt.y = this.y+3;
   };
 
-  this.drawLinks = function() {
-    if ( (this.clickSelected === true) & (this.dim !== true) ) {
-        this.drawpLinkLines();
-    } else {
-      this.drawNormalLinkLines();
-    }
-  };
-
   this.drawNormalLinkLines = function() {
     if (this.curPostLinks !== undefined) { // draw each post link
       for (var i = 0; i < this.curPostLinks.length; i++) {
-        let postIndex = this.curPostLinks[i];
+        let postIndex = this.curPostLinks[i].postCellIndex;
         let cell1x = this.x;
         let cell1y = this.y;
         let cell2x = myGame.curNet.cells[postIndex].x;
@@ -84,13 +76,15 @@ function Cell(x,y,size,shape,color,ind) {
   this.drawpLinkLines = function() {
     if (this.curPostLinks !== undefined) {
       for (let ind = 0; ind < this.curPostLinks.length; ind++) {
-        let postIndex = this.curPostLinks[ind];
+        let postIndex = this.curPostLinks[ind].postCellIndex;
+        let linkCoeff = this.curPostLinks[ind].linkCoeff;
         let cell1x = this.x;
         let cell1y = this.y;
         let cell2x = myGame.curNet.cells[postIndex].x;
         let cell2y = myGame.curNet.cells[postIndex].y;
         let pxoff = this.curLinkAnimOffset;
         for (let j = 0; j < this.totalAnimLines; j++) {
+          // draw 1 segmented anim line
           ctx.beginPath();
           if (this.dim === true) {
             ctx.globalAlpha = 0.2;
@@ -131,7 +125,34 @@ function Cell(x,y,size,shape,color,ind) {
           }
           ctx.stroke();
         } // for
+        this.drawpLinkLineCoeff(ind,cell2x,cell2y);
       } // for curPostLinks
+    }
+  };
+
+  this.drawpLinkLineCoeff = function(pLinkIndex,c2x,c2y) {
+    // draw link linkCoeff text for each line
+    let linkCoeff = this.curPostLinks[pLinkIndex].linkCoeff;
+    let xHalfway =  this.x + ((c2x -  this.x) / 2);
+    let yHalfway =  this.y + ((c2y -  this.y) / 2);
+    let textLength = linkCoeff.toString().length;
+    let boxWidth = (textLength + 3) * 10; // number of characters * pixels per character
+    let boxHeight = 19;
+    ctx.clearRect(xHalfway+4,yHalfway-20,boxWidth,boxHeight); // white space to draw on
+    ctx.strokeStyle = myColors.black;
+    ctx.lineWidth = 1;
+    ctx.rect(xHalfway+4,yHalfway-20,boxWidth,boxHeight);
+    ctx.stroke();
+    ctx.font = "14px Helvetica";
+    ctx.fillStyle = myColors.black;
+    ctx.fillText("LC "+linkCoeff,xHalfway+6,yHalfway-6); // slight offset to make sure text is visible
+  };
+
+  this.drawLinks = function() {
+    if ( (this.clickSelected === true) & (this.dim !== true) ) {
+      this.drawpLinkLines();
+    } else {
+      this.drawNormalLinkLines();
     }
   };
 
@@ -148,7 +169,7 @@ function Cell(x,y,size,shape,color,ind) {
     if (this.clickSelected === true) { // if selected make thick outline
       ctx.fillStyle = this.curColor;
       ctx.strokeStyle = myColors.black;
-      ctx.lineWidth = 4;
+      ctx.lineWidth = 3;
       ctx.globalAlpha = 1;
       this.size = this.baseSize * 1.5;
     } else {
@@ -173,9 +194,8 @@ function Cell(x,y,size,shape,color,ind) {
     ctx.fill();
     ctx.stroke();
     ctx.restore();
-    // index at center of cell
-    this.txt.draw();
-    // HITBOXES
+    this.txt.draw();  // index at center of cell
+    // CELL HITBOXES
     // ctx.save();
     // ctx.translate(this.x,this.y);
     // ctx.beginPath();
@@ -187,11 +207,13 @@ function Cell(x,y,size,shape,color,ind) {
   }; // draw
 
   this.update = function() {
-    if ( (performance.now() % this.linkAnimDur) < 17 ) {
-      if (this.curLinkAnimOffset > ((this.totalAnimLines*2) - 2)) {
-        this.curLinkAnimOffset = 0;
-      } else {
-        this.curLinkAnimOffset += 1;
+    if (this.dim === false) {
+      if ( (performance.now() % this.linkAnimDur) < 17 ) {
+        if (this.curLinkAnimOffset > ((this.totalAnimLines*2) - 2)) {
+          this.curLinkAnimOffset = 0;
+        } else {
+          this.curLinkAnimOffset += 1;
+        }
       }
     }
   };
