@@ -150,13 +150,13 @@ body {
   width: 1002px;
   height: 802px;
 }
-.float-input {
+.input-data-frame {
   position: absolute;
   display: none;
   top: 30px;
   right: 45px;
 }
-.float-input input {
+.input-data-frame input {
   width: 40px;
 }
 #canvas {

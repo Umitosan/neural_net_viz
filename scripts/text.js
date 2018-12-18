@@ -10,6 +10,7 @@ function TxtGroup(x,y,width,height,font,color=myColors.black) {
   this.fontSize = 14;
   this.color = color;
   this.lines = undefined;
+  this.mouseOver = false;
 
   this.init = function() {
     this.lines = [];
@@ -40,6 +41,22 @@ function TxtGroup(x,y,width,height,font,color=myColors.black) {
     ctx.stroke();
     for (var i = 0; i < this.lines.length; i++) {
       this.lines[i].draw();
+    }
+  };
+
+  this.update = function() {
+    // check if mouse in box
+    if (  (State.mouseX > this.x) && (State.mouseX < (this.x+this.width)) &&
+          (State.mouseY > this.y) && (State.mouseY < (this.y+this.height))  ) {
+      if (this.mouseOver === false) {
+        this.mouseOver = true;
+        $('.input-data-frame').css('display','block');
+      }
+    } else {
+      if (this.mouseOver === true) {
+        this.mouseOver = false;
+        $('.input-data-frame').css('display','none');
+      }
     }
   };
 
