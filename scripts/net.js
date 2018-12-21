@@ -219,6 +219,8 @@ function Net(x,y,width,height,cellTotal,color) {
       this.cells[ind].status = newStatus;
       if (newStatus === 'excited') {
         this.cells[ind].curColor = myColors.lightgreen;
+      } else if (newStatus === 'refracting') {
+        this.cells[ind].curColor = myColors.red;
       } else {
         this.cells[ind].curColor = this.cells[ind].baseColor;
       }

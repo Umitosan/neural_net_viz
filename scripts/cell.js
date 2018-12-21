@@ -151,7 +151,7 @@ function Cell(x,y,size,shape,color,ind) {
   };
 
   this.drawLinks = function() {
-    if (this.dim === false) {
+    if (this.status === "excited") {
       this.drawpLinkLines();
     } else {
       this.drawNormalLinkLines();
