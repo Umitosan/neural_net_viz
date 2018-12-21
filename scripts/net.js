@@ -32,7 +32,7 @@ function Net(x,y,width,height,cellTotal,color) {
     this.dfInput = $('.input-data-frame :input');
     let net = this;
     this.dfInput.on('change',function(evt) {
-      console.log('new Dataframe = ', this.value);
+      // console.log('new Dataframe = ', this.value);
       net.loadDataFrameByInd(parseInt(this.value));
     });
     this.cells = [];
@@ -177,7 +177,7 @@ function Net(x,y,width,height,cellTotal,color) {
   this.loadDataFrameByInd = function(ind) {
     if (typeof ind === 'number') {
       if ((ind > -1) && (ind < this.curDataFrameLength)) {
-        console.log('this.curDataFrameLength = ', this.curDataFrameLength);
+        // console.log('this.curDataFrameLength = ', this.curDataFrameLength);
         this.curDataFrame = myDataSetRows[0].dataFrames[ind];
         this.curDataFrameIndex = ind;
         this.curDataFrameStimRounds = this.curDataFrame.stimulusRounds;  // load just one dataFrame
@@ -194,26 +194,6 @@ function Net(x,y,width,height,cellTotal,color) {
       console.log('wierd type of ind for load dataframe');
     }
   };
-
-  // this.loadDataFrameByInd = function(ind) {
-  //   if (typeof ind === 'number') {
-  //     if (ind >= this.curDataFrameLength) {
-  //       this.curDataFrame = myDataSetRows[0].dataFrames[ind];
-  //       // console.log('this.curDataFrame after: ', this.curDataFrame);
-  //       this.curDataFrameIndex = ind;
-  //       this.curDataFrameStimRounds = this.curDataFrame.stimulusRounds;  // load just one dataFrame
-  //       this.loadStimRoundByInd(0); // load stim round 0 by default when changing dataFrames
-  //       this.refreshTxtStatusRight();
-  //       this.buildDataFrameInterface();
-  //     } else {
-  //       console.log('sorry data frame index doesnt exits');
-  //     }
-  //   } else if (typeof ind === 'string') {
-  //     console.log('trying to loadDataFrameByInd using string, NO GOOD!');
-  //   } else {
-  //     console.log('wierd type of ind for load dataframe');
-  //   }
-  // };
 
   this.loadStimRoundByInd = function(ind) {
     this.curStimRoundIndex = ind;

@@ -1,6 +1,7 @@
 # Neural Net Viz
 
-Visualize neural net activity for debugging and because... data is beautiful!
+Visualize neural net activity because data is beautiful!
+* This project serves as a prototype for viewing and debugging the further development of neural nets
 
 ![screenshot](images/screenshot1.png)
 
@@ -25,8 +26,8 @@ git clone https://github.com/Umitosan/neural_net_viz.git
 
 ## Built With
 
-* [jQuery](https://jquery.com/) - Basic DOM manipulation
-* [Canvas](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API) - Graphics API
+* [jQuery](https://jquery.com/)
+* [Canvas](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API) - Graphics
 
 ## Authors
 

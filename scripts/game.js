@@ -20,7 +20,7 @@ function Game(updateDur) {
 
   this.init = function() {
     // this.bg.src = 'bg1.png';
-    this.bg.src = 'neurons_splash1.jpg';
+    this.bg.src = 'images/neurons_splash1.jpg';
     this.lastUpdate = performance.now();
   };
 

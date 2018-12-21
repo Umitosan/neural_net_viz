@@ -27,20 +27,6 @@ function SliderType1(x,y,width,height,nodeTotal,pColor) {
     }
   };
 
-  // this.checkNodeClicked = function(mX,mY) {
-    // if ( (mX > (this.x-this.nodes[0].rad)) && (mX < (this.x+this.width+this.nodes[0].rad)) && (mY > this.y) && (mY < (this.y+this.height)) ) { // check if within slider box first
-    //   for (let i = 0; i < this.nodes.length; i++) { // check if clicked each slider node
-    //     let node = this.nodes[i];
-    //     let extra = 6; // this is extra pixels to check on hitbox size
-    //     if ( (mX > (node.x-node.rad-extra)) && (mX < (node.x+node.rad+extra+extra)) &&
-    //          (mY > (node.y-node.rad-extra)) && (mY < (node.y+node.rad+extra+extra)) ) {
-    //       this.activeNode = i;
-    //       myGame.curNet.loadStimRound(i);
-    //     }
-    //   }
-    // }
-  // };
-
   this.goForward = function() {
     this.activeNode += 1;
   };
@@ -215,13 +201,18 @@ function SliderType2(x,y,width,height,nodeTotal,pColor) {
     ctx.stroke();
     // node label
     ctx.save();
-    ctx.font = "14pt Helvetica";
     ctx.shadowOffsetX = 2;
     ctx.shadowOffsetY = 2;
     ctx.shadowColor = "rgba(0,0,0,0.3)";
     ctx.shadowBlur = 4;
     ctx.fillStyle = myColors.black;
-    ctx.fillText(this.activeNode+1,curNode.x-5,curNode.y+16);
+    if ( (this.activeNode+1).toString().length > 1) {
+      ctx.font = "12pt Helvetica";
+      ctx.fillText(this.activeNode+1,curNode.x-9,curNode.y+15);
+    } else {
+      ctx.font = "14pt Helvetica";
+      ctx.fillText(this.activeNode+1,curNode.x-5,curNode.y+16);
+    }
     ctx.restore();
   }; // draw
 
